@@ -2,6 +2,7 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
@@ -15,11 +16,12 @@ public class Player extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        ShapeRenderer r = game.getShapeRenderer();
-        r.begin(Filled);
-        r.setColor(Color.RED);
-        r.circle(pos.x, pos.y, 8);
-        r.end();
+        SpriteBatch batch = game.getSpriteBatch();
+
+        batch.begin();
+        batch.draw(game.getResourcePack().textures.tilemap, pos.x, pos.y, 16, 64, 16, 16);
+        batch.end();
+
         game.getInputMultiplexer().addProcessor(new Input());
     }
 

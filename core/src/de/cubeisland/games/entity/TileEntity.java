@@ -22,9 +22,11 @@ public class TileEntity extends Entity {
         {
             return;
         }
+        
         SpriteBatch batch = game.getSpriteBatch();
+        
         batch.begin();
-        batch.draw(game.getResourcePack().textures.tilemap, pos.x, pos.y, 0, 0, SIZE, SIZE);
+        batch.draw(game.getResourcePack().textures.tilemap, pos.x, pos.y, 16, 16, SIZE, SIZE);
         batch.end();
     }
 
