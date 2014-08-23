@@ -28,6 +28,7 @@ public class World {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 tileEntities[x][y] = new TileEntity(x, y, TileType.getByColor(pixmap.getPixel(x, y)));
+                tileEntities[x][y].setWorld(this);
             }
         }
 
@@ -60,6 +61,37 @@ public class World {
             return null;
         }
         return this.tileEntities[x][y];
+    }
+
+    public boolean hasNeighbour(TileEntity tile, Direction dir) {
+        int x = tile.getTileX();
+        int y = tile.getTileY();
+
+        switch (dir) {
+            case TOP:
+                y -= 1;
+                break;
+            case BOTTOM:
+                y += 1;
+                break;
+            case LEFT:
+                x -= 1;
+                break;
+            case RIGHT:
+                x += 1;
+                break;
+        }
+
+        if (x < 0 || y < 0) {
+            return false;
+        }
+        if (x >= width || y >= height) {
+            return false;
+        }
+        if (this.tileEntities[x][y] == null) {
+            return false;
+        }
+        return true;
     }
 
     public void spawn(Entity e) {

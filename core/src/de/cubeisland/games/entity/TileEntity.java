@@ -4,7 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.World;
+import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
+
+import static de.cubeisland.games.tile.Direction.*;
+import static de.cubeisland.games.tile.TileType.*;
 
 public class TileEntity extends Entity {
 
@@ -36,7 +41,18 @@ public class TileEntity extends Entity {
             switch(type) {
                 case FLOOR: this.texture = game.getResourcePack().textures.floor;
                     break;
-                case WALL: this.texture = game.getResourcePack().textures.walltop;
+                case WALL:
+                        if (getWorld().hasNeighbour(this, BOTTOM) && getWorld().getNeighbourOf(this, BOTTOM).getType() == FLOOR) {
+                            this.texture = game.getResourcePack().textures.walltop;
+                        } else if (getWorld().hasNeighbour(this, LEFT) && getWorld().getNeighbourOf(this, LEFT).getType() == FLOOR) {
+                            this.texture = game.getResourcePack().textures.wallright;
+                        } else if (getWorld().hasNeighbour(this, TOP) && getWorld().getNeighbourOf(this, TOP).getType() == FLOOR) {
+                            this.texture = game.getResourcePack().textures.wallbottom;
+                        } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
+                            this.texture = game.getResourcePack().textures.wallleft;
+                        } else {
+                            this.texture = game.getResourcePack().textures.wall;
+                        }
                     break;
             }
             firstTime = false;

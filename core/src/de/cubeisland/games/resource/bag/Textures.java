@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 public class Textures extends ResourceBag<Texture> {
     public Texture tilemap;
     public Texture floor;
+    public Texture wall;
     public Texture wallbottom;
     public Texture wallleft;
     public Texture wallleftbottom;
