@@ -3,7 +3,6 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
 
@@ -20,7 +19,7 @@ public class Player extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        SpriteBatch batch = game.getSpriteBatch();
+        SpriteBatch batch = game.getCameraBot().use().spriteBatch;
 
         batch.begin();
         this.statetime += delta;
@@ -34,9 +33,8 @@ public class Player extends Entity {
     public void update(DisconnectGame game, float delta) {
         super.update(game, delta);
 
-        Camera camera = game.getCamera();
-        camera.position.set(this.pos.x, this.pos.y, 0);
-        camera.update();
+        game.getCameraBot().position.set(this.pos.x, this.pos.y, 0);
+        game.getCameraTop().position.set(this.pos.x, this.pos.y, 0);
     }
 
     @Override

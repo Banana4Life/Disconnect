@@ -4,13 +4,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
-import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
-import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
 import static de.cubeisland.games.tile.Direction.*;
-import static de.cubeisland.games.tile.TileType.*;
+import static de.cubeisland.games.tile.TileType.FLOOR;
 
 public class TileEntity extends Entity {
 
@@ -31,12 +29,12 @@ public class TileEntity extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        if (!game.getCamera().canBeSeen(this.pos, this.size))
+        if (!game.getCameraTop().canBeSeen(this.pos, this.size))
         {
             return;
         }
         
-        SpriteBatch batch = game.getSpriteBatch();
+
 
         if (texture == null) {
             switch(type) {
@@ -57,7 +55,14 @@ public class TileEntity extends Entity {
                     break;
             }
         }
-        
+
+        SpriteBatch batch = game.getCameraBot().use().spriteBatch;
+        batch.begin();
+        batch.draw(this.texture, pos.x, pos.y, SIZE, -SIZE);
+        batch.end();
+
+        // Clone for other cam
+        batch = game.getCameraTop().use().spriteBatch;
         batch.begin();
         batch.draw(this.texture, pos.x, pos.y, SIZE, -SIZE);
         batch.end();
