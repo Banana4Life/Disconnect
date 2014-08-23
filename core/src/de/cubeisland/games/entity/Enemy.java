@@ -8,11 +8,12 @@ import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
+import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Line;
 
 public class Enemy extends Entity {
 
-    public static final int SPEED = 1;
-    public static final float RANGE = 4;
+    public static final int SPEED = 20;
+    public static final float RANGE = 50;
     public static final float FOV = 50;
     private static final int SIZE = 5;
 
@@ -37,6 +38,21 @@ public class Enemy extends Entity {
         r.setColor(Color.RED);
         r.circle(pos.x, pos.y, SIZE);
         r.end();
+
+        Vector2 playerDistance = getWorld().getPlayer().getPos().cpy().sub(pos);
+        float viewAngle = velocity.angle();
+        float playerAngle = playerDistance.angle();
+        float diffAngle = Math.abs(viewAngle - playerAngle);
+
+        if (playerDistance.len2() <= RANGE * RANGE) {
+            if (diffAngle <= (FOV / 2f)) {
+                r.begin(Line);
+                r.setColor(Color.MAGENTA);
+                r.line(pos, pos.cpy().add(playerDistance));
+                r.end();
+                // TODO do something more here
+            }
+        }
 
 //        r = new ShapeRenderer();
 //        r.setProjectionMatrix(getWorld().getCamera().combined);

@@ -23,17 +23,17 @@ public abstract class Entity {
     }
 
     public void render(DisconnectGame game, float delta) {
-        if (this.collisionBox != null) {
-            ShapeRenderer r = getWorld().getCamera().getShapeRenderer();
-
-            final float firstX = pos.x + collisionBox.getOffsetX();
-            final float firstY = pos.y - collisionBox.getOffsetY();
-
-            r.begin(ShapeRenderer.ShapeType.Filled);
-            r.setColor(this instanceof TileEntity ? Color.BLUE : Color.RED);
-            r.rect(firstX, firstY, collisionBox.getWidth(), collisionBox.getHeight());
-            r.end();
-        }
+//        if (this.collisionBox != null) {
+//            ShapeRenderer r = getWorld().getCamera().getShapeRenderer();
+//
+//            final float firstX = pos.x + collisionBox.getOffsetX();
+//            final float firstY = pos.y - collisionBox.getOffsetY();
+//
+//            r.begin(ShapeRenderer.ShapeType.Filled);
+//            r.setColor(this instanceof TileEntity ? Color.BLUE : Color.RED);
+//            r.rect(firstX, firstY, collisionBox.getWidth(), collisionBox.getHeight());
+//            r.end();
+//        }
     }
 
     public void onSpawn() {
