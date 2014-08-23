@@ -6,17 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum TileType {
-    FLOOR(0xFCFC00),
-    WALL(0x000000),
+    FLOOR(0xFCFC00, false),
+    WALL(0x000000, true),
     ;
 
     private static final Map<Integer, TileType> BY_COLOR_VALUE;
 
     private final int colorValue;
+    private final boolean blocking;
     private final Color color;
 
-    TileType(int color) {
+    TileType(int color, boolean blocking) {
         this.colorValue = color;
+        this.blocking = blocking;
         this.color = new Color();
         Color.rgba8888ToColor(this.color, color);
     }
@@ -35,5 +37,9 @@ public enum TileType {
         for (TileType t : values()) {
             BY_COLOR_VALUE.put(t.colorValue, t);
         }
+    }
+
+    public boolean isBlocking() {
+        return blocking;
     }
 }
