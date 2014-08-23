@@ -16,6 +16,7 @@ import java.util.*;
 import static de.cubeisland.games.tile.TileType.SPAWNPOINT;
 
 public class World {
+    private DisconnectGame game;
     private Camera camera;
     private final Player player;
     private final int width;
@@ -25,7 +26,8 @@ public class World {
     private final List<Entity> entities = new ArrayList<>();
     private Vector2 spawnPos;
 
-    public World(Camera camera, Player player) {
+    public World(DisconnectGame game, Camera camera, Player player) {
+        this.game = game;
         this.camera = camera;
         this.player = player;
         Pixmap pixmap = new Pixmap(Gdx.files.internal("level.png"));
@@ -154,5 +156,9 @@ public class World {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public DisconnectGame getGame() {
+        return game;
     }
 }

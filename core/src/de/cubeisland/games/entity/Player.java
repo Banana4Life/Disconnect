@@ -4,13 +4,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.entity.collision.CollisionBox;
+import de.cubeisland.games.screens.GameScreen;
 
 public class Player extends Entity {
     private float statetime = 0f;
     private TextureRegion currentKeyFrame;
 
     public Player() {
+        super();
+
         setCollisionBox(new CollisionBox(6, 1, 5, 0));
     }
 
@@ -37,7 +41,16 @@ public class Player extends Entity {
 
     @Override
     public void onCollide(Entity other, Vector2 mtv) {
-        die();
+        super.onCollide(other, mtv);
+
+        if (other instanceof GhostPlayer) {
+            this.getPos().set(other.getPos());
+            other.die();
+            PlayerInput playerInput = ((GameScreen)this.getWorld().getGame().getScreen()).getPlayerInput();
+            playerInput.setMode(playerInput.getMode());
+        } else {
+            die();
+        }
     }
 
     @Override
@@ -45,5 +58,13 @@ public class Player extends Entity {
         super.update(game, delta);
 
         this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
+    }
+
+    public TextureRegion getCurrentKeyFrame() {
+        return currentKeyFrame;
+    }
+
+    public void spawnGhost() {
+        this.getWorld().spawn(new GhostPlayer(this));
     }
 }

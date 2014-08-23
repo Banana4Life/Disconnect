@@ -29,15 +29,11 @@ public class PlayerInput extends InputAdapter {
                 {
                     case LEFT:
                         mode = Mode.LEFT_SINGLE;
+                        left.spawnGhost();
                         break;
                     case RIGHT:
                         mode = Mode.RIGHT_SINGLE;
-                        break;
-                    case LEFT_SINGLE: //TODO: implement the right way
-                        mode = Mode.LEFT;
-                        break;
-                    case RIGHT_SINGLE:
-                        mode = Mode.RIGHT;
+                        right.spawnGhost();
                         break;
                 }
                 return true;
@@ -128,5 +124,9 @@ public class PlayerInput extends InputAdapter {
         } else {
             return Mode.RIGHT;
         }
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
     }
 }

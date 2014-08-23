@@ -27,8 +27,8 @@ public class GameScreen implements Screen {
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
-        this.worldLeft = new World(Camera.left(), new Player());
-        this.worldRight = new World(Camera.right(), new Player());
+        this.worldLeft = new World(game, Camera.left(), new Player());
+        this.worldRight = new World(game, Camera.right(), new Player());
         this.playerInput = new PlayerInput(this.worldLeft.getPlayer(), this.worldRight.getPlayer());
         game.getInputMultiplexer().addProcessor(playerInput);
     }
