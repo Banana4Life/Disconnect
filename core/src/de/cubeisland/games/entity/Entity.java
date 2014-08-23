@@ -1,7 +1,18 @@
 package de.cubeisland.games.entity;
 
-import de.cubeisland.games.Ludumdare30;
+import de.cubeisland.games.Disconnect;
+import de.cubeisland.games.World;
 
 public abstract class Entity {
-    public abstract void render(Ludumdare30 game, float delta);
+    private World world;
+
+    public abstract void render(Disconnect game, float delta);
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    public World getWorld() {
+        return world;
+    }
 }

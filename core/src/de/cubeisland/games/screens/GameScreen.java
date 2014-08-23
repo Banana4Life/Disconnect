@@ -3,14 +3,14 @@ package de.cubeisland.games.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import de.cubeisland.games.Ludumdare30;
+import de.cubeisland.games.Disconnect;
 import de.cubeisland.games.World;
 
 public class GameScreen implements Screen {
-    private final Ludumdare30 game;
+    private final Disconnect game;
     private World world;
 
-    public GameScreen(Ludumdare30 game) {
+    public GameScreen(Disconnect game) {
         this.game = game;
     }
 
@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        this.world = new World(this.game);
+        this.world = new World();
     }
 
     @Override

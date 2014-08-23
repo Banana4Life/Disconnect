@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.screens.GameScreen;
 
-public class Ludumdare30 extends Game {
+public class Disconnect extends Game {
 
     private InputMultiplexer inputMultiplexer;
     private OrthographicCamera camera;
@@ -20,6 +20,7 @@ public class Ludumdare30 extends Game {
         inputMultiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(inputMultiplexer);
         this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(true);
         this.spriteBatch = new SpriteBatch();
         this.spriteBatch.setProjectionMatrix(this.camera.combined);
         this.shapeRenderer = new ShapeRenderer();
