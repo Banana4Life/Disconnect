@@ -14,6 +14,8 @@ import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.Player;
 
+import static de.cubeisland.games.PlayerInput.Mode.*;
+
 public class GameScreen implements Screen {
     private final DisconnectGame game;
 
@@ -52,7 +54,12 @@ public class GameScreen implements Screen {
     private void renderGUI() {
         SpriteBatch batch = this.game.getGuiCamera().getSpriteBatch();
         batch.begin();
-        Texture divider = game.getResourcePack().textures.divider;
+        Texture divider;
+        if (playerInput.getMode() == LEFT) {
+            divider = game.getResourcePack().textures.dividerleft;
+        } else {
+            divider = game.getResourcePack().textures.dividerright;
+        }
         divider.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 0, divider.getWidth(), Gdx.graphics.getHeight(),

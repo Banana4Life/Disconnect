@@ -12,7 +12,7 @@ public class PlayerInput extends InputAdapter {
     private Player left;
     private Player right;
 
-    private Mode mode = Mode.LBOTH;
+    private Mode mode = Mode.LEFT;
 
     public PlayerInput(Player left, Player right) {
 
@@ -27,17 +27,28 @@ public class PlayerInput extends InputAdapter {
             case Input.Keys.SPACE:
                 switch (mode)
                 {
-                    case LBOTH:
-                        mode = Mode.LEFT;
-                        break;
-                    case RBOTH:
-                        mode = Mode.RIGHT;
-                        break;
                     case LEFT:
-                        mode = Mode.RBOTH;
+                        mode = Mode.LEFT_SINGLE;
                         break;
                     case RIGHT:
-                        mode = Mode.LBOTH;
+                        mode = Mode.RIGHT_SINGLE;
+                        break;
+                    case LEFT_SINGLE: //TODO: implement the right way
+                        mode = Mode.LEFT;
+                        break;
+                    case RIGHT_SINGLE:
+                        mode = Mode.RIGHT;
+                        break;
+                }
+                return true;
+            case Input.Keys.CONTROL_LEFT:
+                switch (mode)
+                {
+                    case LEFT:
+                        mode = Mode.RIGHT;
+                        break;
+                    case RIGHT:
+                        mode = Mode.LEFT;
                         break;
                 }
                 return true;
@@ -97,7 +108,7 @@ public class PlayerInput extends InputAdapter {
     }
 
     public enum Mode {
-        LBOTH, RBOTH, LEFT(true, false), RIGHT(false, true);
+        LEFT, RIGHT, LEFT_SINGLE(true, false), RIGHT_SINGLE(false, true);
         public final boolean right;
         public final boolean left;
 
@@ -111,4 +122,11 @@ public class PlayerInput extends InputAdapter {
         }
     }
 
+    public Mode getMode() {
+        if (this.mode == Mode.LEFT || this.mode == Mode.LEFT_SINGLE) {
+            return Mode.LEFT;
+        } else {
+            return Mode.RIGHT;
+        }
+    }
 }
