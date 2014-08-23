@@ -1,5 +1,7 @@
 package de.cubeisland.games.entity;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
@@ -21,17 +23,17 @@ public abstract class Entity {
     }
 
     public void render(DisconnectGame game, float delta) {
-//        if (this.collisionBox != null) {
-//            ShapeRenderer r = game.getCamera2().use().shapeRenderer;
-//
-//            final float firstX = pos.x + collisionBox.getOffsetX();
-//            final float firstY = pos.y - collisionBox.getOffsetY();
-//
-//            r.begin(ShapeRenderer.ShapeType.Filled);
-//            r.setColor(this instanceof TileEntity ? Color.BLUE : Color.RED);
-//            r.rect(firstX, firstY, collisionBox.getWidth(), collisionBox.getHeight());
-//            r.end();
-//        }
+        if (this.collisionBox != null) {
+            ShapeRenderer r = getWorld().getCamera().getShapeRenderer();
+
+            final float firstX = pos.x + collisionBox.getOffsetX();
+            final float firstY = pos.y - collisionBox.getOffsetY();
+
+            r.begin(ShapeRenderer.ShapeType.Filled);
+            r.setColor(this instanceof TileEntity ? Color.BLUE : Color.RED);
+            r.rect(firstX, firstY, collisionBox.getWidth(), collisionBox.getHeight());
+            r.end();
+        }
     }
 
     public void onSpawn() {
@@ -71,6 +73,10 @@ public abstract class Entity {
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public void die() {
+        this.alive = false;
     }
 
     public boolean isAlive() {

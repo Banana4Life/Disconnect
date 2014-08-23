@@ -30,7 +30,9 @@ public class TileEntity extends Entity {
         this.type = type;
         this.size = new Vector2(SIZE, SIZE);
         this.pos.set(x, y).scl(SIZE);
-        this.setCollisionBox(new CollisionBox(SIZE, SIZE));
+        if (type.isBlocking()) {
+            this.setCollisionBox(new CollisionBox(SIZE, SIZE));
+        }
         this.overlayOffset = new Vector2(0, SIZE);
     }
 

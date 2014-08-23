@@ -36,6 +36,11 @@ public class Player extends Entity {
     }
 
     @Override
+    public void onCollide(Entity other, Vector2 mtv) {
+        die();
+    }
+
+    @Override
     public void update(DisconnectGame game, float delta) {
         super.update(game, delta);
 

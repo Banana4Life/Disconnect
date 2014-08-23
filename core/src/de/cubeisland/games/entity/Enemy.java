@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Line;
 
 public class Enemy extends Entity {
 
@@ -20,7 +20,7 @@ public class Enemy extends Entity {
     public void onSpawn() {
         Direction dir = Direction.random();
         getVelocity().set(SPEED * dir.getX(), SPEED * dir.getY());
-        //setCollisionBox(new CollisionBox(pos.x - SIZE / 2f, pos.y + SIZE / 2f));
+        setCollisionBox(new CollisionBox(SIZE * 2f, SIZE * 2f, -SIZE, SIZE));
     }
 
     @Override
