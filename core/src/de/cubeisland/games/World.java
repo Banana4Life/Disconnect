@@ -3,6 +3,7 @@ package de.cubeisland.games;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Vector2;
+import de.cubeisland.games.entity.Enemy;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
@@ -15,16 +16,18 @@ import java.util.*;
 import static de.cubeisland.games.tile.TileType.SPAWNPOINT;
 
 public class World {
+    private Camera camera;
+    private final Player player;
     private final int width;
     private final int height;
     private final TileEntity[][] tileEntities;
     private final Set<TileEntity> blockingTiles;
     private final List<Entity> entities = new ArrayList<>();
     private Vector2 spawnPos;
-    private Camera camera;
 
-    public World(Camera camera) {
+    public World(Camera camera, Player player) {
         this.camera = camera;
+        this.player = player;
         Pixmap pixmap = new Pixmap(Gdx.files.internal("level.png"));
         width = pixmap.getWidth();
         height = pixmap.getHeight();
@@ -71,6 +74,11 @@ public class World {
                 }
             }
         }
+
+        spawn(player);
+        Enemy enemy = new Enemy();
+        enemy.getPos().set(player.getPos()).add(40, 0);
+        spawn(enemy);
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
@@ -134,5 +142,9 @@ public class World {
 
     public Camera getCamera() {
         return camera;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
