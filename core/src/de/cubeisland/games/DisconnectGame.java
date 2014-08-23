@@ -21,6 +21,8 @@ public class DisconnectGame extends Game {
         Gdx.input.setInputProcessor(inputMultiplexer);
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(true);
+        this.camera.zoom = (float) 0.5;
+        
         this.spriteBatch = new SpriteBatch();
         this.spriteBatch.setProjectionMatrix(this.camera.combined);
         this.shapeRenderer = new ShapeRenderer();
