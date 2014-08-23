@@ -1,27 +1,46 @@
 package de.cubeisland.games;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import de.cubeisland.games.screens.GameScreen;
 
-public class Ludumdare30 extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
+public class Ludumdare30 extends Game {
+
+    private InputMultiplexer inputMultiplexer;
+    private OrthographicCamera camera;
+    private SpriteBatch spriteBatch;
+    private ShapeRenderer shapeRenderer;
+
+    @Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+        inputMultiplexer = new InputMultiplexer();
+        Gdx.input.setInputProcessor(inputMultiplexer);
+        this.camera = new OrthographicCamera();
+        this.spriteBatch = new SpriteBatch();
+        this.spriteBatch.setProjectionMatrix(this.camera.combined);
+        this.shapeRenderer = new ShapeRenderer();
+        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
+        setScreen(new GameScreen(this));
+    }
+
+    public InputMultiplexer getInputMultiplexer() {
+        return inputMultiplexer;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
 }
