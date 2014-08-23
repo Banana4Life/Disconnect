@@ -41,47 +41,4 @@ public class Player extends Entity {
 
         this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
     }
-
-    private final class Input extends InputAdapter {
-        @Override
-        public boolean keyDown(int keycode) {
-            switch (keycode) {
-                case Keys.LEFT:
-                    velocity.set(-SPEED, velocity.y);
-                    return true;
-                case Keys.RIGHT:
-                    velocity.set(SPEED, velocity.y);
-                    return true;
-                case Keys.UP:
-                    velocity.set(velocity.x, SPEED);
-                    return true;
-                case Keys.DOWN:
-                    velocity.set(velocity.x, -SPEED);
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            if (keycode == Keys.LEFT && velocity.x < 0) {
-                velocity.x = 0;
-                return true;
-            }
-            if (keycode == Keys.RIGHT && velocity.x > 0) {
-                velocity.x = 0;
-                return true;
-            }
-            if (keycode == Keys.UP && velocity.y > 0) {
-                velocity.y = 0;
-                return true;
-            }
-            if (keycode == Keys.DOWN && velocity.y < 0) {
-                velocity.y = 0;
-                return true;
-            }
-            return false;
-        }
-    }
 }
