@@ -1,33 +1,21 @@
 package de.cubeisland.games.entity;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
 
-import static com.badlogic.gdx.Input.Keys;
-
 public class Player extends Entity {
-
-    private static final float SPEED = 60;
     private float statetime = 0f;
     private TextureRegion currentKeyFrame;
-    private Input input;
 
-    public Player(Vector2 pos) {
-        this.pos = new Vector2(pos);
+    public Player() {
         setCollisionBox(new CollisionBox(6, 1, 5, 0));
     }
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        if (input == null) {
-            input = new Input();
-            game.getInputMultiplexer().addProcessor(input);
-        }
-
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
 
         this.statetime += delta;

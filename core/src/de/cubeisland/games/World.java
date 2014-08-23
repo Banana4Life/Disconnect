@@ -71,10 +71,6 @@ public class World {
                 }
             }
         }
-
-        if (spawnPos != null) {
-            spawn(new Player(spawnPos));
-        }
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
@@ -94,11 +90,16 @@ public class World {
         return getNeighbourOf(tile, dir) != null;
     }
 
-    public void spawn(Entity e) {
+    public <E extends Entity> E spawn(E e) {
+        if (e instanceof Player && spawnPos != null)
+        {
+            e.getPos().set(spawnPos);
+        }
         e.setWorld(this);
         this.entities.add(e);
         e.onSpawn();
         Collections.sort(this.entities, (o1, o2) -> o1.getDepth() - o2.getDepth());
+        return e;
     }
 
     public void update(DisconnectGame game, float delta) {

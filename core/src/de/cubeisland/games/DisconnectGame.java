@@ -15,7 +15,6 @@ public class DisconnectGame extends Game {
     private Reflector reflector;
     private Camera guiCamera;
 
-
     @Override
     public void create() {
         inputMultiplexer = new InputMultiplexer();

@@ -9,10 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.World;
+import de.cubeisland.games.entity.Player;
 
 public class GameScreen implements Screen {
     private final DisconnectGame game;
+
+    private final PlayerInput playerInput;
     private World worldLeft;
     private World worldRight;
     private final FPSLogger logger = new FPSLogger();
@@ -20,12 +24,15 @@ public class GameScreen implements Screen {
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
+        this.worldLeft = new World(Camera.left());
+        this.worldRight = new World(Camera.right());
+        this.playerInput = new PlayerInput(this.worldLeft.spawn(new Player()), this.worldRight.spawn(new Player()));
+        game.getInputMultiplexer().addProcessor(playerInput);
     }
 
     @Override
     public void show() {
-        this.worldLeft = new World(Camera.left());
-        this.worldRight = new World(Camera.right());
+
     }
 
     @Override
@@ -76,4 +83,9 @@ public class GameScreen implements Screen {
     public void dispose() {
 
     }
+
+    public PlayerInput getPlayerInput() {
+        return playerInput;
+    }
+
 }
