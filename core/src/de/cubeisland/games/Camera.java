@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import de.cubeisland.games.entity.TileEntity;
 
 public class Camera extends OrthographicCamera {
 
@@ -89,7 +90,7 @@ public class Camera extends OrthographicCamera {
 
     public boolean canBeSeen(Vector2 tlPos, Vector2 size) {
         float hx = size.x / 2f;
-        float hy = size.y / 2f;
+        float hy = (size.y + TileEntity.SIZE) / 2f;
         return frustum.boundsInFrustum(tlPos.x + hx, tlPos.y + hy, 0, hx, hy, 0);
     }
 
