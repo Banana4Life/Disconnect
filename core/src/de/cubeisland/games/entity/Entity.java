@@ -44,6 +44,9 @@ public abstract class Entity {
     }
 
     public void onTileCollide(TileEntity tile, Vector2 mtv) {
+        System.out.println(tile.getType());
+        System.out.println(mtv);
+        pos.add(mtv);
     }
 
     public void setWorld(World world) {

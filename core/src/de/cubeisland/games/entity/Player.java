@@ -54,18 +54,6 @@ public class Player extends Entity {
         this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
     }
 
-    @Override
-    public void onCollide(Entity other, Vector2 mtv) {
-
-    }
-
-    @Override
-    public void onTileCollide(TileEntity tile, Vector2 mtv) {
-        System.out.println(tile.getType());
-        System.out.println(mtv);
-        getPos().add(mtv);
-    }
-
     private final class Input extends InputAdapter {
         @Override
         public boolean keyDown(int keycode) {

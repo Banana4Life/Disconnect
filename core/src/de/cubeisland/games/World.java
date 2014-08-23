@@ -78,23 +78,8 @@ public class World {
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-
-        switch (dir) {
-            case TOP:
-                y -= 1;
-                break;
-            case BOTTOM:
-                y += 1;
-                break;
-            case LEFT:
-                x -= 1;
-                break;
-            case RIGHT:
-                x += 1;
-                break;
-        }
+        int x = tile.getTileX() + dir.getX();
+        int y = tile.getTileY() - dir.getY();
 
         if (x < 0 || y < 0) {
             return null;
