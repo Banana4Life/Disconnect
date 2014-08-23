@@ -19,7 +19,7 @@ public class World {
     private final List<Entity> entities = new ArrayList<>();
 
     public World() {
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("level.bmp"));
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("level.png"));
         width = pixmap.getWidth();
         height = pixmap.getWidth();
 

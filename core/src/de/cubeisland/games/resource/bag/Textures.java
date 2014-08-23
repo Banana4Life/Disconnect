@@ -9,6 +9,15 @@ import java.lang.reflect.Field;
 
 public class Textures extends ResourceBag<Texture> {
     public Texture tilemap;
+    public Texture floor;
+    public Texture wallbottom;
+    public Texture wallleft;
+    public Texture wallleftbottom;
+    public Texture walllefttop;
+    public Texture wallright;
+    public Texture wallrightbottom;
+    public Texture wallrighttop;
+    public Texture walltop;
 
     public Textures(Files.FileType fileType) {
         super(fileType);

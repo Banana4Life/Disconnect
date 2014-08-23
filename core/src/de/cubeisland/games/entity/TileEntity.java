@@ -1,5 +1,6 @@
 package de.cubeisland.games.entity;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
@@ -11,6 +12,8 @@ public class TileEntity extends Entity {
     private final TileType type;
     private final int tileX;
     private final int tileY;
+    private Texture texture = null;
+    private boolean firstTime = true;
 
     public TileEntity(int x, int y, TileType type) {
         this.tileX = x;
@@ -28,9 +31,19 @@ public class TileEntity extends Entity {
         }
         
         SpriteBatch batch = game.getSpriteBatch();
+
+        if (firstTime) {
+            switch(type) {
+                case FLOOR: this.texture = game.getResourcePack().textures.floor;
+                    break;
+                case WALL: this.texture = game.getResourcePack().textures.walltop;
+                    break;
+            }
+            firstTime = false;
+        }
         
         batch.begin();
-        batch.draw(game.getResourcePack().textures.tilemap, pos.x, pos.y, 16, 16, SIZE, SIZE);
+        batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
         batch.end();
     }
 
