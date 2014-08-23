@@ -33,7 +33,7 @@ public class DisconnectGame extends Game {
 
         this.camera = new Camera(spriteBatch, shapeRenderer);
         this.camera.setToOrtho(true);
-        this.camera.zoom = (float) 0.5;
+        this.camera.zoom = 0.5f;
 
         setScreen(new GameScreen(this));
     }

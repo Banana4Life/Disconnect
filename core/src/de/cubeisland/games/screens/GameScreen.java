@@ -17,6 +17,11 @@ public class GameScreen implements Screen {
     }
 
     @Override
+    public void show() {
+        this.world = new World();
+    }
+
+    @Override
     public void render(float delta) {
         logger.log();
         this.world.update(this.game, delta);
@@ -28,11 +33,6 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
-    }
-
-    @Override
-    public void show() {
-        this.world = new World();
     }
 
     @Override

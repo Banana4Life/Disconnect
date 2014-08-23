@@ -1,8 +1,11 @@
 package de.cubeisland.games;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
+import de.cubeisland.games.tile.TileType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,13 +16,21 @@ public class World {
     private final List<Entity> entities = new ArrayList<>();
 
     public World() {
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0; j < 100; j++) {
-                spawn(new TileEntity(i,j));
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("level.bmp"));
+        final int width = pixmap.getWidth();
+        final int height = pixmap.getWidth();
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                addTile(new TileEntity(x, y, TileType.getByColor(pixmap.getPixel(x, y))));
             }
         }
 
         spawn(new Player());
+    }
+
+    protected void addTile(TileEntity tile) {
+        this.tileEntities.add(tile);
     }
 
     public void spawn(Entity e) {

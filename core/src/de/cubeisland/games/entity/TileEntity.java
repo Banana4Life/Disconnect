@@ -4,20 +4,23 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.tile.TileType;
 
 import java.util.Random;
 
 public class TileEntity extends Entity {
 
     private static final int size = 16;
+    private final TileType type;
 
     // to remove
     Random random = new Random();
     private Color color = new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
     // to remove
 
-    public TileEntity(int x, int y) {
-        this.pos.add(x * size, y * size);
+    public TileEntity(int x, int y, TileType type) {
+        this.type = type;
+        this.pos.set(x * size, y * size);
     }
 
     @Override
@@ -40,5 +43,9 @@ public class TileEntity extends Entity {
         batch.begin();
         batch.draw(game.getResourcePack().textures.tilemap, pos.x, pos.y, 0, 0, size, size);
         batch.end();
+    }
+
+    public TileType getType() {
+        return type;
     }
 }
