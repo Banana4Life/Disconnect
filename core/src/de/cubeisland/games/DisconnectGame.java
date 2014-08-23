@@ -35,6 +35,9 @@ public class DisconnectGame extends Game {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        this.cameraTop.resize(width, height);
+        this.cameraBot.resize(width, height);
+
     }
 
     public InputMultiplexer getInputMultiplexer() {

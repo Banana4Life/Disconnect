@@ -17,10 +17,14 @@ public class Camera extends OrthographicCamera {
     private Camera(boolean top) {
         this.top = top;
         this.zoom = 0.25f;
-        this.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2);
+        this.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+    }
+
+    public void resize(int width, int height) {
+        this.setToOrtho(true, width, height / 2);
     }
 
     public Camera use()
@@ -55,4 +59,6 @@ public class Camera extends OrthographicCamera {
     {
         return new Camera(false);
     }
+
+
 }
