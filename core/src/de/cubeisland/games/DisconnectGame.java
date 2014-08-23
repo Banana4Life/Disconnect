@@ -31,6 +31,12 @@ public class DisconnectGame extends Game {
         setScreen(new GameScreen(this));
     }
 
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        this.camera.setToOrtho(true, width, height);
+    }
+
     public InputMultiplexer getInputMultiplexer() {
         return inputMultiplexer;
     }
