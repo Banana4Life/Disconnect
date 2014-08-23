@@ -64,31 +64,7 @@ public class World {
     }
 
     public boolean hasNeighbour(TileEntity tile, Direction dir) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-
-        switch (dir) {
-            case TOP:
-                y -= 1;
-                break;
-            case BOTTOM:
-                y += 1;
-                break;
-            case LEFT:
-                x -= 1;
-                break;
-            case RIGHT:
-                x += 1;
-                break;
-        }
-
-        if (x < 0 || y < 0) {
-            return false;
-        }
-        if (x >= width || y >= height) {
-            return false;
-        }
-        if (this.tileEntities[x][y] == null) {
+        if (getNeighbourOf(tile, dir) == null) {
             return false;
         }
         return true;

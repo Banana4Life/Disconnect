@@ -13,13 +13,15 @@ import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 public class Player extends Entity {
 
     private static final float SPEED = 60;
+    private float statetime = 0f;
 
     @Override
     public void render(DisconnectGame game, float delta) {
         SpriteBatch batch = game.getSpriteBatch();
 
         batch.begin();
-        batch.draw(game.getResourcePack().textures.tilemap, pos.x, pos.y, 16, 64, 16, 16);
+        this.statetime += delta;
+        batch.draw(game.getResourcePack().animations.character.getKeyFrame(this.statetime, true), pos.x, pos.y, 16, -16);
         batch.end();
 
         game.getInputMultiplexer().addProcessor(new Input());

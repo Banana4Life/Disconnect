@@ -59,7 +59,7 @@ public class TileEntity extends Entity {
         }
         
         batch.begin();
-        batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
+        batch.draw(this.texture, pos.x, pos.y, SIZE, -SIZE);
         batch.end();
     }
 
