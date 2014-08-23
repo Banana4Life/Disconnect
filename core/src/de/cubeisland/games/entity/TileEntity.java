@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
+import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
@@ -18,7 +19,6 @@ public class TileEntity extends Entity {
     private final int tileX;
     private final int tileY;
     private Texture texture = null;
-    private boolean firstTime = true;
 
     public TileEntity(int x, int y, TileType type) {
         this.tileX = x;
@@ -26,6 +26,7 @@ public class TileEntity extends Entity {
         this.type = type;
         this.size = new Vector2(SIZE, SIZE);
         this.pos.set(x, y).scl(SIZE);
+        this.setCollisionBox(new CollisionBox(SIZE, SIZE));
     }
 
     @Override
@@ -37,7 +38,7 @@ public class TileEntity extends Entity {
         
         SpriteBatch batch = game.getSpriteBatch();
 
-        if (firstTime) {
+        if (texture == null) {
             switch(type) {
                 case FLOOR: this.texture = game.getResourcePack().textures.floor;
                     break;
@@ -55,7 +56,6 @@ public class TileEntity extends Entity {
                         }
                     break;
             }
-            firstTime = false;
         }
         
         batch.begin();

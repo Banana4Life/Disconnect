@@ -3,6 +3,7 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
+import de.cubeisland.games.entity.collision.CollisionBox;
 
 public abstract class Entity {
     private World world;
@@ -13,6 +14,7 @@ public abstract class Entity {
 
     private int depth = 1;
     private boolean alive = true;
+    private CollisionBox collisionBox;
 
     public void update(DisconnectGame game, float delta) {
         this.pos.add(this.velocity.cpy().scl(delta));
@@ -25,6 +27,12 @@ public abstract class Entity {
     }
 
     public void onDeath() {
+    }
+
+    public void onCollide(Entity other, Vector2 mtv) {
+    }
+
+    public void onTileCollide(TileEntity tile, Vector2 mtv) {
     }
 
     public void setWorld(World world) {
@@ -53,5 +61,13 @@ public abstract class Entity {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public CollisionBox getCollisionBox() {
+        return collisionBox;
+    }
+
+    public void setCollisionBox(CollisionBox collisionBox) {
+        this.collisionBox = collisionBox;
     }
 }

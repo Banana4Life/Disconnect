@@ -1,19 +1,22 @@
 package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.entity.collision.CollisionBox;
 
 import static com.badlogic.gdx.Input.Keys;
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 
 public class Player extends Entity {
 
     private static final float SPEED = 60;
     private float statetime = 0f;
+
+    public Player() {
+        setCollisionBox(new CollisionBox(6, 1, 16 - 1, 0));
+    }
 
     @Override
     public void render(DisconnectGame game, float delta) {
@@ -34,6 +37,11 @@ public class Player extends Entity {
         Camera camera = game.getCamera();
         camera.position.set(this.pos.x, this.pos.y, 0);
         camera.update();
+    }
+
+    @Override
+    public void onCollide(Entity other, Vector2 mtv) {
+
     }
 
     private final class Input extends InputAdapter {

@@ -5,17 +5,17 @@ import com.badlogic.gdx.graphics.Pixmap;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
+import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class World {
     private final int width;
     private final int height;
     private final TileEntity[][] tileEntities;
+    private final Set<TileEntity> blockingTiles;
     private final List<Entity> entities = new ArrayList<>();
 
     public World() {
@@ -24,11 +24,16 @@ public class World {
         height = pixmap.getWidth();
 
         this.tileEntities = new TileEntity[width][height];
+        this.blockingTiles = new HashSet<>();
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                tileEntities[x][y] = new TileEntity(x, y, TileType.getByColor(pixmap.getPixel(x, y)));
-                tileEntities[x][y].setWorld(this);
+                TileEntity tile = new TileEntity(x, y, TileType.getByColor(pixmap.getPixel(x, y)));
+                tile.setWorld(this);
+                tileEntities[x][y] = tile;
+                if (tile.getType().isBlocking()) {
+                    this.blockingTiles.add(tile);
+                }
             }
         }
 
@@ -64,10 +69,7 @@ public class World {
     }
 
     public boolean hasNeighbour(TileEntity tile, Direction dir) {
-        if (getNeighbourOf(tile, dir) == null) {
-            return false;
-        }
-        return true;
+        return getNeighbourOf(tile, dir) != null;
     }
 
     public void spawn(Entity e) {
@@ -89,6 +91,8 @@ public class World {
             entity.onDeath();
             this.entities.remove(entity);
         }
+
+        Collider.collideEntities(this.entities, this.blockingTiles);
     }
 
     public void render(DisconnectGame game, float delta) {
