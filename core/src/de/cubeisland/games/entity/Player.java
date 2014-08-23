@@ -2,12 +2,12 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
 
 import static com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Player extends Entity {
 
@@ -27,20 +27,20 @@ public class Player extends Entity {
             input = new Input();
             game.getInputMultiplexer().addProcessor(input);
         }
-        SpriteBatch batch = game.getCamera2().use().spriteBatch;
+        SpriteBatch batch = game.getCamera2().use().getSpriteBatch();
 
         this.statetime += delta;
 
-        if (velocity.y > 0) {
+        if (velocity.y < 0) {
             currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
-        } else if (velocity.y < 0) {
+        } else if (velocity.y > 0) {
             currentKeyFrame = game.getResourcePack().animations.characterback.getKeyFrame(this.statetime, true);
         } else if (currentKeyFrame == null) {
             currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
         }
 
         batch.begin();
-        batch.draw(currentKeyFrame, pos.x, pos.y, 16, -16);
+        batch.draw(currentKeyFrame, pos.x, pos.y, 16, 16);
         batch.end();
 
         super.render(game, delta);
@@ -77,10 +77,10 @@ public class Player extends Entity {
                     velocity.set(SPEED, velocity.y);
                     return true;
                 case Keys.UP:
-                    velocity.set(velocity.x, -SPEED);
+                    velocity.set(velocity.x, SPEED);
                     return true;
                 case Keys.DOWN:
-                    velocity.set(velocity.x, SPEED);
+                    velocity.set(velocity.x, -SPEED);
                     return true;
                 default:
                     return false;
@@ -97,11 +97,11 @@ public class Player extends Entity {
                 velocity.x = 0;
                 return true;
             }
-            if (keycode == Keys.UP && velocity.y < 0) {
+            if (keycode == Keys.UP && velocity.y > 0) {
                 velocity.y = 0;
                 return true;
             }
-            if (keycode == Keys.DOWN && velocity.y > 0) {
+            if (keycode == Keys.DOWN && velocity.y < 0) {
                 velocity.y = 0;
                 return true;
             }

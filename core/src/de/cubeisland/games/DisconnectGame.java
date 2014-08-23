@@ -15,6 +15,8 @@ public class DisconnectGame extends Game {
     private Camera camera2;
     private LudumResourcePack resourcePack;
     private Reflector reflector;
+    private Camera guiCamera;
+
 
     @Override
     public void create() {
@@ -28,6 +30,8 @@ public class DisconnectGame extends Game {
         this.camera1 = Camera.left();
         this.camera2 = Camera.right();
 
+        this.guiCamera = Camera.gui();
+
         setScreen(new GameScreen(this));
     }
 
@@ -36,7 +40,7 @@ public class DisconnectGame extends Game {
         super.resize(width, height);
         this.camera1.resize(width, height);
         this.camera2.resize(width, height);
-
+        this.guiCamera.resize(width, height);
     }
 
     public InputMultiplexer getInputMultiplexer() {
@@ -50,6 +54,10 @@ public class DisconnectGame extends Game {
 
     public Camera getCamera2() {
         return camera2;
+    }
+
+    public Camera getGuiCamera() {
+        return guiCamera;
     }
 
     public LudumResourcePack getResourcePack() {

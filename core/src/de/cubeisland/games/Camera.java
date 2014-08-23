@@ -9,13 +9,18 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Camera extends OrthographicCamera {
 
-    public final SpriteBatch spriteBatch;
-    public final ShapeRenderer shapeRenderer;
+    private final SpriteBatch spriteBatch;
+    private final ShapeRenderer shapeRenderer;
 
-    private boolean right;
+    private CameraType type;
 
-    private Camera(boolean right) {
-        this.right = right;
+    private enum CameraType
+    {
+        LEFT, RIGHT, GUI;
+    }
+
+    private Camera(CameraType type) {
+        this.type = type;
         this.zoom = 0.25f;
         this.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -24,7 +29,16 @@ public class Camera extends OrthographicCamera {
     }
 
     public void resize(int width, int height) {
-        this.setToOrtho(true, width / 2, height);
+        switch (type)
+        {
+            case LEFT:
+            case RIGHT:
+                this.setToOrtho(false, width / 2, height);
+                break;
+            case GUI:
+                this.setToOrtho(false, width, height);
+                break;
+        }
     }
 
     public Camera use()
@@ -32,9 +46,28 @@ public class Camera extends OrthographicCamera {
         int height = Gdx.graphics.getHeight();
         int width = Gdx.graphics.getWidth();
 
+        int x = 0;
+        int y = 0;
+        int xSize = width;
+        int ySize = height;
+        switch (type)
+        {
+            case LEFT:
+                xSize = width / 2 - 2;
+                break;
+            case RIGHT:
+                xSize = width / 2 - 2;
+                x = width / 2 + 2;
+                break;
+            case GUI:
+                break;
+            default:
+                return this;
+        }
+
         Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
-        Gdx.gl.glScissor(right ? 0 : width / 2, 0 , width / 2, height);
-        Gdx.gl.glViewport(right ? 0 : width / 2, 0, width / 2, height);
+        Gdx.gl.glScissor(x, y, xSize, ySize);
+        Gdx.gl.glViewport(x, y, xSize, ySize);
 
         this.update();
 
@@ -44,21 +77,34 @@ public class Camera extends OrthographicCamera {
         return this;
     }
 
+    public SpriteBatch getSpriteBatch() {
+        this.use();
+        return spriteBatch;
+    }
+
+    public ShapeRenderer getShapeRenderer() {
+        this.use();
+        return shapeRenderer;
+    }
+
     public boolean canBeSeen(Vector2 tlPos, Vector2 size) {
         float hx = size.x / 2f;
         float hy = size.y / 2f;
-        return frustum.boundsInFrustum(tlPos.x + hx, tlPos.y - hy, 0, hx, hy, 0);
+        return frustum.boundsInFrustum(tlPos.x + hx, tlPos.y + hy, 0, hx, hy, 0);
     }
 
     public static Camera left()
     {
-        return new Camera(true);
+        return new Camera(CameraType.LEFT);
     }
 
     public static Camera right()
     {
-        return new Camera(false);
+        return new Camera(CameraType.RIGHT);
     }
 
-
+    public static Camera gui()
+    {
+        return new Camera(CameraType.GUI);
+    }
 }

@@ -35,8 +35,6 @@ public class TileEntity extends Entity {
         {
             return;
         }
-        
-
 
         if (texture == null) {
             switch(type) {
@@ -58,15 +56,15 @@ public class TileEntity extends Entity {
             }
         }
 
-        SpriteBatch batch = game.getCamera2().use().spriteBatch;
+        SpriteBatch batch = game.getCamera2().getSpriteBatch();
         batch.begin();
-        batch.draw(this.texture, pos.x, pos.y + SIZE, SIZE, -SIZE);
+        batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
         batch.end();
 
         // Clone for other cam
-        batch = game.getCamera1().use().spriteBatch;
+        batch = game.getCamera1().getSpriteBatch();
         batch.begin();
-        batch.draw(this.texture, pos.x, pos.y + SIZE, SIZE, -SIZE);
+        batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
         batch.end();
         super.render(game, delta);
     }
