@@ -1,10 +1,7 @@
 package de.cubeisland.games.entity.collision;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.Entity;
@@ -46,7 +43,7 @@ public class Collider {
             for (TileEntity tile : blockingTiles) {
                 Vector2 mtv = intersect(game, first, tile);
                 if (mtv != null) {
-                    first.onTileCollide(tile, mtv);
+                    first.onTileCollide(tile, mtv.scl(1.001f));
                 }
             }
         }
