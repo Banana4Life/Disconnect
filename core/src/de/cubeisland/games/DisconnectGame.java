@@ -3,7 +3,6 @@ package de.cubeisland.games;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.screens.GameScreen;
@@ -11,7 +10,7 @@ import de.cubeisland.games.screens.GameScreen;
 public class DisconnectGame extends Game {
 
     private InputMultiplexer inputMultiplexer;
-    private OrthographicCamera camera;
+    private Camera camera;
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapeRenderer;
 
@@ -19,14 +18,13 @@ public class DisconnectGame extends Game {
 	public void create () {
         inputMultiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(inputMultiplexer);
-        this.camera = new OrthographicCamera();
+
+        this.spriteBatch = new SpriteBatch();
+        this.shapeRenderer = new ShapeRenderer();
+
+        this.camera = new Camera(spriteBatch, shapeRenderer);
         this.camera.setToOrtho(true);
         this.camera.zoom = (float) 0.5;
-        
-        this.spriteBatch = new SpriteBatch();
-        this.spriteBatch.setProjectionMatrix(this.camera.combined);
-        this.shapeRenderer = new ShapeRenderer();
-        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
         setScreen(new GameScreen(this));
     }
@@ -41,7 +39,7 @@ public class DisconnectGame extends Game {
         return inputMultiplexer;
     }
 
-    public OrthographicCamera getCamera() {
+    public Camera getCamera() {
         return camera;
     }
 

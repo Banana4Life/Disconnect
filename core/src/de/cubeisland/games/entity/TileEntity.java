@@ -24,6 +24,10 @@ public class TileEntity extends Entity {
         //SpriteBatch batch = game.getSpriteBatch();
         //batch.begin();
         //batch.draw(tex, pos.x, pos.y, size, size);
+        if (!game.getCamera().canBeSeen(this.pos))
+        {
+            return;
+        }
 
         ShapeRenderer r = game.getShapeRenderer();
         r.begin(ShapeRenderer.ShapeType.Filled);
