@@ -18,7 +18,7 @@ public class Player extends Entity {
 
     public Player(Vector2 pos) {
         this.pos = new Vector2(pos);
-        setCollisionBox(new CollisionBox((6, 1, 5, 1)));
+        setCollisionBox(new CollisionBox(6, 1, 5, 1));
     }
 
     @Override
