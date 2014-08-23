@@ -9,8 +9,12 @@ public class TileEntity extends Entity {
 
     private static final int SIZE = 16;
     private final TileType type;
+    private final int tileX;
+    private final int tileY;
 
     public TileEntity(int x, int y, TileType type) {
+        this.tileX = x;
+        this.tileY = y;
         this.type = type;
         this.size = new Vector2(SIZE, SIZE);
         this.pos.set(x, y).scl(SIZE);
@@ -32,5 +36,13 @@ public class TileEntity extends Entity {
 
     public TileType getType() {
         return type;
+    }
+
+    public int getTileX() {
+        return tileX;
+    }
+
+    public int getTileY() {
+        return tileY;
     }
 }
