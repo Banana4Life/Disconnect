@@ -29,8 +29,8 @@ public class Camera extends OrthographicCamera {
         int width = Gdx.graphics.getWidth();
 
         Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
-        Gdx.gl.glScissor(0, top ? 0 : height / 2, width, top ? height / 2 : height);
-        Gdx.gl.glViewport(0, top ? 0 : height / 2, width, top ? height / 2 : height);
+        Gdx.gl.glScissor(0, top ? 0 : height / 2, width, height / 2);
+        Gdx.gl.glViewport(0, top ? 0 : height / 2, width, height / 2);
 
         this.update();
 
