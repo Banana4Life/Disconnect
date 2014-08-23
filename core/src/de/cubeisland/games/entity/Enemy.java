@@ -1,10 +1,10 @@
 package de.cubeisland.games.entity;
 
-import de.cubeisland.games.Disconnect;
+import de.cubeisland.games.DisconnectGame;
 
 public class Enemy extends Entity {
     @Override
-    public void render(Disconnect game, float delta) {
+    public void render(DisconnectGame game, float delta) {
 
     }
 }

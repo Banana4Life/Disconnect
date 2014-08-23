@@ -3,19 +3,20 @@ package de.cubeisland.games.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import de.cubeisland.games.Disconnect;
+import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
 
 public class GameScreen implements Screen {
-    private final Disconnect game;
+    private final DisconnectGame game;
     private World world;
 
-    public GameScreen(Disconnect game) {
+    public GameScreen(DisconnectGame game) {
         this.game = game;
     }
 
     @Override
     public void render(float delta) {
+        this.world.update(this.game, delta);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.getSpriteBatch().begin();

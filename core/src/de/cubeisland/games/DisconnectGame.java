@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.screens.GameScreen;
 
-public class Disconnect extends Game {
+public class DisconnectGame extends Game {
 
     private InputMultiplexer inputMultiplexer;
     private OrthographicCamera camera;
