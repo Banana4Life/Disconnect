@@ -41,14 +41,15 @@ public class TileEntity extends Entity {
                 case FLOOR: this.texture = game.getResourcePack().textures.floor;
                     break;
                 case WALL:
-                        if (getWorld().hasNeighbour(this, BOTTOM) && getWorld().getNeighbourOf(this, BOTTOM).getType() == FLOOR) {
+                        if (getWorld().hasNeighbour(this, TOP) && getWorld().getNeighbourOf(this, TOP).getType() == FLOOR) {
                             this.texture = game.getResourcePack().textures.walltop;
                         } else if (getWorld().hasNeighbour(this, LEFT) && getWorld().getNeighbourOf(this, LEFT).getType() == FLOOR) {
                             this.texture = game.getResourcePack().textures.wallright;
-                        } else if (getWorld().hasNeighbour(this, TOP) && getWorld().getNeighbourOf(this, TOP).getType() == FLOOR) {
-                            this.texture = game.getResourcePack().textures.wallbottom;
                         } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
                             this.texture = game.getResourcePack().textures.wallleft;
+                        } else if (getWorld().hasNeighbour(this, BOTTOM) && getWorld().getNeighbourOf(this, BOTTOM).getType() == FLOOR) {
+                            this.texture = game.getResourcePack().textures.wall;
+                            //TODO: Overlay
                         } else {
                             this.texture = game.getResourcePack().textures.wall;
                         }
