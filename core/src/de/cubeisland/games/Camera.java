@@ -12,10 +12,10 @@ public class Camera extends OrthographicCamera {
     public final SpriteBatch spriteBatch;
     public final ShapeRenderer shapeRenderer;
 
-    private boolean top;
+    private boolean right;
 
-    private Camera(boolean top) {
-        this.top = top;
+    private Camera(boolean right) {
+        this.right = right;
         this.zoom = 0.25f;
         this.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -24,7 +24,7 @@ public class Camera extends OrthographicCamera {
     }
 
     public void resize(int width, int height) {
-        this.setToOrtho(true, width, height / 2);
+        this.setToOrtho(true, width / 2, height);
     }
 
     public Camera use()
@@ -33,8 +33,8 @@ public class Camera extends OrthographicCamera {
         int width = Gdx.graphics.getWidth();
 
         Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
-        Gdx.gl.glScissor(0, top ? 0 : height / 2, width, height / 2);
-        Gdx.gl.glViewport(0, top ? 0 : height / 2, width, height / 2);
+        Gdx.gl.glScissor(right ? 0 : width / 2, 0 , width / 2, height);
+        Gdx.gl.glViewport(right ? 0 : width / 2, 0, width / 2, height);
 
         this.update();
 
@@ -50,12 +50,12 @@ public class Camera extends OrthographicCamera {
         return frustum.boundsInFrustum(tlPos.x + hx, tlPos.y - hy, 0, hx, hy, 0);
     }
 
-    public static Camera top()
+    public static Camera left()
     {
         return new Camera(true);
     }
 
-    public static Camera bot()
+    public static Camera right()
     {
         return new Camera(false);
     }

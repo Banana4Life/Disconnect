@@ -29,7 +29,7 @@ public class TileEntity extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        if (!game.getCameraTop().canBeSeen(this.pos, this.size))
+        if (!game.getCamera1().canBeSeen(this.pos, this.size))
         {
             return;
         }
@@ -56,13 +56,13 @@ public class TileEntity extends Entity {
             }
         }
 
-        SpriteBatch batch = game.getCameraBot().use().spriteBatch;
+        SpriteBatch batch = game.getCamera2().use().spriteBatch;
         batch.begin();
         batch.draw(this.texture, pos.x, pos.y, SIZE, -SIZE);
         batch.end();
 
         // Clone for other cam
-        batch = game.getCameraTop().use().spriteBatch;
+        batch = game.getCamera1().use().spriteBatch;
         batch.begin();
         batch.draw(this.texture, pos.x, pos.y, SIZE, -SIZE);
         batch.end();

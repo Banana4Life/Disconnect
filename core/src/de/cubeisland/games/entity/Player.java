@@ -21,7 +21,7 @@ public class Player extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        SpriteBatch batch = game.getCameraBot().use().spriteBatch;
+        SpriteBatch batch = game.getCamera2().use().spriteBatch;
 
         this.statetime += delta;
 
@@ -44,8 +44,8 @@ public class Player extends Entity {
     public void update(DisconnectGame game, float delta) {
         super.update(game, delta);
 
-        game.getCameraBot().position.set(this.pos.x, this.pos.y, 0);
-        game.getCameraTop().position.set(this.pos.x, this.pos.y, 0);
+        game.getCamera2().position.set(this.pos.x, this.pos.y, 0);
+        game.getCamera1().position.set(this.pos.x, this.pos.y, 0);
     }
 
     @Override
