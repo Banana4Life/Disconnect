@@ -53,6 +53,8 @@ public class TileEntity extends Entity {
                             this.texture = game.getResourcePack().textures.wall;
                         }
                     break;
+                case SPAWNPOINT: this.texture = game.getResourcePack().textures.floor;
+                    break;
             }
         }
 

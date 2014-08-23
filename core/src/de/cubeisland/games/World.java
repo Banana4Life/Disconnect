@@ -15,17 +15,21 @@ import de.cubeisland.games.tile.TileType;
 
 import java.util.*;
 
+import static de.cubeisland.games.tile.Direction.TOP;
+import static de.cubeisland.games.tile.TileType.SPAWNPOINT;
+
 public class World {
     private final int width;
     private final int height;
     private final TileEntity[][] tileEntities;
     private final Set<TileEntity> blockingTiles;
     private final List<Entity> entities = new ArrayList<>();
+    private Vector2 spawnPos;
 
     public World() {
         Pixmap pixmap = new Pixmap(Gdx.files.internal("level.png"));
         width = pixmap.getWidth();
-        height = pixmap.getWidth();
+        height = pixmap.getHeight();
 
         this.tileEntities = new TileEntity[width][height];
         this.blockingTiles = new HashSet<>();
@@ -35,13 +39,44 @@ public class World {
                 TileEntity tile = new TileEntity(x, y, TileType.getByColor(pixmap.getPixel(x, y)));
                 tile.setWorld(this);
                 tileEntities[x][y] = tile;
-                if (tile.getType().isBlocking()) {
-                    this.blockingTiles.add(tile);
+                if (tile.getType() == SPAWNPOINT) {
+                    spawnPos = tile.getPos();
                 }
             }
         }
 
-        spawn(new Player());
+        int directions;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                directions = 0;
+                for (int m = -1; m < 2; m++) {
+                    for (int n = -1; n < 2; n++) {
+                        if (tileEntities[x][y].getType().isBlocking()) {
+                            if (x + m > -1 && x + m < width && y + n > -1 && y + n < height) {
+                                if (tileEntities[x + m][y + n] == null || tileEntities[x + m][y + n].getType() == tileEntities[x][y].getType()) {
+                                    directions++;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (directions > 8) {
+                    tileEntities[x][y] = null;
+                }
+            }
+        }
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (tileEntities[x][y] != null && tileEntities[x][y].getType().isBlocking()) {
+                    blockingTiles.add(tileEntities[x][y]);
+                }
+            }
+        }
+
+        if (spawnPos != null) {
+            spawn(new Player(spawnPos));
+        }
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
@@ -102,7 +137,9 @@ public class World {
     public void render(DisconnectGame game, float delta) {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                tileEntities[x][y].render(game, delta);
+                if (tileEntities[x][y] != null) {
+                    tileEntities[x][y].render(game, delta);
+                }
             }
         }
 

@@ -16,9 +16,9 @@ public class Player extends Entity {
     private TextureRegion currentKeyFrame;
     private Input input;
 
-    public Player() {
-        setCollisionBox(new CollisionBox(6, 1, 5, 1));
-        getPos().set(TileEntity.SIZE * 5, TileEntity.SIZE * 5);
+    public Player(Vector2 pos) {
+        this.pos = new Vector2(pos);
+        setCollisionBox(new CollisionBox((6, 1, 5, 1)));
     }
 
     @Override

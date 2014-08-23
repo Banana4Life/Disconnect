@@ -8,6 +8,7 @@ import java.util.Map;
 public enum TileType {
     FLOOR(0xFCFC00FF, false),
     WALL(0xFFFFFFFF, true),
+    SPAWNPOINT(0xDA0205FF, false),
     ;
 
     private static final Map<Integer, TileType> BY_COLOR_VALUE;
