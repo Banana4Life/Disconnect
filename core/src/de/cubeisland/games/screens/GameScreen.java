@@ -2,6 +2,7 @@ package de.cubeisland.games.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
@@ -9,6 +10,7 @@ import de.cubeisland.games.World;
 public class GameScreen implements Screen {
     private final DisconnectGame game;
     private World world;
+    private final FPSLogger logger = new FPSLogger();
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
@@ -16,6 +18,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        logger.log();
         this.world.update(this.game, delta);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -26,7 +29,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        this.game.getCamera().update();
+
     }
 
     @Override
