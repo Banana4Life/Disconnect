@@ -34,5 +34,6 @@ public class TileEntity extends Entity {
         r.setColor(color);
         r.rect(pos.x, pos.y, size, size);
         r.end();
+        game.getSpriteBatch().draw(game.getResourcePack().textures.tilemap, pos.x, pos.y, 0, 0, size, size, 1, 1, 0, 16, 1008, size, size, false, false);
     }
 }

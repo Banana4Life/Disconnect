@@ -59,4 +59,8 @@ public class DisconnectGame extends Game {
     public SpriteBatch getSpriteBatch() {
         return spriteBatch;
     }
+
+    public LudumResourcePack getResourcePack() {
+        return resourcePack;
+    }
 }
