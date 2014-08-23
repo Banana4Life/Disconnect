@@ -4,9 +4,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.DisconnectGame;
 
+import java.util.Random;
+
 public class TileEntity extends Entity {
 
     private static final int size = 16;
+
+    // to remove
+    Random random = new Random();
+    private Color color = new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
+    // to remove
 
     public TileEntity(int x, int y) {
         this.pos.add(x * size, y * size);
@@ -14,15 +21,13 @@ public class TileEntity extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
+        //SpriteBatch batch = game.getSpriteBatch();
+        //batch.begin();
+        //batch.draw(tex, pos.x, pos.y, size, size);
+
         ShapeRenderer r = game.getShapeRenderer();
         r.begin(ShapeRenderer.ShapeType.Filled);
-        r.setColor(Color.GRAY);
-        r.rect(pos.x, pos.y, size, size);
-        r.end();
-
-        // Debug Lines:
-        r.begin(ShapeRenderer.ShapeType.Line);
-        r.setColor(Color.GREEN);
+        r.setColor(color);
         r.rect(pos.x, pos.y, size, size);
         r.end();
     }
