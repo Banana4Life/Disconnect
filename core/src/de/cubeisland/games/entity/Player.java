@@ -7,11 +7,13 @@ import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
 
 import static com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Player extends Entity {
 
     private static final float SPEED = 60;
     private float statetime = 0f;
+    private TextureRegion currentKeyFrame;
 
     public Player() {
         setCollisionBox(new CollisionBox(6, 1, 16 - 1, 0));
@@ -21,9 +23,18 @@ public class Player extends Entity {
     public void render(DisconnectGame game, float delta) {
         SpriteBatch batch = game.getCameraBot().use().spriteBatch;
 
-        batch.begin();
         this.statetime += delta;
-        batch.draw(game.getResourcePack().animations.character.getKeyFrame(this.statetime, true), pos.x, pos.y, 16, -16);
+
+        if (velocity.y > 0) {
+            currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
+        } else if (velocity.y < 0) {
+            currentKeyFrame = game.getResourcePack().animations.characterback.getKeyFrame(this.statetime, true);
+        } else if (currentKeyFrame == null) {
+            currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
+        }
+
+        batch.begin();
+        batch.draw(currentKeyFrame, pos.x, pos.y, 16, -16);
         batch.end();
 
         game.getInputMultiplexer().addProcessor(new Input());

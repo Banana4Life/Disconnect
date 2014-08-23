@@ -10,7 +10,8 @@ import de.cubeisland.games.resource.ResourceBag;
 import java.lang.reflect.Field;
 
 public class Animations extends ResourceBag<Animation> {
-    public Animation character;
+    public Animation characterfront;
+    public Animation characterback;
 
     public Animations(Files.FileType fileType) {
         super(fileType);
