@@ -34,9 +34,9 @@ public class World {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                TileEntity tile = new TileEntity(x, y, TileType.getByColor(pixmap.getPixel(x, y)));
+                TileEntity tile = new TileEntity(x, height - y - 1, TileType.getByColor(pixmap.getPixel(x, y)));
                 tile.setWorld(this);
-                tileEntities[x][y] = tile;
+                tileEntities[x][height - y - 1] = tile;
                 if (tile.getType() == SPAWNPOINT) {
                     spawnPos = tile.getPos();
                 }

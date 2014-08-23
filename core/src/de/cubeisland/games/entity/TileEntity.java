@@ -59,13 +59,20 @@ public class TileEntity extends Entity {
                         if (getWorld().hasNeighbour(this, LEFT) && this.texture == null) {
                             TileEntity neighbor = getWorld().getNeighbourOf(this, LEFT);
                             if (neighbor.getType() == FLOOR) {
-                                if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
+                                if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR){
+                                    this.texture = game.getResourcePack().textures.wallboth;
+                                } else if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
                                     this.texture = game.getResourcePack().textures.wallrightbottom;
                                 } else {
                                     this.texture = game.getResourcePack().textures.wallright;
                                 }
                             } else if (neighbor.getType() == WALL && getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == FLOOR) {
-                                this.texture = game.getResourcePack().textures.wallrighttop;
+                                TileEntity otherNeighbor = getWorld().getNeighbourOf(this, RIGHT);
+                                if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == WALL && otherNeighbor.getType() == WALL && getWorld().hasNeighbour(otherNeighbor, TOP) && getWorld().getNeighbourOf(otherNeighbor, TOP).getType() == FLOOR) {
+                                    this.texture = game.getResourcePack().textures.wallbothtop;
+                                } else {
+                                    this.texture = game.getResourcePack().textures.wallrighttop;
+                                }
                             }
                         } if (getWorld().hasNeighbour(this, RIGHT) && this.texture == null) {
                             TileEntity neighbor = getWorld().getNeighbourOf(this, RIGHT);

@@ -8,10 +8,11 @@ import de.cubeisland.games.resource.ResourceBag;
 import java.lang.reflect.Field;
 
 public class Textures extends ResourceBag<Texture> {
-    public Texture tilemap;
     public Texture floor;
     public Texture wall;
     public Texture wallbottom;
+    public Texture wallboth;
+    public Texture wallbothtop;
     public Texture wallleft;
     public Texture wallleftbottom;
     public Texture walllefttop;
