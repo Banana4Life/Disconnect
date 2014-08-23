@@ -1,6 +1,6 @@
 package de.cubeisland.games.entity;
 
-public class BasicShip extends Entity {
+public class Player extends Entity {
     @Override
     public void render(float delta) {
 
