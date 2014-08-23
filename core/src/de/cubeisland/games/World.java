@@ -13,9 +13,9 @@ public class World {
         this.game = game;
     }
 
-    public void render(float delta) {
+    public void render(Ludumdare30 game, float delta) {
         for (Entity e : entities) {
-            e.render(delta);
+            e.render(this.game, delta);
         }
     }
 }
