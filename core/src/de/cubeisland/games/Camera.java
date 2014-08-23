@@ -22,9 +22,10 @@ public class Camera extends OrthographicCamera {
         this.shapeRenderer.setProjectionMatrix(this.combined);
     }
 
-    public boolean canBeSeen(Vector2 pos) {
-        float x = viewportWidth / 2 + position.x;
-        float y = viewportHeight / 2 + position.y;
-        return pos.x >= -x && pos.x <= x && pos.y >= -y && pos.y <= y;
+    public boolean canBeSeen(Vector2 tlPos, Vector2 size) {
+        return frustum.pointInFrustum(tlPos.x, tlPos.y, 0)
+            || frustum.pointInFrustum(tlPos.x + size.x, tlPos.y + size.y, 0)
+            || frustum.pointInFrustum(tlPos.x, tlPos.y + size.y, 0)
+             || frustum.pointInFrustum(tlPos.x + size.x, tlPos.y, 0);
     }
 }

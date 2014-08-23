@@ -9,6 +9,8 @@ public abstract class Entity {
 
     protected Vector2 pos = Vector2.Zero.cpy();
     protected Vector2 velocity = Vector2.Zero.cpy();
+    protected Vector2 size = Vector2.Zero.cpy();
+
     private int depth = 1;
     private boolean alive = true;
 
