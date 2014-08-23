@@ -12,6 +12,8 @@ public class PlayerInput extends InputAdapter {
     private Player left;
     private Player right;
 
+    private Mode mode = Mode.LBOTH;
+
     public PlayerInput(Player left, Player right) {
 
         this.left = left;
@@ -20,8 +22,28 @@ public class PlayerInput extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        boolean l = this.handle(left.getVelocity(), keycode, true);
-        boolean r = this.handle(right.getVelocity(), keycode, true);
+        switch (keycode)
+        {
+            case Input.Keys.SPACE:
+                switch (mode)
+                {
+                    case LBOTH:
+                        mode = Mode.LEFT;
+                        break;
+                    case RBOTH:
+                        mode = Mode.RIGHT;
+                        break;
+                    case LEFT:
+                        mode = Mode.RBOTH;
+                        break;
+                    case RIGHT:
+                        mode = Mode.LBOTH;
+                        break;
+                }
+                return true;
+        }
+        boolean l = !mode.left || this.handle(left.getVelocity(), keycode, true);
+        boolean r = !mode.right || this.handle(right.getVelocity(), keycode, true);
         return l || r;
     }
 
@@ -72,6 +94,21 @@ public class PlayerInput extends InputAdapter {
             }
         }
         return false;
+    }
+
+    public enum Mode {
+        LBOTH, RBOTH, LEFT(true, false), RIGHT(false, true);
+        public final boolean right;
+        public final boolean left;
+
+        Mode(boolean left, boolean right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        Mode() {
+            this(true, true);
+        }
     }
 
 }
