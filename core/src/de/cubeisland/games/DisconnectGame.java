@@ -11,8 +11,6 @@ import de.cubeisland.games.screens.GameScreen;
 public class DisconnectGame extends Game {
 
     private InputMultiplexer inputMultiplexer;
-    private Camera camera1;
-    private Camera camera2;
     private LudumResourcePack resourcePack;
     private Reflector reflector;
     private Camera guiCamera;
@@ -27,9 +25,6 @@ public class DisconnectGame extends Game {
         this.resourcePack = new LudumResourcePack(Files.FileType.Internal, reflector);
         this.resourcePack.build();
 
-        this.camera1 = Camera.left();
-        this.camera2 = Camera.right();
-
         this.guiCamera = Camera.gui();
 
         setScreen(new GameScreen(this));
@@ -38,22 +33,11 @@ public class DisconnectGame extends Game {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        this.camera1.resize(width, height);
-        this.camera2.resize(width, height);
         this.guiCamera.resize(width, height);
     }
 
     public InputMultiplexer getInputMultiplexer() {
         return inputMultiplexer;
-    }
-
-    public Camera getCamera1() {
-        return camera1;
-    }
-
-
-    public Camera getCamera2() {
-        return camera2;
     }
 
     public Camera getGuiCamera() {

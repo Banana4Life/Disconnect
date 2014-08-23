@@ -1,21 +1,17 @@
 package de.cubeisland.games;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
 import de.cubeisland.games.entity.collision.Collider;
-import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
 import java.util.*;
 
-import static de.cubeisland.games.tile.Direction.TOP;
 import static de.cubeisland.games.tile.TileType.SPAWNPOINT;
 
 public class World {
@@ -25,8 +21,10 @@ public class World {
     private final Set<TileEntity> blockingTiles;
     private final List<Entity> entities = new ArrayList<>();
     private Vector2 spawnPos;
+    private Camera camera;
 
-    public World() {
+    public World(Camera camera) {
+        this.camera = camera;
         Pixmap pixmap = new Pixmap(Gdx.files.internal("level.png"));
         width = pixmap.getWidth();
         height = pixmap.getHeight();
@@ -146,5 +144,9 @@ public class World {
         for (Entity entity : entities) {
             entity.render(game, delta);
         }
+    }
+
+    public Camera getCamera() {
+        return camera;
     }
 }

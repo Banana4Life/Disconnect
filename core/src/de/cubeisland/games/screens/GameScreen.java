@@ -7,13 +7,16 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
 
 public class GameScreen implements Screen {
     private final DisconnectGame game;
-    private World world;
+    private World worldLeft;
+    private World worldRight;
     private final FPSLogger logger = new FPSLogger();
+
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
@@ -21,18 +24,24 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        this.world = new World();
+        this.worldLeft = new World(Camera.left());
+        this.worldRight = new World(Camera.right());
     }
 
     @Override
     public void render(float delta) {
         logger.log();
-        this.world.update(this.game, delta);
+        this.worldLeft.update(this.game, delta);
+        this.worldRight.update(this.game, delta);
 
         Gdx.gl.glClearColor(Color.MAGENTA.r, Color.MAGENTA.g, Color.MAGENTA.b, Color.MAGENTA.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.world.render(this.game, delta);
+        this.worldLeft.render(this.game, delta);
+        this.worldRight.render(this.game, delta);
+        renderGUI();
+    }
 
+    private void renderGUI() {
         SpriteBatch batch = this.game.getGuiCamera().getSpriteBatch();
         batch.begin();
         Texture divider = game.getResourcePack().textures.divider;

@@ -9,7 +9,7 @@ import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 public class Enemy extends Entity {
     @Override
     public void render(DisconnectGame game, float delta) {
-        ShapeRenderer r = game.getCamera2().getShapeRenderer();
+        ShapeRenderer r = this.getWorld().getCamera().getShapeRenderer();
 
         r.begin(Filled);
         r.setColor(Color.RED);

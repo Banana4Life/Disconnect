@@ -27,7 +27,8 @@ public class Player extends Entity {
             input = new Input();
             game.getInputMultiplexer().addProcessor(input);
         }
-        SpriteBatch batch = game.getCamera2().use().getSpriteBatch();
+
+        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
 
         this.statetime += delta;
 
@@ -50,8 +51,7 @@ public class Player extends Entity {
     public void update(DisconnectGame game, float delta) {
         super.update(game, delta);
 
-        game.getCamera2().position.set(this.pos.x, this.pos.y, 0);
-        game.getCamera1().position.set(this.pos.x, this.pos.y, 0);
+        this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
     }
 
     @Override

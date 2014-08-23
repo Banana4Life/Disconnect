@@ -1,9 +1,7 @@
 package de.cubeisland.games.entity;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
@@ -31,7 +29,7 @@ public class TileEntity extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        if (!game.getCamera1().canBeSeen(this.pos, this.size))
+        if (!this.getWorld().getCamera().canBeSeen(this.pos, this.size))
         {
             return;
         }
@@ -59,17 +57,12 @@ public class TileEntity extends Entity {
             }
         }
 
-        SpriteBatch batch = game.getCamera2().getSpriteBatch();
+        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
         batch.begin();
         batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
         batch.end();
 
-        // Clone for other cam
-        batch = game.getCamera1().getSpriteBatch();
-        batch.begin();
-        batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
-        batch.end();
-        super.render(game, delta);
+        super.render(game, delta); // TODO why is this here?
     }
 
     public TileType getType() {
