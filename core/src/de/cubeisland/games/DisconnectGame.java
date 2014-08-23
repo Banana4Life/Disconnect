@@ -1,10 +1,13 @@
 package de.cubeisland.games;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import de.cubeisland.engine.reflect.Reflector;
+import de.cubeisland.games.resource.LudumResourcePack;
 import de.cubeisland.games.screens.GameScreen;
 
 public class DisconnectGame extends Game {
@@ -13,12 +16,18 @@ public class DisconnectGame extends Game {
     private Camera camera;
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapeRenderer;
+    private LudumResourcePack resourcePack;
+    private Reflector reflector;
 
     @Override
 	public void create () {
         inputMultiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        this.reflector = new Reflector();
+        this.resourcePack = new LudumResourcePack(Files.FileType.Internal, reflector);
+        this.resourcePack.build();
+        
         this.spriteBatch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
 
