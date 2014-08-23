@@ -123,7 +123,7 @@ public class World {
             this.entities.remove(entity);
         }
 
-        Collider.collideEntities(game, this.entities, this.blockingTiles);
+        Collider.collideEntities(this.entities, this.blockingTiles);
     }
 
     public void render(DisconnectGame game, float delta) {
