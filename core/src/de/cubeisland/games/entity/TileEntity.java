@@ -9,6 +9,7 @@ import de.cubeisland.games.tile.TileType;
 
 import static de.cubeisland.games.tile.Direction.*;
 import static de.cubeisland.games.tile.TileType.FLOOR;
+import static de.cubeisland.games.tile.TileType.WALL;
 
 public class TileEntity extends Entity {
 
@@ -39,16 +40,46 @@ public class TileEntity extends Entity {
                 case FLOOR: this.texture = game.getResourcePack().textures.floor;
                     break;
                 case WALL:
-                        if (getWorld().hasNeighbour(this, TOP) && getWorld().getNeighbourOf(this, TOP).getType() == FLOOR) {
-                            this.texture = game.getResourcePack().textures.walltop;
-                        } else if (getWorld().hasNeighbour(this, LEFT) && getWorld().getNeighbourOf(this, LEFT).getType() == FLOOR) {
-                            this.texture = game.getResourcePack().textures.wallright;
-                        } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
-                            this.texture = game.getResourcePack().textures.wallleft;
-                        } else if (getWorld().hasNeighbour(this, BOTTOM) && getWorld().getNeighbourOf(this, BOTTOM).getType() == FLOOR) {
-                            this.texture = game.getResourcePack().textures.wall;
-                            //TODO: Overlay
-                        } else {
+                        if (getWorld().hasNeighbour(this, TOP)) {
+                            TileEntity neighbor = getWorld().getNeighbourOf(this, TOP);
+                            if (neighbor.getType() == FLOOR) {
+                                if (getWorld().hasNeighbour(this, LEFT) && getWorld().getNeighbourOf(this, LEFT).getType() == FLOOR) {
+                                    if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
+                                        this.texture = game.getResourcePack().textures.walltopboth;
+                                    } else {
+                                        this.texture = game.getResourcePack().textures.walltopleft;
+                                    }
+                                } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR){
+                                    this.texture = game.getResourcePack().textures.walltopright;
+                                } else {
+                                    this.texture = game.getResourcePack().textures.walltop;
+                                }
+                            }
+                        }
+                        if (getWorld().hasNeighbour(this, LEFT) && this.texture == null) {
+                            TileEntity neighbor = getWorld().getNeighbourOf(this, LEFT);
+                            if (neighbor.getType() == FLOOR) {
+                                if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
+                                    this.texture = game.getResourcePack().textures.wallrightbottom;
+                                } else {
+                                    this.texture = game.getResourcePack().textures.wallright;
+                                }
+                            } else if (neighbor.getType() == WALL && getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == FLOOR) {
+                                this.texture = game.getResourcePack().textures.wallrighttop;
+                            }
+                        } if (getWorld().hasNeighbour(this, RIGHT) && this.texture == null) {
+                            TileEntity neighbor = getWorld().getNeighbourOf(this, RIGHT);
+                            if (neighbor.getType() == FLOOR) {
+                                if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
+                                    this.texture = game.getResourcePack().textures.wallleftbottom;
+                                } else {
+                                    this.texture = game.getResourcePack().textures.wallleft;
+                                }
+                            } else if (neighbor.getType() == WALL && getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == FLOOR) {
+                                this.texture = game.getResourcePack().textures.walllefttop;
+                            }
+                        }
+                        if (this.texture == null) {
                             this.texture = game.getResourcePack().textures.wall;
                         }
                     break;
