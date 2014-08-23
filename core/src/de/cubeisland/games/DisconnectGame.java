@@ -1,9 +1,6 @@
 package de.cubeisland.games;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.*;
 import de.cubeisland.engine.reflect.Reflector;
 import de.cubeisland.games.resource.LudumResourcePack;
 import de.cubeisland.games.screens.GameScreen;
@@ -19,6 +16,7 @@ public class DisconnectGame extends Game {
     public void create() {
         inputMultiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(inputMultiplexer);
+        inputMultiplexer.addProcessor(new GlobalInputProcessor());
 
         this.reflector = new Reflector();
         this.resourcePack = new LudumResourcePack(Files.FileType.Internal, reflector);
