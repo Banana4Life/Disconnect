@@ -23,9 +23,8 @@ public class Camera extends OrthographicCamera {
     }
 
     public boolean canBeSeen(Vector2 tlPos, Vector2 size) {
-        return frustum.pointInFrustum(tlPos.x, tlPos.y, 0)
-            || frustum.pointInFrustum(tlPos.x + size.x, tlPos.y + size.y, 0)
-            || frustum.pointInFrustum(tlPos.x, tlPos.y + size.y, 0)
-             || frustum.pointInFrustum(tlPos.x + size.x, tlPos.y, 0);
+        float hx = size.x / 2f;
+        float hy = size.y / 2f;
+        return frustum.boundsInFrustum(tlPos.x + hx, tlPos.y + hy, 0, hx, hy, 0);
     }
 }
