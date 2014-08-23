@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum TileType {
-    FLOOR(0xFCFC00, false),
-    WALL(0x000000, true),
+    FLOOR(0xFCFC00FF, false),
+    WALL(0xFFFFFFFF, true),
     ;
 
     private static final Map<Integer, TileType> BY_COLOR_VALUE;
