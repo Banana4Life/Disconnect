@@ -138,6 +138,14 @@ public class World {
         for (Entity entity : entities) {
             entity.render(game, delta);
         }
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (tileEntities[x][y] != null) {
+                    tileEntities[x][y].renderOverlay();
+                }
+            }
+        }
     }
 
     public Camera getCamera() {

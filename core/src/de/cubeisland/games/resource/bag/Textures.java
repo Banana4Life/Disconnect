@@ -11,6 +11,9 @@ public class Textures extends ResourceBag<Texture> {
     public Texture floor;
     public Texture wall;
     public Texture wallbottom;
+    public Texture wallbottomleft;
+    public Texture wallbottomright;
+    public Texture wallbottomboth;
     public Texture wallboth;
     public Texture wallbothtop;
     public Texture wallleft;
