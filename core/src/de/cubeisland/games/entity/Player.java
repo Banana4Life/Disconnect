@@ -14,13 +14,19 @@ public class Player extends Entity {
     private static final float SPEED = 60;
     private float statetime = 0f;
     private TextureRegion currentKeyFrame;
+    private Input input;
 
     public Player() {
-        setCollisionBox(new CollisionBox(6, 1, 16 - 1, 0));
+        setCollisionBox(new CollisionBox(6, 1, 5, 1));
+        getPos().set(TileEntity.SIZE * 5, TileEntity.SIZE * 5);
     }
 
     @Override
     public void render(DisconnectGame game, float delta) {
+        if (input == null) {
+            input = new Input();
+            game.getInputMultiplexer().addProcessor(input);
+        }
         SpriteBatch batch = game.getCamera2().use().spriteBatch;
 
         this.statetime += delta;
@@ -37,7 +43,7 @@ public class Player extends Entity {
         batch.draw(currentKeyFrame, pos.x, pos.y, 16, -16);
         batch.end();
 
-        game.getInputMultiplexer().addProcessor(new Input());
+        super.render(game, delta);
     }
 
     @Override
@@ -51,6 +57,13 @@ public class Player extends Entity {
     @Override
     public void onCollide(Entity other, Vector2 mtv) {
 
+    }
+
+    @Override
+    public void onTileCollide(TileEntity tile, Vector2 mtv) {
+        System.out.println(tile.getType());
+        System.out.println(mtv);
+        getPos().add(mtv);
     }
 
     private final class Input extends InputAdapter {

@@ -1,11 +1,15 @@
 package de.cubeisland.games;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
 import de.cubeisland.games.entity.collision.Collider;
+import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
@@ -92,7 +96,7 @@ public class World {
             this.entities.remove(entity);
         }
 
-        Collider.collideEntities(this.entities, this.blockingTiles);
+        Collider.collideEntities(game, this.entities, this.blockingTiles);
     }
 
     public void render(DisconnectGame game, float delta) {

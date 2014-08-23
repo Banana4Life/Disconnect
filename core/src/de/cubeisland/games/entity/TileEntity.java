@@ -1,7 +1,9 @@
 package de.cubeisland.games.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
@@ -12,7 +14,7 @@ import static de.cubeisland.games.tile.TileType.FLOOR;
 
 public class TileEntity extends Entity {
 
-    private static final int SIZE = 16;
+    public static final int SIZE = 16;
     private final TileType type;
     private final int tileX;
     private final int tileY;
@@ -58,14 +60,15 @@ public class TileEntity extends Entity {
 
         SpriteBatch batch = game.getCamera2().use().spriteBatch;
         batch.begin();
-        batch.draw(this.texture, pos.x, pos.y, SIZE, -SIZE);
+        batch.draw(this.texture, pos.x, pos.y + SIZE, SIZE, -SIZE);
         batch.end();
 
         // Clone for other cam
         batch = game.getCamera1().use().spriteBatch;
         batch.begin();
-        batch.draw(this.texture, pos.x, pos.y, SIZE, -SIZE);
+        batch.draw(this.texture, pos.x, pos.y + SIZE, SIZE, -SIZE);
         batch.end();
+        super.render(game, delta);
     }
 
     public TileType getType() {
