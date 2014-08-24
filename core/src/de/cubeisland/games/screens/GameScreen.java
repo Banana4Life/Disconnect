@@ -91,6 +91,7 @@ public class GameScreen extends DisconnectScreen {
     @Override
     public void hide() {
         super.hide();
+        game.getInputMultiplexer().removeProcessor(this.playerInput);
         dispose();
     }
 
@@ -104,7 +105,6 @@ public class GameScreen extends DisconnectScreen {
     public void dispose() {
         this.worldLeft.dispose();
         this.worldRight.dispose();
-        game.getInputMultiplexer().removeProcessor(this.playerInput);
         super.dispose();
     }
 

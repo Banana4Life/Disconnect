@@ -15,6 +15,7 @@ public class DisconnectGame extends Game {
     private LudumResourcePack resourcePack;
     private Reflector reflector;
     private Camera guiCamera;
+    private Screen nextScreen;
 
     @Override
     public void create() {
@@ -71,11 +72,20 @@ public class DisconnectGame extends Game {
             Constructor<T> ctor = screenClass.getConstructor(this.getClass());
             T screen = ctor.newInstance(this);
 
-            setScreen(screen);
+            nextScreen = screen;
 
             return screen;
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Failed to transition to a screen!", e);
         }
+    }
+
+    @Override
+    public void render() {
+        if (nextScreen != null) {
+            setScreen(nextScreen);
+            nextScreen = null;
+        }
+        super.render();
     }
 }

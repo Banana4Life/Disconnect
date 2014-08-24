@@ -231,6 +231,20 @@ public class World implements Disposable {
 
     @Override
     public void dispose() {
+        for (Entity entity : this.entities) {
+            if (entity.isAlive()) {
+                entity.onDeath();
+            }
+        }
+        this.entities.clear();
+        this.blockingTiles.clear();
+        for (int x = 0; x < this.width; ++x) {
+            for (int y = 0; y < this.height; ++y) {
+                if (this.tileEntities[x][y] != null) {
+                    this.tileEntities[x][y].onDeath();
+                }
+            }
+        }
         this.camera.dispose();
     }
 

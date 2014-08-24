@@ -46,7 +46,7 @@ public class Player extends Entity {
     @Override
     public void onSpawn() {
         this.step = getWorld().getGame().getResourcePack().sounds.step;
-        this.soundId = this.step.play(.10f);
+        this.soundId = this.step.play(.05f);
         this.step.pause(this.soundId);
         this.step.setLooping(this.soundId, true);
     }
@@ -119,6 +119,7 @@ public class Player extends Entity {
     @Override
     public void onDeath() {
         getWorld().getGame().lose();
+        this.step.stop(this.soundId);
     }
 
     @Override
@@ -142,5 +143,9 @@ public class Player extends Entity {
 
     public void setOtherPlayer(Player otherPlayer) {
         this.otherPlayer = otherPlayer;
+    }
+
+    public Player getOtherPlayer() {
+        return otherPlayer;
     }
 }
