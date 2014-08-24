@@ -115,10 +115,7 @@ public class Player extends Entity {
     @Override
     public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
-        if (tile instanceof Door) {
-            ((Door)tile).interact(carriedItem);
-            carriedItem = null;
-        }
+        tile.interact(carriedItem);
         if (this.ghost == null || !this.ghost.isAlive()) {
             this.otherPlayer.getPos().set(this.getPos());
             this.otherPlayer.skipUpdate();
