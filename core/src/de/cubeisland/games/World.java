@@ -13,7 +13,7 @@ import de.cubeisland.games.tile.TileType;
 
 import java.util.*;
 
-import static de.cubeisland.games.tile.TileType.SPAWNPOINT;
+import static de.cubeisland.games.tile.TileType.FLOOR_PLAYER;
 
 public class World implements Disposable {
     private final Player player;
@@ -26,11 +26,11 @@ public class World implements Disposable {
     private Camera camera;
     private Vector2 spawnPos;
 
-    public World(DisconnectGame game, Camera camera, Player player) {
+    public World(DisconnectGame game, Camera camera, Player player, String levelName) {
         this.game = game;
         this.camera = camera;
         this.player = player;
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("level.png"));
+        Pixmap pixmap = new Pixmap(Gdx.files.internal(levelName + ".png"));
         width = pixmap.getWidth();
         height = pixmap.getHeight();
 
@@ -39,11 +39,26 @@ public class World implements Disposable {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                TileEntity tile = new TileEntity(x, height - y - 1, TileType.getByColor(pixmap.getPixel(x, y)));
+                TileType tileType = TileType.getByColor(pixmap.getPixel(x, y));
+                TileEntity tile = new TileEntity(x, height - y - 1, tileType);
                 tile.setWorld(this);
                 tileEntities[x][height - y - 1] = tile;
-                if (tile.getType() == SPAWNPOINT) {
+                if (tileType == FLOOR_PLAYER) {
                     spawnPos = tile.getPos();
+                }
+                Entity spawned = null;
+                switch (tileType) {
+                    case FLOOR_ENEMY:
+                        this.spawn(spawned = new Enemy());
+                        break;
+                    case FLOOR_KEY:
+                        this.spawn(spawned = new Key());
+                        break;
+                    // TODO other Types
+                }
+                if (spawned != null)
+                {
+                    spawned.getPos().set(tile.getPos());
                 }
             }
         }
@@ -78,12 +93,6 @@ public class World implements Disposable {
         }
 
         spawn(player);
-        Enemy enemy = new Enemy();
-        enemy.getPos().set(player.getPos()).add(40, 0);
-        spawn(enemy);
-        Key key = new Key();
-        key.getPos().set(player.getPos()).add(10, 10);
-        spawn(key);
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {

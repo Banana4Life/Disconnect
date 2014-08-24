@@ -22,7 +22,7 @@ public class Enemy extends Entity {
     public void onSpawn() {
         Direction dir = Direction.random();
         getVelocity().set(SPEED * dir.getX(), SPEED * dir.getY());
-        setCollisionBox(new CollisionBox(SIZE * 2f, SIZE * 2f, -SIZE, SIZE));
+        setCollisionBox(new CollisionBox(SIZE * 2f, SIZE * 2f, 0, 0));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Enemy extends Entity {
 
         r.begin(Filled);
         r.setColor(Color.RED);
-        r.circle(pos.x, pos.y, SIZE);
+        r.circle(pos.x + SIZE, pos.y + SIZE, SIZE);
         r.end();
 
         Player player = getWorld().getPlayer();
@@ -55,7 +55,7 @@ public class Enemy extends Entity {
             if (diffAngle <= (FOV / 2f)) {
                 r.begin(Line);
                 r.setColor(Color.MAGENTA);
-                r.line(pos, pos.cpy().add(playerDistance));
+                r.line(pos.cpy().add(SIZE, SIZE), playerDistance.add(pos));
                 r.end();
                 // TODO do something more here
             }

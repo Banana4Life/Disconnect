@@ -27,10 +27,15 @@ public class TileEntity extends Entity {
     public TileEntity(int x, int y, TileType type) {
         this.tileX = x;
         this.tileY = y;
-        this.type = type;
+        this.type = type.get();
+        if (type != WALL)
+        {
+            System.out.println(type.name() + type.get().name());
+        }
+
         this.size = new Vector2(SIZE, SIZE);
         this.pos.set(x, y).scl(SIZE);
-        if (type.isBlocking()) {
+        if (this.type.isBlocking()) {
             this.setCollisionBox(new CollisionBox(SIZE, SIZE));
         }
         this.overlayOffset = new Vector2(0, SIZE);
@@ -114,7 +119,7 @@ public class TileEntity extends Entity {
                         this.texture = game.getResourcePack().textures.wall;
                     }
                     break;
-                case SPAWNPOINT:
+                case FLOOR_PLAYER:
                     this.texture = game.getResourcePack().textures.floor;
                     break;
             }

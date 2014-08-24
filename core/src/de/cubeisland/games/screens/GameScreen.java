@@ -33,8 +33,8 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        this.worldLeft = new World(game, Camera.left(), new Player());
-        this.worldRight = new World(game, Camera.right(), new Player());
+        this.worldLeft = new World(game, Camera.left(), new Player(), "LevelL1");
+        this.worldRight = new World(game, Camera.right(), new Player(), "LevelR1");
         this.playerInput = new PlayerInput(this.worldLeft.getPlayer(), this.worldRight.getPlayer());
         game.getInputMultiplexer().addProcessor(playerInput);
 
