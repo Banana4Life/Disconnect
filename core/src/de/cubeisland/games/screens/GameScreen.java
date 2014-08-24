@@ -89,6 +89,12 @@ public class GameScreen extends DisconnectScreen {
     }
 
     @Override
+    public void hide() {
+        super.hide();
+        dispose();
+    }
+
+    @Override
     public void resize(int width, int height) {
         this.worldLeft.getCamera().resize(width, height);
         this.worldRight.getCamera().resize(width, height);
