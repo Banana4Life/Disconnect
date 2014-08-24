@@ -25,7 +25,7 @@ public class GameScreen extends ScreenAdapter {
     private World worldRight;
 
     private float disconnectTime;
-    private float maxdisconnectTime = 10;
+    private float maxdisconnectTime = 5;
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
@@ -74,11 +74,13 @@ public class GameScreen extends ScreenAdapter {
         if (this.playerInput.getDisconnected()) {
             disconnectTime += delta;
         } else {
-            disconnectTime = 0;
+            disconnectTime -= delta * 4;
         }
 
         if (disconnectTime > maxdisconnectTime) {
             disconnectTime = maxdisconnectTime;
+        } else if (disconnectTime < 0) {
+            disconnectTime = 0;
         }
 
         TextureRegion energybar = game.getResourcePack().animations.energybar.getKeyFrames()[(int)((game.getResourcePack().animations.energybar.getKeyFrames().length - 1) * disconnectTime / maxdisconnectTime)];
