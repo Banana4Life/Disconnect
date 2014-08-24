@@ -18,6 +18,8 @@ public class Animations extends ResourceBag<Animation> {
     public Animation characterrightside;
     public Animation energybar;
     public Animation key;
+    public Animation doorhorizontal;
+    public Animation doorvertical;
 
     public Animations(Files.FileType fileType) {
         super(fileType);

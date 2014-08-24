@@ -104,9 +104,11 @@ public class Player extends Entity {
     @Override
     public boolean onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
+        if (tile instanceof Door) {
+            ((Door)tile).interact(carriedItem);
+        }
         this.otherPlayer.getPos().set(this.getPos());
         this.otherPlayer.skipUpdate();
-        tile.interact(carriedItem);
         return true;
     }
 

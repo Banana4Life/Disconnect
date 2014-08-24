@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import de.cubeisland.games.entity.Door;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
@@ -15,6 +16,7 @@ import de.cubeisland.games.tile.TileType;
 
 import java.util.*;
 
+import static de.cubeisland.games.tile.TileType.DOOR;
 import static de.cubeisland.games.tile.TileType.FLOOR_PLAYER;
 
 public class World implements Disposable {
@@ -45,7 +47,12 @@ public class World implements Disposable {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 TileType tileType = TileType.getByColor(pixmap.getPixel(x, y));
-                TileEntity tile = new TileEntity(x, height - y - 1, tileType);
+                TileEntity tile;
+                if (tileType == DOOR) {
+                    tile = new Door(x, height - y - 1);
+                } else {
+                    tile = new TileEntity(x, height - y - 1, tileType);
+                }
                 tile.setWorld(this);
                 tileEntities[x][height - y - 1] = tile;
                 if (tileType == FLOOR_PLAYER) {

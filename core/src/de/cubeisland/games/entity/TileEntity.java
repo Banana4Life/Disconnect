@@ -21,11 +21,11 @@ public class TileEntity extends Entity {
     public static final int SIZE = 16;
     private final int tileX;
     private final int tileY;
-    private TileType type;
-    private Texture texture = null;
+    protected TileType type;
+    protected Texture texture = null;
 
-    private Texture overlay = null;
-    private Vector2 overlayOffset;
+    protected Texture overlay = null;
+    protected Vector2 overlayOffset;
 
     public TileEntity(int x, int y, TileType type) {
         this.tileX = x;
@@ -52,7 +52,6 @@ public class TileEntity extends Entity {
                     this.texture = textures.floor;
                     break;
                 case WALL:
-                case WALL_DOOR:
                     TileEntity top = getWorld().getNeighbourOf(this, TOP);
                     TileEntity left = getWorld().getNeighbourOf(this, LEFT);
                     TileEntity right = getWorld().getNeighbourOf(this, RIGHT);
@@ -170,21 +169,5 @@ public class TileEntity extends Entity {
 
     public int getTileY() {
         return tileY;
-    }
-
-    public void interact(Item carriedItem) {
-        if (carriedItem != null) {
-            this.texture = null;
-            this.overlay = null;
-        }
-        if (this.type == WALL_DOOR && carriedItem instanceof Key) {
-            this.type = FLOOR;
-            for (Direction direction : Direction.values()) {
-                TileEntity neighbourOf = this.getWorld().getNeighbourOf(this, direction);
-                if (neighbourOf != null) {
-                    neighbourOf.interact(carriedItem);
-                }
-            }
-        }
     }
 }

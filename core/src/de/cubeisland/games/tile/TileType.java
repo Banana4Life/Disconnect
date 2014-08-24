@@ -11,7 +11,8 @@ import java.util.Map;
 
 public enum TileType {
     WALL            (0x000000FF, true),
-    WALL_DOOR       (0x9F9F9FFF, true),
+    DOOR            (0x9F9F9FFF, true),
+    DOOR_OPEN       (0x9F9FAFFF, false),
     FLOOR           (0xFFFFFFFF, false),
     FLOOR_PLAYER    (0xFFF000FF, false, FLOOR),
     FLOOR_ENEMY     (0xFF0000FF, false, FLOOR, Enemy.class),
