@@ -23,6 +23,8 @@ public class GameScreen implements Screen {
     private World worldLeft;
     private World worldRight;
 
+    private float disconnectTime;
+    private float maxdisconnectTime = 10;
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
@@ -50,10 +52,10 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.worldLeft.render(this.game, delta);
         this.worldRight.render(this.game, delta);
-        renderGUI();
+        renderGUI(delta);
     }
 
-    private void renderGUI() {
+    private void renderGUI(float delta) {
         SpriteBatch batch = this.game.getGuiCamera().getSpriteBatch();
         batch.begin();
         Texture divider;
@@ -66,7 +68,19 @@ public class GameScreen implements Screen {
         batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 16, divider.getWidth(), Gdx.graphics.getHeight(),
                 0, 0, 1, Gdx.graphics.getHeight() / divider.getHeight());
 
-        TextureRegion energybar = game.getResourcePack().animations.energybar.getKeyFrames()[0];
+        batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 8, 0, 16, 16);
+
+        if (this.playerInput.getDisconnected()) {
+            disconnectTime += delta;
+        } else {
+            disconnectTime = 0;
+        }
+
+        if (disconnectTime > maxdisconnectTime) {
+            disconnectTime = maxdisconnectTime;
+        }
+
+        TextureRegion energybar = game.getResourcePack().animations.energybar.getKeyFrames()[(int)((game.getResourcePack().animations.energybar.getKeyFrames().length - 1) * disconnectTime / maxdisconnectTime)];
         batch.draw(energybar, Gdx.graphics.getWidth() / 8 - 16, 0, 32, 16);
         batch.end();
     }

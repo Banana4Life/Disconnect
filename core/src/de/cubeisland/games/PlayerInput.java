@@ -140,4 +140,11 @@ public class PlayerInput extends InputAdapter {
             this(true, true);
         }
     }
+
+    public boolean getDisconnected() {
+        if (this.mode == Mode.LEFT_SINGLE || this.mode == Mode.RIGHT_SINGLE) {
+            return true;
+        }
+        return false;
+    }
 }
