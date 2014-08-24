@@ -47,10 +47,6 @@ public abstract class Entity {
     }
 
     public void onCollide(Entity other, Rectangle collisionBox) {
-
-        if (other instanceof TileEntity) {
-            this.onTileCollide((TileEntity) other, collisionBox);
-        }
     }
 
     public void onTileCollide(TileEntity tile, Rectangle collisionBox) {

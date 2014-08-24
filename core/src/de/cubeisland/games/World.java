@@ -180,7 +180,7 @@ public class World {
         for (TileEntity e2 : blockingTiles) {
             Rectangle collision = Collider.findCollision(e1, e2);
             if (collision != null) {
-                e1.onCollide(e2, collision);
+                e1.onTileCollide(e2, collision);
                 count++;
             }
         }
