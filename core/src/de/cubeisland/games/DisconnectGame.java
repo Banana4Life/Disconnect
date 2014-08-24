@@ -26,6 +26,11 @@ public class DisconnectGame extends Game {
 
         this.guiCamera = Camera.gui();
 
+
+        resourcePack.songs.maintheme.setLooping(true);
+        resourcePack.songs.maintheme.setVolume(0.15f);
+        resourcePack.songs.maintheme.play();
+
         setScreen(new TitleScreen(this));
     }
 

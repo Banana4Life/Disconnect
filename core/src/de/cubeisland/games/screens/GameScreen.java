@@ -1,11 +1,7 @@
 package de.cubeisland.games.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -41,10 +37,6 @@ public class GameScreen extends DisconnectScreen {
         this.worldRight = new World(game, Camera.right(), new Player(animations.characterrightfront, animations.characterrightside, animations.characterrightback), "LevelR1");
         this.playerInput = new PlayerInput(this.worldLeft.getPlayer(), this.worldRight.getPlayer());
         game.getInputMultiplexer().addProcessor(playerInput);
-
-        game.getResourcePack().musics.maintheme.setLooping(true);
-        game.getResourcePack().musics.maintheme.setVolume(0.25f);
-        game.getResourcePack().musics.maintheme.play();
     }
 
     @Override
