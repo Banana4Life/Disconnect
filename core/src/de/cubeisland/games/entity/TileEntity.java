@@ -135,7 +135,13 @@ public class TileEntity extends Entity {
         if (!this.getWorld().getCamera().canBeSeen(this.pos, this.size) || this.overlay == null) {
             return;
         }
-        CollisionBox overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, -14); // 13 overlay height + 1 to collide sooner
+
+        CollisionBox overlayCollisionBox;
+        if (this.type == DOOR || this.type == DOOR_OPEN) {
+            overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, 0);
+        } else {
+            overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, -14); // 13 overlay height + 1 to collide sooner
+        }
 
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
 

@@ -29,7 +29,7 @@ public class Door extends TileEntity {
 
     public void interact(Item carriedItem) {
         if (carriedItem instanceof Key) {
-            this.texture = null;
+            this.texture = this.getWorld().getGame().getResourcePack().textures.floor;
             this.overlay = this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames()[this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames().length - 1];
             this.overlayOffset = new Vector2(0, 0);
             this.type = DOOR_OPEN;
