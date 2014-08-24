@@ -5,20 +5,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import de.cubeisland.games.resource.ResourceBag;
+import de.cubeisland.games.util.SoundPlayer;
 
 import java.lang.reflect.Field;
 
-public class Sounds extends ResourceBag<Sound> {
+public class Sounds extends ResourceBag<SoundPlayer> {
 
-    public Sound step;
-    public Sound door;
+    public SoundPlayer step;
+    public SoundPlayer door;
+    public SoundPlayer timer;
 
     public Sounds(Files.FileType fileType) {
         super(fileType);
     }
 
     @Override
-    protected Sound load(FileHandle basedir, Field field) {
-        return Gdx.audio.newSound(basedir.child(fieldToPath(field) + ".mp3"));
+    protected SoundPlayer load(FileHandle basedir, Field field) {
+        return new SoundPlayer(Gdx.audio.newSound(basedir.child(fieldToPath(field) + ".mp3")));
     }
 }

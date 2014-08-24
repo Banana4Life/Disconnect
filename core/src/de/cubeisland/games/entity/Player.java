@@ -10,6 +10,7 @@ import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.screens.GameScreen;
+import de.cubeisland.games.util.SoundPlayer;
 
 public class Player extends Entity {
     private float statetime = 0f;
@@ -22,8 +23,7 @@ public class Player extends Entity {
     private Animation characterLeft;
     private Animation characterRight;
 
-    private Sound step;
-    private long soundId;
+    private SoundPlayer.SoundInstance step;
     private Player otherPlayer;
     private boolean skipUpdate = false;
 
@@ -49,10 +49,7 @@ public class Player extends Entity {
     @Override
     public void onSpawn(World world) {
         super.onSpawn(world);
-        this.step = getWorld().getGame().getResourcePack().sounds.step;
-        this.soundId = this.step.play(.05f);
-        this.step.pause(this.soundId);
-        this.step.setLooping(this.soundId, true);
+        this.step = getWorld().getGame().getResourcePack().sounds.step.start(.05f).pause().looping(true);
     }
 
     @Override
@@ -73,11 +70,11 @@ public class Player extends Entity {
         }
 
         if (animation != null) {
-            this.step.resume(this.soundId);
+            this.step.resume();
             currentKeyFrame = animation.getKeyFrame(this.statetime, true);
             idleFrame = animation.getKeyFrames()[0];
         } else {
-            this.step.pause(this.soundId);
+            this.step.pause();
             currentKeyFrame = idleFrame;
         }
 
@@ -129,7 +126,7 @@ public class Player extends Entity {
     @Override
     public void onDeath() {
         getWorld().getGame().lose();
-        this.step.stop(this.soundId);
+        this.step.stop();
     }
 
     @Override
