@@ -23,7 +23,6 @@ public class Player extends Entity {
 
     private Sound step;
     private long soundId;
-    private boolean playing = false;
 
     public Player(Animation characterFront, Animation characterSide, Animation characterBack) {
         super();
