@@ -145,7 +145,7 @@ public class TileEntity extends Entity {
 
         List<Entity> entities = this.getWorld().getEntities();
         for (Entity entity : entities) {
-            if (entity.getCollisionBox() == null) {
+            if (entity.getCollisionBox() == null || entity instanceof Item) {
                 continue;
             }
 
