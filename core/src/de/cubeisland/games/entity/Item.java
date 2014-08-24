@@ -12,6 +12,10 @@ public class Item extends Entity {
     private static final float SIZE = 3;
 
     private Type type = Type.DEFAULT;
+    
+    public Item(Type type) {
+        this.type = type;
+    }
 
     @Override
     public void onSpawn() {
@@ -25,16 +29,12 @@ public class Item extends Entity {
 
         r.begin(Filled);
         switch (this.type) {
-            case KEY:
-                r.setColor(Color.YELLOW);
-                break;
             case ENERGY:
                 r.setColor(Color.MAGENTA);
                 break;
             case UPGRADE:
                 r.setColor(Color.RED);
                 break;
-
         }
         r.rect(pos.x, pos.y, SIZE, SIZE);
         r.end();

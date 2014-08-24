@@ -2,9 +2,20 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.entity.collision.CollisionBox;
 
-public class Key extends Entity {
+public class Key extends Item {
     private float statetime = 0f;
+
+    public Key() {
+        super(Type.KEY);
+    }
+
+    @Override
+    public void onSpawn() {
+        super.onSpawn();
+        this.setCollisionBox(new CollisionBox(4, 2, 6, 0));
+    }
 
     @Override
     public void render(DisconnectGame game, float delta) {
