@@ -101,6 +101,7 @@ public class Player extends Entity {
             playerInput.setMode(playerInput.getMode());
             playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
             playerInput.getOtherPlayer().getPos().set(this.getPos());
+            ((GameScreen)getWorld().getGame().getScreen()).stopTimeSound();
         } else if (other instanceof Item) {
             if (this.carriedItem != null)
             {

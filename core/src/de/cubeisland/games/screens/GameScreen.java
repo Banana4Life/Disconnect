@@ -11,6 +11,7 @@ import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.resource.bag.Animations;
+import de.cubeisland.games.util.SoundPlayer;
 
 import static de.cubeisland.games.Camera.CameraType;
 import static de.cubeisland.games.PlayerInput.Mode.LEFT;
@@ -23,9 +24,12 @@ public class GameScreen extends DisconnectScreen {
 
     private float disconnectTime;
     private float maxdisconnectTime = 5;
+    private SoundPlayer timerSound;
+    private SoundPlayer.SoundInstance timerSoundInstance;
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
+        this.timerSound = game.getResourcePack().sounds.timer;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class GameScreen extends DisconnectScreen {
         Animations animations = game.getResourcePack().animations;
         this.worldLeft = new World(game, Camera.create(CameraType.LEFT), new Player(animations.characterleftfront, animations.characterleftside, animations.characterleftback), "LevelL1");
         this.worldRight = new World(game, Camera.create(CameraType.RIGHT), new Player(animations.characterrightfront, animations.characterrightside, animations.characterrightback), "LevelR1");
-        this.playerInput = new PlayerInput(this.worldLeft.getPlayer(), this.worldRight.getPlayer());
+        this.playerInput = new PlayerInput(this, this.worldLeft.getPlayer(), this.worldRight.getPlayer());
         this.worldLeft.getPlayer().setOtherPlayer(this.worldRight.getPlayer());
         this.worldRight.getPlayer().setOtherPlayer(this.worldLeft.getPlayer());
         game.getInputMultiplexer().prepend(playerInput);
@@ -98,6 +102,7 @@ public class GameScreen extends DisconnectScreen {
     public void hide() {
         super.hide();
         game.getInputMultiplexer().remove(this.playerInput);
+        this.stopTimeSound();
         dispose();
     }
 
@@ -116,6 +121,19 @@ public class GameScreen extends DisconnectScreen {
 
     public PlayerInput getPlayerInput() {
         return playerInput;
+    }
+
+    public void startTimerSound() {
+        if (timerSoundInstance == null) {
+            this.timerSoundInstance = timerSound.start(.15f).looping(true);
+        }
+    }
+
+    public void stopTimeSound() {
+        if (timerSoundInstance != null) {
+            this.timerSoundInstance.stop();
+            this.timerSoundInstance = null;
+        }
     }
 
 }

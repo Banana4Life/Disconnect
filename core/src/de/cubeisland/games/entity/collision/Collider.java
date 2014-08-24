@@ -58,6 +58,11 @@ public class Collider {
             y2 = begin.y;
         }
 
+        x1 -= TileEntity.SIZE;
+        y1 += TileEntity.SIZE;
+        x2 += TileEntity.SIZE;
+        y2 -= TileEntity.SIZE;
+
         List<TileEntity> tiles = world.getTilesWithin(x1, y1, x2, y2);
         for (TileEntity tile : tiles) {
             if (!tile.getType().isBlocking()) {

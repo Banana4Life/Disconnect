@@ -4,17 +4,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.entity.Player;
+import de.cubeisland.games.screens.GameScreen;
 
 public class PlayerInput extends InputAdapter {
 
     private static final float SPEED = 60;
 
+    private final GameScreen screen;
     private Player left;
     private Player right;
 
     private Mode mode = Mode.LEFT;
 
-    public PlayerInput(Player left, Player right) {
+    public PlayerInput(GameScreen screen, Player left, Player right) {
+        this.screen = screen;
 
         this.left = left;
         this.right = right;
@@ -36,6 +39,7 @@ public class PlayerInput extends InputAdapter {
                         left.getVelocity().set(0, 0);
                         break;
                 }
+                screen.startTimerSound();
                 return true;
             case Input.Keys.CONTROL_LEFT:
                 switch (mode) {
