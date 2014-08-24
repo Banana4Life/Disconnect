@@ -132,7 +132,7 @@ public class TileEntity extends Entity {
         if (!this.getWorld().getCamera().canBeSeen(this.pos, this.size) || this.overlay == null) {
             return;
         }
-        CollisionBox overlayCollisionBox = new CollisionBox(SIZE, SIZE, overlayOffset.x, overlayOffset.y);
+        CollisionBox overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, -14); // 13 overlay height + 1 to collide sooner
 
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
         batch.begin();
