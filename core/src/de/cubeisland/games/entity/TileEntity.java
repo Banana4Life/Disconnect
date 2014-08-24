@@ -55,14 +55,14 @@ public class TileEntity extends Entity {
                     TileEntity left = getWorld().getNeighbourOf(this, LEFT);
                     TileEntity right = getWorld().getNeighbourOf(this, RIGHT);
                     TileEntity bottom = getWorld().getNeighbourOf(this, BOTTOM);
-                    if (FLOOR.isType(top) || DOOR.isType(top) || DOOR_OPEN.isType(top)) {
-                        if (FLOOR.isType(left) || DOOR.isType(left) || DOOR_OPEN.isType(left)) {
-                            if (FLOOR.isType(right) || DOOR.isType(right) || DOOR_OPEN.isType(right)) {
+                    if (FLOOR.isType(top) || DOOR.isType(top) || AUTO_DOOR.isType(top)) {
+                        if (FLOOR.isType(left) || DOOR.isType(left) || AUTO_DOOR.isType(left)) {
+                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
                                 this.texture = textures.walltopboth;
                             } else {
                                 this.texture = textures.walltopleft;
                             }
-                        } else if (FLOOR.isType(right) || DOOR.isType(right) || DOOR_OPEN.isType(right)) {
+                        } else if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
                             this.texture = textures.walltopright;
                         } else {
                             this.texture = textures.walltop;
@@ -98,7 +98,7 @@ public class TileEntity extends Entity {
                             this.texture = textures.walllefttop;
                         }
                     }
-                    if (FLOOR.isType(bottom) || DOOR.isType(bottom) || DOOR_OPEN.isType(bottom)) {
+                    if (FLOOR.isType(bottom) || DOOR.isType(bottom) || AUTO_DOOR.isType(bottom)) {
                         if (FLOOR.isType(left)) {
                             if (FLOOR.isType(right)) {
                                 this.overlay = textures.wallbottomboth;
@@ -135,7 +135,7 @@ public class TileEntity extends Entity {
         }
 
         CollisionBox overlayCollisionBox;
-        if (this.type == DOOR_OPENING || this.type == DOOR_OPEN) {
+        if (this.type == DOOR_OPEN || this.type == AUTO_DOOR_OPEN) {
             overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, 0);
         } else {
             overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, -14); // 13 overlay height + 1 to collide sooner
@@ -174,5 +174,9 @@ public class TileEntity extends Entity {
 
     public int getTileY() {
         return tileY;
+    }
+
+    public boolean isBlocking() {
+        return this.getType().isBlocking();
     }
 }

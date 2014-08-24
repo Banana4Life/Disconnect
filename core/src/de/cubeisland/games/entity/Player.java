@@ -1,6 +1,5 @@
 package de.cubeisland.games.entity;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -118,6 +117,10 @@ public class Player extends Entity {
     @Override
     public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
+        if (tile instanceof Door)
+        {
+            System.out.println("DOOR " + ((Door) tile).state.name());
+        }
         tile.interact(carriedItem, this);
         if (this.ghost == null || !this.ghost.isAlive()) {
             this.otherPlayer.getPos().set(this.getPos());
