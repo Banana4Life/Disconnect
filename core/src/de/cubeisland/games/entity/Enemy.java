@@ -3,13 +3,18 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
+import de.cubeisland.games.resource.bag.Animations;
 import de.cubeisland.games.tile.Direction;
+import de.cubeisland.games.util.SoundPlayer;
 
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 import static de.cubeisland.games.entity.collision.Collider.isLineOfSightClear;
@@ -21,6 +26,16 @@ public class Enemy extends Entity {
     public static final float FOV = 50;
     private static final int SIZE = 5;
 
+    private Animation characterFront;
+    private Animation characterBack;
+    private Animation characterLeft;
+    private Animation characterRight;
+
+    private SoundPlayer.SoundInstance step;
+
+    private TextureRegion currentKeyFrame = null;
+    private float statetime = 0f;
+
     private boolean aggro = false;
 
     @Override
@@ -29,6 +44,21 @@ public class Enemy extends Entity {
         Direction dir = Direction.random();
         getVelocity().set(SPEED * dir.getX(), SPEED * dir.getY());
         setCollisionBox(new CollisionBox(SIZE * 2f, SIZE * 2f, 0, 0));
+
+        Animations animations =  getWorld().getGame().getResourcePack().animations;
+
+        this.characterFront = animations.securityfront;
+        TextureRegion[] tmp = new TextureRegion[animations.securityside.getKeyFrames().length];
+        int i = 0;
+        for (TextureRegion keyFrame : animations.securityside.getKeyFrames()) {
+            tmp[i] = new TextureRegion(keyFrame);
+            tmp[i++].flip(true, false);
+        }
+        this.characterLeft = new Animation(animations.securityside.getFrameDuration(), tmp);
+        this.characterRight = animations.securityside;
+        this.characterBack = animations.securityback;
+
+        this.step = getWorld().getGame().getResourcePack().sounds.step.start(.05f).pause().looping(true);
     }
 
     @Override
@@ -60,16 +90,37 @@ public class Enemy extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        ShapeRenderer r = this.getWorld().getCamera().getShapeRenderer();
+        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
 
-        r.begin(Filled);
-        r.setColor(Color.RED);
-        r.circle(pos.x + SIZE, pos.y + SIZE, SIZE);
-        r.end();
+        this.statetime += delta;
+
+        Animation animation = null;
+        if (currentKeyFrame == null || velocity.y < 0) {
+            animation = characterFront;
+        } else if (velocity.y > 0) {
+            animation = characterBack;
+        } else if (velocity.x < 0) {
+            animation = characterLeft;
+        } else if (velocity.x > 0) {
+            animation = characterRight;
+        }
+
+        if (animation != null) {
+            this.step.resume();
+            currentKeyFrame = animation.getKeyFrame(this.statetime, true);
+        } else {
+            this.step.pause();
+        }
+
+        batch.begin();
+        batch.draw(currentKeyFrame, pos.x, pos.y, 16, 16);
+        batch.end();
 
         float viewAngle = velocity.angle();
         float playerAngle = playerDistance.angle();
         float diffAngle = Math.abs(viewAngle - playerAngle);
+
+        ShapeRenderer r = getWorld().getCamera().getShapeRenderer();
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Vector2 center = pos.cpy().add(SIZE, SIZE);

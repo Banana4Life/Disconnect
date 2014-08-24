@@ -16,6 +16,9 @@ public class Animations extends ResourceBag<Animation> {
     public Animation characterrightfront;
     public Animation characterrightback;
     public Animation characterrightside;
+    public Animation securityfront;
+    public Animation securityback;
+    public Animation securityside;
     public Animation energybar;
     public Animation key;
     public Animation doorhorizontal;
@@ -27,10 +30,6 @@ public class Animations extends ResourceBag<Animation> {
 
     @Override
     protected Animation load(FileHandle basedir, Field field) {
-        if (field.getName().equals("characterleft") || field.getName().equals("characterright")) {
-            return null;
-        }
-
         Texture tmp = new Texture(basedir.child(fieldToPath(field) + ".png"));
         TextureRegion[][] keyFrames2D = TextureRegion.split(tmp, tmp.getWidth(), 16);
 
