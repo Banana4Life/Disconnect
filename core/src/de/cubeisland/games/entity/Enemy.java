@@ -1,6 +1,7 @@
 package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -13,6 +14,7 @@ import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.resource.bag.Animations;
+import de.cubeisland.games.screens.GameScreen;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.util.SoundPlayer;
 
@@ -130,6 +132,10 @@ public class Enemy extends Entity {
         if (playerDistance.len2() <= RANGE * RANGE && diffAngle <= (FOV / 2f) && isLineOfSightClear(getWorld(), pos, pos.cpy().add(playerDistance))) {
             r.setColor(1, 0, 0, 0.6f);
             aggro = true;
+            Screen screen = getWorld().getGame().getScreen();
+            if (screen instanceof GameScreen) {
+                ((GameScreen) screen).startAlarm();
+            }
             for (Door door : getWorld().findAllDoors()) {
                 door.close();
             }

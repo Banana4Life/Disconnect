@@ -26,6 +26,7 @@ public class GameScreen extends DisconnectScreen {
     private float maxdisconnectTime = 5;
     private SoundPlayer timerSound;
     private SoundPlayer.SoundInstance timerSoundInstance;
+    private SoundPlayer.SoundInstance alarmSound;
 
     public GameScreen(DisconnectGame game) {
         this.game = game;
@@ -100,6 +101,10 @@ public class GameScreen extends DisconnectScreen {
         super.hide();
         game.getInputMultiplexer().remove(this.playerInput);
         this.stopTimeSound();
+        if (this.alarmSound != null) {
+            this.alarmSound.stop();
+            this.alarmSound = null;
+        }
         dispose();
     }
 
@@ -130,6 +135,12 @@ public class GameScreen extends DisconnectScreen {
         if (timerSoundInstance != null) {
             this.timerSoundInstance.stop();
             this.timerSoundInstance = null;
+        }
+    }
+
+    public void startAlarm() {
+        if (this.alarmSound == null) {
+            this.alarmSound = game.getResourcePack().sounds.alarm.start(.5f);
         }
     }
 
