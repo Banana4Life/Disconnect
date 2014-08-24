@@ -106,13 +106,17 @@ public class World implements Disposable {
 
     public <E extends Entity> E spawn(Class<E> clazz, Vector2 pos) {
         try {
-            E e = clazz.newInstance();
-            this.spawn(e);
-            e.getPos().set(pos);
-            return e;
+            if (clazz !=null)
+            {
+                E e = clazz.newInstance();
+                this.spawn(e);
+                e.getPos().set(pos);
+                return e;
+            }
         } catch (ReflectiveOperationException e) {
             throw new IllegalArgumentException(clazz.getName());
         }
+        return null;
     }
 
     public <E extends Entity> E spawn(E e) {
