@@ -46,19 +46,11 @@ public class World implements Disposable {
                 if (tileType == FLOOR_PLAYER) {
                     spawnPos = tile.getPos();
                 }
-                Entity spawned = null;
-                switch (tileType) {
-                    case FLOOR_ENEMY:
-                        this.spawn(spawned = new Enemy());
-                        break;
-                    case FLOOR_KEY:
-                        this.spawn(spawned = new Key());
-                        break;
-                    // TODO other Types
-                }
-                if (spawned != null)
+                Entity entity = tileType.createEntity();
+                if (entity != null)
                 {
-                    spawned.getPos().set(tile.getPos());
+                    this.spawn(entity);
+                    entity.getPos().set(tile.getPos());
                 }
             }
         }

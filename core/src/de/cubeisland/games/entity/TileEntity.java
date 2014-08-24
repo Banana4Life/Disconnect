@@ -28,11 +28,6 @@ public class TileEntity extends Entity {
         this.tileX = x;
         this.tileY = y;
         this.type = type.get();
-        if (type != WALL)
-        {
-            System.out.println(type.name() + type.get().name());
-        }
-
         this.size = new Vector2(SIZE, SIZE);
         this.pos.set(x, y).scl(SIZE);
         if (this.type.isBlocking()) {
