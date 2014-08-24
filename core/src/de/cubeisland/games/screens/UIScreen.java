@@ -21,7 +21,7 @@ public abstract class UIScreen extends DisconnectScreen {
 
     @Override
     public void show() {
-        setClearColor(Color.WHITE);
+        setClearColor(Color.BLACK);
         game.getInputMultiplexer().addProcessor(input);
     }
 

@@ -29,6 +29,8 @@ public class Textures extends ResourceBag<Texture> {
     public Texture dividerleft;
     public Texture dividerright;
     public Texture iteminhand;
+    public Texture logo;
+    public Texture exittipp;
 
     public Textures(Files.FileType fileType) {
         super(fileType);

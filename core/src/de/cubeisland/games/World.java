@@ -84,7 +84,9 @@ public class World implements Disposable {
             }
         }
 
-        spawn(player);
+        if (player != null) {
+            spawn(player);
+        }
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
