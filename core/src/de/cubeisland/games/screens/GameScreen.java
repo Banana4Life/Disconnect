@@ -18,9 +18,8 @@ import de.cubeisland.games.resource.bag.Animations;
 
 import static de.cubeisland.games.PlayerInput.Mode.LEFT;
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen extends DisconnectScreen {
     private final DisconnectGame game;
-    private final FPSLogger logger = new FPSLogger();
     private PlayerInput playerInput;
     private World worldLeft;
     private World worldRight;
@@ -46,13 +45,13 @@ public class GameScreen extends ScreenAdapter {
     }
 
     @Override
-    public void render(float delta) {
-        logger.log();
+    public void update(float delta) {
         this.worldLeft.update(this.game, delta);
         this.worldRight.update(this.game, delta);
+    }
 
-        Gdx.gl.glClearColor(Color.MAGENTA.r, Color.MAGENTA.g, Color.MAGENTA.b, Color.MAGENTA.a);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    @Override
+    public void draw(float delta) {
         this.worldLeft.render(this.game, delta);
         this.worldRight.render(this.game, delta);
         renderGUI(delta);

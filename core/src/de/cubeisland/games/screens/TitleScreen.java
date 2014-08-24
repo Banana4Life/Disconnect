@@ -26,7 +26,7 @@ public class TitleScreen extends UIScreen {
     }
 
     @Override
-    public void render(float delta) {
+    public void draw(float delta) {
 
     }
 }

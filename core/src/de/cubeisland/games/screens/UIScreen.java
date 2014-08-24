@@ -1,10 +1,8 @@
 package de.cubeisland.games.screens;
 
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.ScreenAdapter;
 import de.cubeisland.games.DisconnectGame;
 
-public class UIScreen extends ScreenAdapter {
+public abstract class UIScreen extends DisconnectScreen {
 
     protected DisconnectGame game;
     protected UIInput input;

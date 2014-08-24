@@ -24,7 +24,7 @@ public class LoseScreen extends UIScreen {
     }
 
     @Override
-    public void render(float delta) {
+    public void draw(float delta) {
 
     }
 }
