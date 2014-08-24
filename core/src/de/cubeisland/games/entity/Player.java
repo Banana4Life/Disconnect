@@ -13,6 +13,7 @@ public class Player extends Entity {
     private float statetime = 0f;
     private TextureRegion currentKeyFrame;
     private TextureRegion idleFrame;
+    private Item carriedItem = null;
 
     public Player() {
         super();
@@ -66,10 +67,6 @@ public class Player extends Entity {
 
     @Override
     public void onCollide(Entity other, Rectangle collision) {
-        super.onCollide(other, collision);
-        if (other instanceof TileEntity) {
-            return;
-        }
         if (other instanceof GhostPlayer) {
             this.getPos().set(other.getPos());
             other.die();
@@ -77,6 +74,11 @@ public class Player extends Entity {
             playerInput.setMode(playerInput.getMode());
             playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
             playerInput.getOtherPlayer().getPos().set(this.getPos());
+        } else if (other instanceof Item) {
+            if (this.carriedItem == null) {
+                this.carriedItem = (Item) other;
+                other.die();
+            }
         } else {
             die();
         }
@@ -95,5 +97,9 @@ public class Player extends Entity {
 
     public void spawnGhost() {
         this.getWorld().spawn(new GhostPlayer(this));
+    }
+
+    public Item getCarriedItem() {
+        return this.carriedItem;
     }
 }
