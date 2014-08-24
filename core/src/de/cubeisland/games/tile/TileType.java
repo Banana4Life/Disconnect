@@ -9,7 +9,7 @@ import java.util.Map;
 public enum TileType {
     WALL             (0x000000FF, true),
 
-    TERMINAL         (0xFF7300FF, true),
+    TERMINAL         (0xFF7300FF, true, Terminal.class),
 
     DOOR             (0x9F9F9FFF, true, Door.class),
     DOOR_OPEN        (0x8F9F9FFF, false, Door.class),

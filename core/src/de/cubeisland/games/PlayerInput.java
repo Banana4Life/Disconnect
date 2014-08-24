@@ -3,8 +3,13 @@ package de.cubeisland.games;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
+import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
+import de.cubeisland.games.entity.TileEntity;
+import de.cubeisland.games.entity.UserInteractableTile;
 import de.cubeisland.games.screens.GameScreen;
+import de.cubeisland.games.tile.Direction;
+import de.cubeisland.games.tile.TileType;
 
 public class PlayerInput extends InputAdapter {
 
@@ -49,6 +54,16 @@ public class PlayerInput extends InputAdapter {
                     case RIGHT:
                         mode = Mode.LEFT;
                         break;
+                }
+                return true;
+            case Input.Keys.S:
+                TileEntity leftNeighbor = left.getWorld().getNeighbourOf(left.getWorld().getTileAtPos(left.getPos().x + 8, left.getPos().y), Direction.BOTTOM);
+                if (leftNeighbor.getType() == TileType.TERMINAL) {
+                    ((UserInteractableTile)leftNeighbor).userInteract(left);
+                }
+                TileEntity rightNeighbor = right.getWorld().getNeighbourOf(right.getWorld().getTileAtPos(right.getPos().x + 8, right.getPos().y), Direction.BOTTOM);
+                if (rightNeighbor.getType() == TileType.TERMINAL) {
+                    ((UserInteractableTile)rightNeighbor).userInteract(right);
                 }
                 return true;
         }

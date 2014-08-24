@@ -166,4 +166,10 @@ public class Player extends Entity {
     public void useItem() {
         this.carriedItem = null;
     }
+
+    public void switchItems() {
+        Item tmp = this.carriedItem;
+        this.carriedItem = this.otherPlayer.carriedItem;
+        this.otherPlayer.carriedItem = tmp;
+    }
 }

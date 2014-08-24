@@ -286,6 +286,22 @@ public class World implements Disposable {
         return tiles;
     }
 
+    public TileEntity getTileAtPos(float x, float y) {
+
+        for (int tileX = 0; tileX < this.width; ++tileX) {
+            for (int tileY = 0; tileY < this.height; ++tileY) {
+                if (this.tileEntities[tileX][tileY] != null) {
+                    TileEntity tile = this.tileEntities[tileX][tileY];
+                    if (x >= tile.getPos().x && x < tile.getPos().x + 16 && y >= tile.getPos().y && y < tile.getPos().y + 16) {
+                        return tile;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     public List<Door> findAllDoors() {
         List<Door> doors = new ArrayList<>();
 
