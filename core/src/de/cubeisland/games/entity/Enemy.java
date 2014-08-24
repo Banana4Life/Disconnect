@@ -31,6 +31,11 @@ public class Enemy extends Entity {
         velocity.scl(-1);
     }
 
+    @Override
+    public void onCollide(Entity other, Rectangle collisionBox) {
+        die();
+    }
+
     private Vector2 playerDistance = new Vector2(0, 0);
 
     @Override
