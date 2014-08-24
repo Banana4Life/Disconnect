@@ -14,7 +14,7 @@ public class Player extends Entity {
     private TextureRegion currentKeyFrame;
     private TextureRegion idleFrame;
     private Item carriedItem = null;
-    
+
     private Animation characterfront;
     private Animation characterback;
     private Animation characterleft;
@@ -55,7 +55,7 @@ public class Player extends Entity {
         } else if (velocity.x > 0) {
             currentKeyFrame = characterright.getKeyFrame(this.statetime, true);
             idleFrame = characterright.getKeyFrames()[0];
-        }else if (currentKeyFrame == null) {
+        } else if (currentKeyFrame == null) {
             currentKeyFrame = characterfront.getKeyFrame(this.statetime, true);
             idleFrame = characterfront.getKeyFrames()[0];
         } else {
@@ -71,10 +71,6 @@ public class Player extends Entity {
 
     @Override
     public void onCollide(Entity other, Rectangle collision) {
-        super.onCollide(other, collision);
-        if (other instanceof TileEntity) {
-            return;
-        }
         if (other instanceof GhostPlayer) {
             this.getPos().set(other.getPos());
             other.die();
@@ -82,9 +78,18 @@ public class Player extends Entity {
             playerInput.setMode(playerInput.getMode());
             playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
             playerInput.getOtherPlayer().getPos().set(this.getPos());
+        } else if (other instanceof Item) {
+            other.die();
+            this.carriedItem = (Item) other;
         } else {
             die();
         }
+    }
+
+    @Override
+    public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
+        super.onTileCollide(tile, collisionBox);
+        tile.interact(carriedItem);
     }
 
     @Override

@@ -194,7 +194,12 @@ public class World implements Disposable {
                 count++;
             }
         }
-        for (TileEntity e2 : blockingTiles) {
+        for (Iterator<TileEntity> iterator = blockingTiles.iterator(); iterator.hasNext(); ) {
+            TileEntity e2 = iterator.next();
+            if (!e2.getType().isBlocking())
+            {
+                iterator.remove();
+            }
             Rectangle collision = Collider.findCollision(e1, e2);
             if (collision != null) {
                 e1.onTileCollide(e2, collision);

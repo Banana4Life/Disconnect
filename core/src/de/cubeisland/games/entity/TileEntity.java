@@ -7,20 +7,20 @@ import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
+import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
 import java.util.List;
 
 import static de.cubeisland.games.tile.Direction.*;
-import static de.cubeisland.games.tile.TileType.FLOOR;
-import static de.cubeisland.games.tile.TileType.WALL;
+import static de.cubeisland.games.tile.TileType.*;
 
 public class TileEntity extends Entity {
 
     public static final int SIZE = 16;
-    private final TileType type;
     private final int tileX;
     private final int tileY;
+    private TileType type;
     private Texture texture = null;
 
     private Texture overlay = null;
@@ -50,6 +50,7 @@ public class TileEntity extends Entity {
                     this.texture = game.getResourcePack().textures.floor;
                     break;
                 case WALL:
+                case WALL_DOOR:
                     if (getWorld().hasNeighbour(this, TOP)) {
                         TileEntity neighbor = getWorld().getNeighbourOf(this, TOP);
                         if (neighbor.getType() == FLOOR) {
@@ -169,5 +170,21 @@ public class TileEntity extends Entity {
 
     public int getTileY() {
         return tileY;
+    }
+
+    public void interact(Item carriedItem) {
+        if (carriedItem != null)
+        {
+            this.texture = null;
+        }
+        if (this.type == WALL_DOOR && carriedItem instanceof Key) {
+            this.type = FLOOR;
+            for (Direction direction : Direction.values()) {
+                TileEntity neighbourOf = this.getWorld().getNeighbourOf(this, direction);
+                if (neighbourOf != null) {
+                    neighbourOf.interact(carriedItem);
+                }
+            }
+        }
     }
 }
