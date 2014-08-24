@@ -23,7 +23,7 @@ public enum TileType {
     FLOOR_UPGRADE    (0x0066FFFF, false, FLOOR),
     FLOOR_KEY        (0x00AAFFFF, false, FLOOR, Key.class),
     FLOOR_ACTIVATOR  (0xAAAAFFFF, false, Activator.class),
-    EXIT             (0x48FF00FF, false, Activator.class); // TODO Exit tile
+    EXIT             (0x48FF00FF, false, FLOOR, Exit.class); // TODO Exit texture
 
     private static final Map<Integer, TileType> BY_COLOR_VALUE;
 
