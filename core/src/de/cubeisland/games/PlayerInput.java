@@ -30,10 +30,12 @@ public class PlayerInput extends InputAdapter {
                     case LEFT:
                         mode = Mode.LEFT_SINGLE;
                         left.spawnGhost();
+                        right.getVelocity().set(0, 0);
                         break;
                     case RIGHT:
                         mode = Mode.RIGHT_SINGLE;
                         right.spawnGhost();
+                        left.getVelocity().set(0, 0);
                         break;
                 }
                 return true;
@@ -128,5 +130,20 @@ public class PlayerInput extends InputAdapter {
 
     public void setMode(Mode mode) {
         this.mode = mode;
+    }
+
+    public Player getCurrentPlayer() {
+        if (getMode() == Mode.LEFT) {
+            return left;
+        } else {
+            return right;
+        }
+    }
+    public Player getOtherPlayer() {
+        if (getMode() == Mode.LEFT) {
+            return right;
+        } else {
+            return left;
+        }
     }
 }

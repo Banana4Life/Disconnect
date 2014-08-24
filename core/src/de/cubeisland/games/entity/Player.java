@@ -11,6 +11,7 @@ import de.cubeisland.games.screens.GameScreen;
 public class Player extends Entity {
     private float statetime = 0f;
     private TextureRegion currentKeyFrame;
+    private TextureRegion idleFrame;
 
     public Player() {
         super();
@@ -26,10 +27,15 @@ public class Player extends Entity {
 
         if (velocity.y < 0) {
             currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
+            idleFrame = game.getResourcePack().animations.characterfront.getKeyFrames()[0];
         } else if (velocity.y > 0) {
             currentKeyFrame = game.getResourcePack().animations.characterback.getKeyFrame(this.statetime, true);
+            idleFrame = game.getResourcePack().animations.characterback.getKeyFrames()[0];
         } else if (currentKeyFrame == null) {
             currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
+            idleFrame = game.getResourcePack().animations.characterfront.getKeyFrames()[0];
+        } else {
+            currentKeyFrame = idleFrame;
         }
 
         batch.begin();
@@ -48,6 +54,8 @@ public class Player extends Entity {
             other.die();
             PlayerInput playerInput = ((GameScreen)this.getWorld().getGame().getScreen()).getPlayerInput();
             playerInput.setMode(playerInput.getMode());
+            playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
+            playerInput.getOtherPlayer().getPos().set(this.getPos());
         } else {
             die();
         }
@@ -60,8 +68,8 @@ public class Player extends Entity {
         this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
     }
 
-    public TextureRegion getCurrentKeyFrame() {
-        return currentKeyFrame;
+    public TextureRegion getIdleFrame() {
+        return idleFrame;
     }
 
     public void spawnGhost() {

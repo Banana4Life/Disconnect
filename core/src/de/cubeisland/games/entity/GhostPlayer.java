@@ -3,7 +3,6 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
 
@@ -19,7 +18,7 @@ public class GhostPlayer extends Entity {
         delta = 0;
         time = 1;
 
-        this.keyFrame = player.getCurrentKeyFrame();
+        this.keyFrame = player.getIdleFrame();
         this.getPos().set(player.getPos());
     }
 
