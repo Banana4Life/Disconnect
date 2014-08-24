@@ -26,9 +26,9 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void onTileCollide(TileEntity tile, Rectangle helper3) {
-        super.onTileCollide(tile, helper3);
+    public boolean onTileCollide(TileEntity tile, Rectangle helper3) {
         velocity.scl(-1);
+        return super.onTileCollide(tile, helper3);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Enemy extends Entity {
         CollisionBox playerCB = player.getCollisionBox();
         playerDistance.set(player.getPos());
         playerDistance.add(playerCB.getOffsetX() + playerCB.getWidth() / 2f,
-                           playerCB.getOffsetY() + playerCB.getHeight() / 2f).sub(pos);
+                playerCB.getOffsetY() + playerCB.getHeight() / 2f).sub(pos);
         float viewAngle = velocity.angle();
         float playerAngle = playerDistance.angle();
         float diffAngle = Math.abs(viewAngle - playerAngle);

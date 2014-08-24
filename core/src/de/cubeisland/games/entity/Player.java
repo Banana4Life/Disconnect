@@ -24,6 +24,7 @@ public class Player extends Entity {
     private Sound step;
     private long soundId;
     private Player otherPlayer;
+    private boolean skipUpdate = false;
 
     public Player(Animation characterFront, Animation characterSide, Animation characterBack) {
         super();
@@ -101,10 +102,16 @@ public class Player extends Entity {
     }
 
     @Override
-    public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
+    public boolean onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
-        tile.interact(carriedItem);
         this.otherPlayer.getPos().set(this.getPos());
+        this.otherPlayer.skipUpdate();
+        tile.interact(carriedItem);
+        return true;
+    }
+
+    private void skipUpdate() {
+        this.skipUpdate = true;
     }
 
     @Override
@@ -114,6 +121,11 @@ public class Player extends Entity {
 
     @Override
     public void update(DisconnectGame game, float delta) {
+        if (skipUpdate)
+        {
+            skipUpdate = false;
+            return;
+        }
         super.update(game, delta);
 
         this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);

@@ -12,7 +12,7 @@ public abstract class Entity {
     protected Vector2 velocity = Vector2.Zero.cpy();
     protected Vector2 size = Vector2.Zero.cpy();
     private World world;
-    private Vector2 lastPos = Vector2.Zero.cpy();
+    protected Vector2 lastPos = Vector2.Zero.cpy();
     private int depth = 1;
     private boolean alive = true;
     private CollisionBox collisionBox;
@@ -20,7 +20,6 @@ public abstract class Entity {
     public void update(DisconnectGame game, float delta) {
         this.lastPos.set(pos);
         this.pos.add(this.velocity.cpy().scl(delta));
-
         this.world.checkCollisions(this);
     }
 
@@ -49,9 +48,11 @@ public abstract class Entity {
     public void onCollide(Entity other, Rectangle collisionBox) {
     }
 
-    public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
-        float posy = pos.y;
-        float posx = pos.x;
+    public boolean onTileCollide(TileEntity tile, Rectangle collisionBox) {
+        System.out.println(tile.getTileX() + " " + tile.getTileY());
+
+        if (this instanceof Player)
+            System.out.println(lastPos.x + "->" + pos.x + " | " + lastPos.y + "->" + pos.y);
         if (Math.abs(lastPos.y - pos.y) > Math.abs((lastPos.x - pos.x)))
         {
             if (onTileCollideY(collisionBox))
@@ -60,13 +61,25 @@ public abstract class Entity {
             }
             if (collisionBox != null)
             {
-                pos.y = posy;
+                float posy = pos.y;
+                pos.y = lastPos.y;
                 onTileColideX(collisionBox);
                 collisionBox = Collider.findCollision(this, tile);
                 if (collisionBox != null)
                 {
-                    pos.x = posx;
-                    System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
+                    pos.y = posy;
+                    collisionBox = Collider.findCollision(this, tile);
+                    if (collisionBox != null)
+                    {
+                        System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
+                        pos.x = lastPos.x;
+                        pos.y = lastPos.y;
+                        return false;
+                    }
+                }
+                else
+                {
+                    pos.y = posy;
                 }
             }
         }
@@ -78,17 +91,29 @@ public abstract class Entity {
             }
             if (collisionBox != null)
             {
-                pos.x = posx;
+                float posx = pos.x;
+                pos.x = lastPos.x;
                 onTileCollideY(collisionBox);
                 collisionBox = Collider.findCollision(this, tile);
                 if (collisionBox != null)
                 {
-                    pos.y = posy;
-                    System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
+                    pos.x = posx;
+                    collisionBox = Collider.findCollision(this, tile);
+                    if (collisionBox != null)
+                    {
+                        System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
+                        pos.x = lastPos.x;
+                        pos.y = lastPos.y;
+                        return false;
+                    }
+                }
+                else
+                {
+                    pos.x = posx;
                 }
             }
         }
-
+        return true;
     }
 
     private boolean onTileCollideY(Rectangle collisionBox) {
