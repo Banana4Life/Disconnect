@@ -49,10 +49,6 @@ public abstract class Entity {
     }
 
     public boolean onTileCollide(TileEntity tile, Rectangle collisionBox) {
-        System.out.println(tile.getTileX() + " " + tile.getTileY());
-
-        if (this instanceof Player)
-            System.out.println(lastPos.x + "->" + pos.x + " | " + lastPos.y + "->" + pos.y);
         if (Math.abs(lastPos.y - pos.y) > Math.abs((lastPos.x - pos.x)))
         {
             if (onTileCollideY(collisionBox))
