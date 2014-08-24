@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 import de.cubeisland.games.entity.Enemy;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
@@ -17,7 +18,7 @@ import java.util.*;
 
 import static de.cubeisland.games.tile.TileType.SPAWNPOINT;
 
-public class World {
+public class World implements Disposable {
     private final Player player;
     private final int width;
     private final int height;
@@ -185,5 +186,10 @@ public class World {
             }
         }
         return count;
+    }
+
+    @Override
+    public void dispose() {
+        this.camera.dispose();
     }
 }

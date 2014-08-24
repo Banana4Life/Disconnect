@@ -2,6 +2,7 @@ package de.cubeisland.games.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,7 +17,7 @@ import de.cubeisland.games.entity.Player;
 
 import static de.cubeisland.games.PlayerInput.Mode.LEFT;
 
-public class GameScreen implements Screen {
+public class GameScreen extends ScreenAdapter {
     private final DisconnectGame game;
     private final FPSLogger logger = new FPSLogger();
     private PlayerInput playerInput;
@@ -92,23 +93,11 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
     public void dispose() {
-
+        this.worldLeft.dispose();
+        this.worldRight.dispose();
+        game.getInputMultiplexer().removeProcessor(this.playerInput);
+        super.dispose();
     }
 
     public PlayerInput getPlayerInput() {
