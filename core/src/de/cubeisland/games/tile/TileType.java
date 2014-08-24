@@ -72,16 +72,7 @@ public enum TileType {
         return this.type;
     }
 
-    public Entity createEntity()
-    {
-        if (this.entityClass != null)
-        {
-            try {
-                return this.entityClass.newInstance();
-            } catch (ReflectiveOperationException e) {
-                return null;
-            }
-        }
-        return null;
+    public Class<? extends Entity> getEntityClass() {
+        return entityClass;
     }
 }

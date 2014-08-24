@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
-import de.cubeisland.games.entity.*;
+import de.cubeisland.games.entity.Entity;
+import de.cubeisland.games.entity.Player;
+import de.cubeisland.games.entity.TileEntity;
 import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
@@ -49,12 +51,7 @@ public class World implements Disposable {
                 if (tileType == FLOOR_PLAYER) {
                     spawnPos = tile.getPos();
                 }
-                Entity entity = tileType.createEntity();
-                if (entity != null)
-                {
-                    this.spawn(entity);
-                    entity.getPos().set(tile.getPos());
-                }
+                this.spawn(tileType.getEntityClass(), tile.getPos());
             }
         }
 
@@ -105,6 +102,17 @@ public class World implements Disposable {
 
     public boolean hasNeighbour(TileEntity tile, Direction dir) {
         return getNeighbourOf(tile, dir) != null;
+    }
+
+    public <E extends Entity> E spawn(Class<E> clazz, Vector2 pos) {
+        try {
+            E e = clazz.newInstance();
+            this.spawn(e);
+            e.getPos().set(pos);
+            return e;
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalArgumentException(clazz.getName());
+        }
     }
 
     public <E extends Entity> E spawn(E e) {
