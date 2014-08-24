@@ -88,6 +88,13 @@ public class Player extends Entity {
         super.render(game, delta);
     }
 
+    public TextureRegion getItemInHandTex() {
+        if (carriedItem == null) {
+            return null;
+        }
+        return carriedItem.getTex();
+    }
+
     @Override
     public void onCollide(Entity other, Rectangle collision) {
         if (other instanceof GhostPlayer) {
@@ -98,8 +105,8 @@ public class Player extends Entity {
             playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
             playerInput.getOtherPlayer().getPos().set(this.getPos());
         } else if (other instanceof Item) {
-            other.die();
             this.carriedItem = (Item) other;
+            this.carriedItem.setCollisionBox(null);
         } else {
             die();
         }
@@ -108,7 +115,10 @@ public class Player extends Entity {
     @Override
     public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
-        tile.interact(carriedItem);
+        if (tile instanceof Door) {
+            ((Door)tile).interact(carriedItem);
+            carriedItem = null;
+        }
         if (this.ghost == null || !this.ghost.isAlive()) {
             this.otherPlayer.getPos().set(this.getPos());
             this.otherPlayer.skipUpdate();

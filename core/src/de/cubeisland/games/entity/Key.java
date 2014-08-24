@@ -15,7 +15,7 @@ public class Key extends Item {
     @Override
     public void onSpawn(World world) {
         super.onSpawn(world);
-        this.setCollisionBox(new CollisionBox(4, 2, 6, 0));
+        this.setCollisionBox(new CollisionBox(6, 6, 5, 0));
     }
 
     @Override
@@ -23,10 +23,13 @@ public class Key extends Item {
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
 
         this.statetime += delta;
+        texReg = game.getResourcePack().animations.key.getKeyFrame(this.statetime, true);
 
-        batch.begin();
-        batch.draw(game.getResourcePack().animations.key.getKeyFrame(this.statetime, true), pos.x, pos.y, 16, 16);
-        batch.end();
+        if (getCollisionBox() != null) {
+            batch.begin();
+            batch.draw(texReg, pos.x, pos.y, 16, 16);
+            batch.end();
+        }
 
         super.render(game, delta);
     }

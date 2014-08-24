@@ -69,7 +69,13 @@ public class GameScreen extends DisconnectScreen {
                 0, 0, 1, Gdx.graphics.getHeight() / divider.getHeight());
 
         batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 13, 0, 16, 16);
+        if (worldLeft.getPlayer().getItemInHandTex() != null) {
+            batch.draw(worldLeft.getPlayer().getItemInHandTex(), Gdx.graphics.getWidth() / 8 - 13, 0, 16, 16);
+        }
         batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 3, 0, 16, 16);
+        if (worldRight.getPlayer().getItemInHandTex() != null) {
+            batch.draw(worldRight.getPlayer().getItemInHandTex(), Gdx.graphics.getWidth() / 8 - 3, 0, 16, 16);
+        }
 
         if (this.playerInput.getDisconnected()) {
             disconnectTime += delta;

@@ -1,6 +1,7 @@
 package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
@@ -13,6 +14,7 @@ public class Item extends Entity {
     private static final float SIZE = 3;
 
     private Type type = Type.DEFAULT;
+    protected TextureRegion texReg = null;
     
     public Item(Type type) {
         this.type = type;
@@ -44,5 +46,9 @@ public class Item extends Entity {
         ;
 
         public static final Type DEFAULT = KEY;
+    }
+
+    public TextureRegion getTex() {
+        return texReg;
     }
 }

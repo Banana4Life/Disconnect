@@ -42,7 +42,7 @@ public class GhostPlayer extends Entity {
 
         this.delta += delta;
         if (this.getCollisionBox() == null && this.delta > this.time) {
-            this.setCollisionBox(new CollisionBox(2, 1, 7, 0));
+            this.setCollisionBox(new CollisionBox(2, 3, 7, 0));
         }
     }
 }
