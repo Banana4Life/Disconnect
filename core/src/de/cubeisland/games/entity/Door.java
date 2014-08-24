@@ -62,6 +62,7 @@ public class Door extends TileEntity {
         if (carriedItem instanceof Key) {
             this.type = DOOR_OPENING;
             this.texture = this.getWorld().getGame().getResourcePack().textures.floor;
+            getWorld().getGame().getResourcePack().sounds.door.play(0.20f);
         }
     }
 

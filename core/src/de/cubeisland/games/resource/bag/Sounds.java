@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 public class Sounds extends ResourceBag<Sound> {
 
     public Sound step;
+    public Sound door;
 
     public Sounds(Files.FileType fileType) {
         super(fileType);
