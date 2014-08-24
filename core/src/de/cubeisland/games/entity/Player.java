@@ -121,14 +121,13 @@ public class Player extends Entity {
 
     @Override
     public void update(DisconnectGame game, float delta) {
+        this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
         if (skipUpdate)
         {
             skipUpdate = false;
             return;
         }
         super.update(game, delta);
-
-        this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
     }
 
     public TextureRegion getIdleFrame() {
