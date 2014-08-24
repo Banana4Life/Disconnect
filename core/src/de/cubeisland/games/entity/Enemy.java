@@ -30,9 +30,9 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public boolean onTileCollide(TileEntity tile, Rectangle helper3) {
+    public void onTileCollide(TileEntity tile, Rectangle helper3) {
         velocity.scl(-1);
-        return super.onTileCollide(tile, helper3);
+        super.onTileCollide(tile, helper3);
     }
 
     @Override

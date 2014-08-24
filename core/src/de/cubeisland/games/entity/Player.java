@@ -27,6 +27,8 @@ public class Player extends Entity {
     private Player otherPlayer;
     private boolean skipUpdate = false;
 
+    private GhostPlayer ghost = null;
+
     public Player(Animation characterFront, Animation characterSide, Animation characterBack) {
         super();
 
@@ -104,14 +106,13 @@ public class Player extends Entity {
     }
 
     @Override
-    public boolean onTileCollide(TileEntity tile, Rectangle collisionBox) {
+    public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
-        if (tile instanceof Door) {
-            ((Door)tile).interact(carriedItem);
+        tile.interact(carriedItem);
+        if (this.ghost == null || !this.ghost.isAlive()) {
+            this.otherPlayer.getPos().set(this.getPos());
+            this.otherPlayer.skipUpdate();
         }
-        this.otherPlayer.getPos().set(this.getPos());
-        this.otherPlayer.skipUpdate();
-        return true;
     }
 
     private void skipUpdate() {
@@ -140,7 +141,8 @@ public class Player extends Entity {
     }
 
     public void spawnGhost() {
-        this.getWorld().spawn(new GhostPlayer(this));
+        this.ghost = new GhostPlayer(this);
+        this.getWorld().spawn(ghost);
     }
 
     public void setOtherPlayer(Player otherPlayer) {

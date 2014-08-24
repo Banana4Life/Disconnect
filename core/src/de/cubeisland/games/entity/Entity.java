@@ -49,7 +49,11 @@ public abstract class Entity {
     public void onCollide(Entity other, Rectangle collisionBox) {
     }
 
-    public boolean onTileCollide(TileEntity tile, Rectangle collisionBox) {
+    public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
+        if (!tile.getType().isBlocking())
+        {
+            return;
+        }
         if (Math.abs(lastPos.y - pos.y) > Math.abs((lastPos.x - pos.x)))
         {
             if (onTileCollideY(collisionBox))
@@ -71,7 +75,6 @@ public abstract class Entity {
                         System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
                         pos.x = lastPos.x;
                         pos.y = lastPos.y;
-                        return false;
                     }
                 }
                 else
@@ -101,7 +104,6 @@ public abstract class Entity {
                         System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
                         pos.x = lastPos.x;
                         pos.y = lastPos.y;
-                        return false;
                     }
                 }
                 else
@@ -110,7 +112,6 @@ public abstract class Entity {
                 }
             }
         }
-        return true;
     }
 
     private boolean onTileCollideY(Rectangle collisionBox) {

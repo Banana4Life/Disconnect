@@ -1,6 +1,7 @@
 package de.cubeisland.games.entity;
 
 import de.cubeisland.games.World;
+import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.TileType;
 
 public class Activator extends TileEntity {
@@ -12,6 +13,7 @@ public class Activator extends TileEntity {
     public void onSpawn(World world) {
         super.onSpawn(world);
         this.texture = world.getGame().getResourcePack().textures.activatoroff;
+        this.setCollisionBox(new CollisionBox(TileEntity.SIZE, TileEntity.SIZE));
     }
 
     @Override

@@ -65,6 +65,10 @@ public class World implements Disposable {
                 if (tileType == FLOOR_PLAYER) {
                     spawnPos = tile.getPos();
                 }
+                if (!tile.getType().isBlocking() && tile.getCollisionBox() != null)
+                {
+                    this.entities.add(tile);
+                }
                 this.spawn(tileType.getEntityClass(), tile.getPos());
             }
         }
@@ -209,7 +213,14 @@ public class World implements Disposable {
             }
             Rectangle collision = Collider.findCollision(e1, e2);
             if (collision != null) {
-                e1.onCollide(e2, collision);
+                if (e2 instanceof TileEntity)
+                {
+                    e1.onTileCollide((TileEntity) e2, collision);
+                }
+                else
+                {
+                    e1.onCollide(e2, collision);
+                }
                 count++;
             }
         }
