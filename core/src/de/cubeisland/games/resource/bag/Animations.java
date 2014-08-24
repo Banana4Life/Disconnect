@@ -24,6 +24,7 @@ public class Animations extends ResourceBag<Animation> {
     public Animation doorhorizontal;
     public Animation doorvertical;
     public Animation terminal;
+    public Animation buttonpress;
 
     public Animations(Files.FileType fileType) {
         super(fileType);
