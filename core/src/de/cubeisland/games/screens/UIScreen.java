@@ -22,12 +22,12 @@ public abstract class UIScreen extends DisconnectScreen {
     @Override
     public void show() {
         setClearColor(Color.BLACK);
-        game.getInputMultiplexer().addProcessor(input);
+        game.getInputMultiplexer().prepend(input);
     }
 
     @Override
     public void hide() {
-        game.getInputMultiplexer().removeProcessor(input);
+        game.getInputMultiplexer().remove(input);
     }
 
     public UIInput getInput() {

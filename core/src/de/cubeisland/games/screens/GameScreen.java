@@ -39,7 +39,7 @@ public class GameScreen extends DisconnectScreen {
         this.playerInput = new PlayerInput(this.worldLeft.getPlayer(), this.worldRight.getPlayer());
         this.worldLeft.getPlayer().setOtherPlayer(this.worldRight.getPlayer());
         this.worldRight.getPlayer().setOtherPlayer(this.worldLeft.getPlayer());
-        game.getInputMultiplexer().addProcessor(playerInput);
+        game.getInputMultiplexer().prepend(playerInput);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class GameScreen extends DisconnectScreen {
     @Override
     public void hide() {
         super.hide();
-        game.getInputMultiplexer().removeProcessor(this.playerInput);
+        game.getInputMultiplexer().remove(this.playerInput);
         dispose();
     }
 

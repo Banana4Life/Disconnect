@@ -1,12 +1,15 @@
 package de.cubeisland.games;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import de.cubeisland.engine.reflect.Reflector;
 import de.cubeisland.games.resource.LudumResourcePack;
 import de.cubeisland.games.screens.*;
 
 import java.lang.reflect.Constructor;
 
+import static com.badlogic.gdx.Files.FileType.Internal;
 import static de.cubeisland.games.Camera.CameraType.GUI;
 
 public class DisconnectGame extends Game {
@@ -19,12 +22,11 @@ public class DisconnectGame extends Game {
 
     @Override
     public void create() {
-        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer = new InputMultiplexer(new GlobalInputProcessor(this));
         Gdx.input.setInputProcessor(inputMultiplexer);
-        inputMultiplexer.addProcessor(new GlobalInputProcessor(this));
 
         this.reflector = new Reflector();
-        this.resourcePack = new LudumResourcePack(Files.FileType.Internal, reflector);
+        this.resourcePack = new LudumResourcePack(Internal, reflector);
         this.resourcePack.build();
 
         this.guiCamera = Camera.create(GUI);
