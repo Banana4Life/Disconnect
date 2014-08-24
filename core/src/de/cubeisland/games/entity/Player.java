@@ -1,5 +1,6 @@
 package de.cubeisland.games.entity;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,27 +15,39 @@ public class Player extends Entity {
     private TextureRegion currentKeyFrame;
     private TextureRegion idleFrame;
     private Item carriedItem = null;
+    
+    private Animation characterFront;
+    private Animation characterBack;
+    private Animation characterLeft;
+    private Animation characterRight;
 
-    private Animation characterfront;
-    private Animation characterback;
-    private Animation characterleft;
-    private Animation characterright;
+    private Sound step;
+    private long soundId;
+    private boolean playing = false;
 
-    public Player(Animation characterfront, Animation characterside, Animation characterback) {
+    public Player(Animation characterFront, Animation characterside, Animation characterBack) {
         super();
 
-        this.characterfront = characterfront;
+        this.characterFront = characterFront;
         TextureRegion[] tmp = new TextureRegion[characterside.getKeyFrames().length];
         int i = 0;
         for (TextureRegion keyFrame : characterside.getKeyFrames()) {
             tmp[i] = new TextureRegion(keyFrame);
             tmp[i++].flip(true, false);
         }
-        this.characterleft = new Animation(characterside.getFrameDuration(), tmp);
-        this.characterright = characterside;
-        this.characterback = characterback;
+        this.characterLeft = new Animation(characterside.getFrameDuration(), tmp);
+        this.characterRight = characterside;
+        this.characterBack = characterBack;
 
         setCollisionBox(new CollisionBox(6, 2, 5, 0));
+    }
+
+    @Override
+    public void onSpawn() {
+        this.step = getWorld().getGame().getResourcePack().sounds.step;
+        this.soundId = this.step.play(.10f);
+        this.step.pause(this.soundId);
+        this.step.setLooping(this.soundId, true);
     }
 
     @Override
@@ -43,22 +56,23 @@ public class Player extends Entity {
 
         this.statetime += delta;
 
-        if (velocity.y < 0) {
-            currentKeyFrame = characterfront.getKeyFrame(this.statetime, true);
-            idleFrame = characterfront.getKeyFrames()[0];
+        Animation animation = null;
+        if (currentKeyFrame == null || velocity.y < 0) {
+            animation = characterFront;
         } else if (velocity.y > 0) {
-            currentKeyFrame = characterback.getKeyFrame(this.statetime, true);
-            idleFrame = characterback.getKeyFrames()[0];
+            animation = characterBack;
         } else if (velocity.x < 0) {
-            currentKeyFrame = characterleft.getKeyFrame(this.statetime, true);
-            idleFrame = characterleft.getKeyFrames()[0];
+            animation = characterLeft;
         } else if (velocity.x > 0) {
-            currentKeyFrame = characterright.getKeyFrame(this.statetime, true);
-            idleFrame = characterright.getKeyFrames()[0];
-        } else if (currentKeyFrame == null) {
-            currentKeyFrame = characterfront.getKeyFrame(this.statetime, true);
-            idleFrame = characterfront.getKeyFrames()[0];
+            animation = characterRight;
+        }
+
+        if (animation != null) {
+            this.step.resume(this.soundId);
+            currentKeyFrame = animation.getKeyFrame(this.statetime, true);
+            idleFrame = animation.getKeyFrames()[0];
         } else {
+            this.step.pause(this.soundId);
             currentKeyFrame = idleFrame;
         }
 
