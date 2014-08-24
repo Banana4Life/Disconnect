@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.PlayerInput;
@@ -62,9 +63,11 @@ public class GameScreen implements Screen {
             divider = game.getResourcePack().textures.dividerright;
         }
         divider.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-
-        batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 0, divider.getWidth(), Gdx.graphics.getHeight(),
+        batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 16, divider.getWidth(), Gdx.graphics.getHeight(),
                 0, 0, 1, Gdx.graphics.getHeight() / divider.getHeight());
+
+        TextureRegion energybar = game.getResourcePack().animations.energybar.getKeyFrames()[0];
+        batch.draw(energybar, Gdx.graphics.getWidth() / 8 - 16, 0, 32, 16);
         batch.end();
     }
 
