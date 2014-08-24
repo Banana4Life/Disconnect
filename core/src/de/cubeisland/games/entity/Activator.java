@@ -6,6 +6,7 @@ import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
 public class Activator extends TileEntity {
+
     public Activator(int x, int y, TileType type) {
         super(x, y, type);
     }
@@ -19,6 +20,7 @@ public class Activator extends TileEntity {
 
     @Override
     public void interact(Item carriedItem, Player player) {
+        getWorld().getGame().getResourcePack().sounds.pressureplate.start(.25f);
         this.texture = this.getWorld().getGame().getResourcePack().textures.activatoron;
         this.setCollisionBox(null);
         for (Direction direction : Direction.values()) {
