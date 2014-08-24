@@ -7,6 +7,8 @@ import de.cubeisland.games.screens.*;
 
 import java.lang.reflect.Constructor;
 
+import static de.cubeisland.games.Camera.CameraType.GUI;
+
 public class DisconnectGame extends Game {
 
     private InputMultiplexer inputMultiplexer;
@@ -24,7 +26,7 @@ public class DisconnectGame extends Game {
         this.resourcePack = new LudumResourcePack(Files.FileType.Internal, reflector);
         this.resourcePack.build();
 
-        this.guiCamera = Camera.gui();
+        this.guiCamera = Camera.create(GUI);
 
 
         resourcePack.songs.maintheme.setLooping(true);

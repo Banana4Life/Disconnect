@@ -16,7 +16,7 @@ public class TitleScreen extends UIScreen {
     public void show() {
         super.show();
 
-        input.add(new Handler() {
+        getInput().add(new Handler() {
             @Override
             public boolean handle(DisconnectGame game) {
                 game.transition(GameScreen.class);

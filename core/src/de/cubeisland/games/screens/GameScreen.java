@@ -12,6 +12,7 @@ import de.cubeisland.games.World;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.resource.bag.Animations;
 
+import static de.cubeisland.games.Camera.CameraType;
 import static de.cubeisland.games.PlayerInput.Mode.LEFT;
 
 public class GameScreen extends DisconnectScreen {
@@ -33,8 +34,8 @@ public class GameScreen extends DisconnectScreen {
         setClearColor(Color.MAGENTA);
 
         Animations animations = game.getResourcePack().animations;
-        this.worldLeft = new World(game, Camera.left(), new Player(animations.characterleftfront, animations.characterleftside, animations.characterleftback), "LevelL1");
-        this.worldRight = new World(game, Camera.right(), new Player(animations.characterrightfront, animations.characterrightside, animations.characterrightback), "LevelR1");
+        this.worldLeft = new World(game, Camera.create(CameraType.LEFT), new Player(animations.characterleftfront, animations.characterleftside, animations.characterleftback), "LevelL1");
+        this.worldRight = new World(game, Camera.create(CameraType.RIGHT), new Player(animations.characterrightfront, animations.characterrightside, animations.characterrightback), "LevelR1");
         this.playerInput = new PlayerInput(this.worldLeft.getPlayer(), this.worldRight.getPlayer());
         this.worldLeft.getPlayer().setOtherPlayer(this.worldRight.getPlayer());
         this.worldRight.getPlayer().setOtherPlayer(this.worldLeft.getPlayer());

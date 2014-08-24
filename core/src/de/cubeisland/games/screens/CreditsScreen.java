@@ -14,7 +14,7 @@ public class CreditsScreen extends UIScreen {
     @Override
     public void show() {
         super.show();
-        input.add(ESCAPE, new Handler() {
+        getInput().add(ESCAPE, new Handler() {
             @Override
             public boolean handle(DisconnectGame game) {
                 game.setScreen(new TitleScreen(game));

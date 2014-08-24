@@ -25,16 +25,8 @@ public class Camera extends OrthographicCamera implements Disposable {
         shapeRenderer = new ShapeRenderer();
     }
 
-    public static Camera left() {
-        return new Camera(CameraType.LEFT);
-    }
-
-    public static Camera right() {
-        return new Camera(CameraType.RIGHT);
-    }
-
-    public static Camera gui() {
-        return new Camera(CameraType.GUI);
+    public static Camera create(CameraType type) {
+        return new Camera(type);
     }
 
     public void resize(int width, int height) {
@@ -66,6 +58,7 @@ public class Camera extends OrthographicCamera implements Disposable {
                 x = width / 2 + 2;
                 break;
             case GUI:
+            case UI:
                 break;
             default:
                 return this;
@@ -105,9 +98,10 @@ public class Camera extends OrthographicCamera implements Disposable {
         this.spriteBatch.dispose();
     }
 
-    private enum CameraType {
+    public static enum CameraType {
         LEFT,
         RIGHT,
         GUI,
+        UI,
     }
 }
