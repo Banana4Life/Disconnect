@@ -1,5 +1,6 @@
 package de.cubeisland.games.screens;
 
+import com.badlogic.gdx.graphics.Color;
 import de.cubeisland.games.DisconnectGame;
 
 public abstract class UIScreen extends DisconnectScreen {
@@ -14,6 +15,7 @@ public abstract class UIScreen extends DisconnectScreen {
 
     @Override
     public void show() {
+        setClearColor(Color.WHITE);
         game.getInputMultiplexer().addProcessor(input);
     }
 

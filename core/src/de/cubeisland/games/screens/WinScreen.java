@@ -12,18 +12,6 @@ public class WinScreen extends UIScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
-        input.add(ESCAPE, new Handler() {
-            @Override
-            public boolean handle(DisconnectGame game) {
-                game.exit();
-                return true;
-            }
-        });
-    }
-
-    @Override
     public void draw(float delta) {
 
     }
