@@ -70,11 +70,19 @@ public abstract class Entity {
                 pos.y = newVal;
                 return true;
             }
+            else
+            {
+                pos.y = lastPos.y;
+            }
         } else if (velocity.y < 0) {
             newVal = collisionBox.y + collisionBox.height - this.getCollisionBox().getOffsetY();
             if (newVal <= lastPos.y) {
                 pos.y = newVal;
                 return true;
+            }
+            else
+            {
+                pos.y = lastPos.y;
             }
         }
         return false;
@@ -88,11 +96,19 @@ public abstract class Entity {
                 pos.x = newVal;
                 return true;
             }
+            else
+            {
+                pos.x = lastPos.x;
+            }
         } else if (velocity.x < 0) {
             newVal = collisionBox.x + collisionBox.width - this.getCollisionBox().getOffsetX();
             if (newVal <= lastPos.x) {
                 pos.x = newVal;
                 return true;
+            }
+            else
+            {
+                pos.x = lastPos.x;
             }
         }
         return false;
