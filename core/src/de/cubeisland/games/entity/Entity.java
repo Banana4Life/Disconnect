@@ -206,6 +206,6 @@ public abstract class Entity {
         this.collisionBox = collisionBox;
     }
 
-    public void interact(Item carriedItem) {
+    public void interact(Item carriedItem, Player player) {
     }
 }

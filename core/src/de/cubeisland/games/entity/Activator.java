@@ -17,7 +17,7 @@ public class Activator extends TileEntity {
     }
 
     @Override
-    public void interact(Item carriedItem) {
+    public void interact(Item carriedItem, Player player) {
         this.texture = this.getWorld().getGame().getResourcePack().textures.activatoron;
     }
 }

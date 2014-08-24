@@ -102,8 +102,13 @@ public class Player extends Entity {
             playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
             playerInput.getOtherPlayer().getPos().set(this.getPos());
         } else if (other instanceof Item) {
+            if (this.carriedItem != null)
+            {
+                this.getWorld().spawn(carriedItem.getClass(), carriedItem.getPos());
+            }
             this.carriedItem = (Item) other;
-            this.carriedItem.setCollisionBox(null);
+            other.setCollisionBox(null);
+            this.carriedItem.die();
         } else {
             die();
         }
@@ -112,7 +117,7 @@ public class Player extends Entity {
     @Override
     public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
-        tile.interact(carriedItem);
+        tile.interact(carriedItem, this);
         if (this.ghost == null || !this.ghost.isAlive()) {
             this.otherPlayer.getPos().set(this.getPos());
             this.otherPlayer.skipUpdate();
@@ -155,5 +160,9 @@ public class Player extends Entity {
 
     public Player getOtherPlayer() {
         return otherPlayer;
+    }
+
+    public void useItem() {
+        this.carriedItem = null;
     }
 }

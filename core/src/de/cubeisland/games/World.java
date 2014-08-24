@@ -30,6 +30,7 @@ public class World implements Disposable {
     private DisconnectGame game;
     private Camera camera;
     private Vector2 spawnPos;
+    private List<Entity> spawnedEntities = new ArrayList<>();
 
     public World(DisconnectGame game, Camera camera, Player player, String levelName) {
         this.game = game;
@@ -147,7 +148,8 @@ public class World implements Disposable {
         if (e instanceof Player && spawnPos != null) {
             e.getPos().set(spawnPos);
         }
-        this.entities.add(e);
+
+        this.spawnedEntities.add(e);
         e.onSpawn(this);
         Collections.sort(entities, BY_DEPTH);
         return e;
@@ -165,6 +167,8 @@ public class World implements Disposable {
             entity.onDeath();
             this.entities.remove(entity);
         }
+        this.entities.addAll(spawnedEntities);
+        this.spawnedEntities.clear();
     }
 
     public void render(DisconnectGame game, float delta) {

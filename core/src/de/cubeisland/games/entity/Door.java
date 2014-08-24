@@ -59,8 +59,9 @@ public class Door extends TileEntity {
     }
 
     @Override
-    public void interact(Item carriedItem) {
+    public void interact(Item carriedItem, Player player) {
         if (carriedItem instanceof Key) {
+            player.useItem();
             this.type = DOOR_OPENING;
             this.texture = this.getWorld().getGame().getResourcePack().textures.floor;
             getWorld().getGame().getResourcePack().sounds.door.start(0.20f);

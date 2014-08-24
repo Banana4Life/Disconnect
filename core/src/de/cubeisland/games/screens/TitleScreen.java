@@ -1,18 +1,14 @@
 package de.cubeisland.games.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.resource.bag.Animations;
 
-import static com.badlogic.gdx.Input.Keys.ENTER;
-import static com.badlogic.gdx.Input.Keys.ESCAPE;
-import static com.badlogic.gdx.Input.Keys.SPACE;
+import static com.badlogic.gdx.Input.Keys.*;
 import static de.cubeisland.games.screens.UIInput.Handler;
 
 public class TitleScreen extends UIScreen {
@@ -29,6 +25,7 @@ public class TitleScreen extends UIScreen {
 
         Animations animations = game.getResourcePack().animations;
         this.titleWorld = new World(game, game.getGuiCamera(), new Player(animations.characterleftfront, animations.characterleftside, animations.characterleftback), "TitleWorld");
+        this.titleWorld.update(this.game, 0);
 
         getInput().add(new Handler() {
             @Override
