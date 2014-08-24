@@ -12,6 +12,9 @@ import java.lang.reflect.Field;
 public class Animations extends ResourceBag<Animation> {
     public Animation characterfront;
     public Animation characterback;
+    public Animation characterside;
+    public Animation characterleft;
+    public Animation characterright;
 
     public Animations(Files.FileType fileType) {
         super(fileType);
@@ -19,6 +22,10 @@ public class Animations extends ResourceBag<Animation> {
 
     @Override
     protected Animation load(FileHandle basedir, Field field) {
+        if (field.getName().equals("characterleft") || field.getName().equals("characterright")) {
+            return null;
+        }
+
         TextureRegion[][] keyFrames2D = TextureRegion.split(new Texture(basedir.child(fieldToPath(field) + ".png")), 16, 16);
 
         int rows = keyFrames2D.length;

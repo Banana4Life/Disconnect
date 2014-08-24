@@ -1,5 +1,6 @@
 package de.cubeisland.games.entity;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,7 +17,7 @@ public class Player extends Entity {
     public Player() {
         super();
 
-        setCollisionBox(new CollisionBox(6, 1, 5, 0));
+        setCollisionBox(new CollisionBox(6, 2, 5, 0));
     }
 
     @Override
@@ -31,7 +32,25 @@ public class Player extends Entity {
         } else if (velocity.y > 0) {
             currentKeyFrame = game.getResourcePack().animations.characterback.getKeyFrame(this.statetime, true);
             idleFrame = game.getResourcePack().animations.characterback.getKeyFrames()[0];
-        } else if (currentKeyFrame == null) {
+        } else if (velocity.x < 0) {
+            if (game.getResourcePack().animations.characterleft == null) {
+                TextureRegion[] tmp = new TextureRegion[game.getResourcePack().animations.characterside.getKeyFrames().length];
+                int i = 0;
+                for (TextureRegion keyFrame : game.getResourcePack().animations.characterside.getKeyFrames()) {
+                    tmp[i] = new TextureRegion(keyFrame);
+                    tmp[i++].flip(true, false);
+                }
+                game.getResourcePack().animations.characterleft = new Animation(game.getResourcePack().animations.characterside.getFrameDuration(), tmp);
+            }
+            currentKeyFrame = game.getResourcePack().animations.characterleft.getKeyFrame(this.statetime, true);
+            idleFrame = game.getResourcePack().animations.characterleft.getKeyFrames()[0];
+        } else if (velocity.x > 0) {
+            if (game.getResourcePack().animations.characterright == null) {
+                game.getResourcePack().animations.characterright = new Animation(game.getResourcePack().animations.characterside.getFrameDuration(), game.getResourcePack().animations.characterside.getKeyFrames().clone());
+            }
+            currentKeyFrame = game.getResourcePack().animations.characterright.getKeyFrame(this.statetime, true);
+            idleFrame = game.getResourcePack().animations.characterright.getKeyFrames()[0];
+        }else if (currentKeyFrame == null) {
             currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
             idleFrame = game.getResourcePack().animations.characterfront.getKeyFrames()[0];
         } else {
