@@ -2,12 +2,14 @@ package de.cubeisland.games;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.entity.Enemy;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
 import de.cubeisland.games.entity.collision.Collider;
+import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
@@ -16,14 +18,14 @@ import java.util.*;
 import static de.cubeisland.games.tile.TileType.SPAWNPOINT;
 
 public class World {
-    private DisconnectGame game;
-    private Camera camera;
     private final Player player;
     private final int width;
     private final int height;
     private final TileEntity[][] tileEntities;
     private final Set<TileEntity> blockingTiles;
     private final List<Entity> entities = new ArrayList<>();
+    private DisconnectGame game;
+    private Camera camera;
     private Vector2 spawnPos;
 
     public World(DisconnectGame game, Camera camera, Player player) {
@@ -101,8 +103,7 @@ public class World {
     }
 
     public <E extends Entity> E spawn(E e) {
-        if (e instanceof Player && spawnPos != null)
-        {
+        if (e instanceof Player && spawnPos != null) {
             e.getPos().set(spawnPos);
         }
         e.setWorld(this);
@@ -124,8 +125,6 @@ public class World {
             entity.onDeath();
             this.entities.remove(entity);
         }
-
-        Collider.collideEntities(this.entities, this.blockingTiles);
     }
 
     public void render(DisconnectGame game, float delta) {
@@ -160,5 +159,31 @@ public class World {
 
     public DisconnectGame getGame() {
         return game;
+    }
+
+    public int checkCollisions(Entity e1) {
+        int count = 0;
+        CollisionBox cB = e1.getCollisionBox();
+        if (cB == null) {
+            return count;
+        }
+        for (Entity e2 : entities) {
+            if (e2 == e1) {
+                continue;
+            }
+            Rectangle collision = Collider.findCollision(e1, e2);
+            if (collision != null) {
+                e1.onCollide(e2, collision);
+                count++;
+            }
+        }
+        for (TileEntity e2 : blockingTiles) {
+            Rectangle collision = Collider.findCollision(e1, e2);
+            if (collision != null) {
+                e1.onCollide(e2, collision);
+                count++;
+            }
+        }
+        return count;
     }
 }

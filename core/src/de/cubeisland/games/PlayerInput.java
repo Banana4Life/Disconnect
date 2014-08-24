@@ -22,11 +22,9 @@ public class PlayerInput extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode)
-        {
+        switch (keycode) {
             case Input.Keys.SPACE:
-                switch (mode)
-                {
+                switch (mode) {
                     case LEFT:
                         mode = Mode.LEFT_SINGLE;
                         left.spawnGhost();
@@ -40,8 +38,7 @@ public class PlayerInput extends InputAdapter {
                 }
                 return true;
             case Input.Keys.CONTROL_LEFT:
-                switch (mode)
-                {
+                switch (mode) {
                     case LEFT:
                         mode = Mode.RIGHT;
                         break;
@@ -64,10 +61,8 @@ public class PlayerInput extends InputAdapter {
         return l || r;
     }
 
-    public boolean handle(Vector2 velocity, int keycode, boolean isDown)
-    {
-        if (isDown)
-        {
+    public boolean handle(Vector2 velocity, int keycode, boolean isDown) {
+        if (isDown) {
             switch (keycode) {
                 case Input.Keys.LEFT:
                     velocity.set(-SPEED, velocity.y);
@@ -82,9 +77,7 @@ public class PlayerInput extends InputAdapter {
                     velocity.set(velocity.x, -SPEED);
                     return true;
             }
-        }
-        else
-        {
+        } else {
             if (keycode == Input.Keys.LEFT && velocity.x < 0) {
                 velocity.x = 0;
                 return true;
@@ -103,21 +96,6 @@ public class PlayerInput extends InputAdapter {
             }
         }
         return false;
-    }
-
-    public enum Mode {
-        LEFT, RIGHT, LEFT_SINGLE(true, false), RIGHT_SINGLE(false, true);
-        public final boolean right;
-        public final boolean left;
-
-        Mode(boolean left, boolean right) {
-            this.left = left;
-            this.right = right;
-        }
-
-        Mode() {
-            this(true, true);
-        }
     }
 
     public Mode getMode() {
@@ -139,11 +117,27 @@ public class PlayerInput extends InputAdapter {
             return right;
         }
     }
+
     public Player getOtherPlayer() {
         if (getMode() == Mode.LEFT) {
             return right;
         } else {
             return left;
+        }
+    }
+
+    public enum Mode {
+        LEFT, RIGHT, LEFT_SINGLE(true, false), RIGHT_SINGLE(false, true);
+        public final boolean right;
+        public final boolean left;
+
+        Mode(boolean left, boolean right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        Mode() {
+            this(true, true);
         }
     }
 }

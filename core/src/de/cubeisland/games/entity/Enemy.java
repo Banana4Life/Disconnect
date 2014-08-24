@@ -2,6 +2,7 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.CollisionBox;
@@ -25,8 +26,8 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void onTileCollide(TileEntity tile, Vector2 mtv) {
-        super.onTileCollide(tile, mtv);
+    public void onTileCollide(TileEntity tile, Rectangle helper3) {
+        super.onTileCollide(tile, helper3);
         velocity.scl(-1);
     }
 

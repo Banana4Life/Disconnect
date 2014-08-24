@@ -1,7 +1,6 @@
 package de.cubeisland.games.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -14,15 +13,14 @@ import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.Player;
 
-import static de.cubeisland.games.PlayerInput.Mode.*;
+import static de.cubeisland.games.PlayerInput.Mode.LEFT;
 
 public class GameScreen implements Screen {
     private final DisconnectGame game;
-
+    private final FPSLogger logger = new FPSLogger();
     private PlayerInput playerInput;
     private World worldLeft;
     private World worldRight;
-    private final FPSLogger logger = new FPSLogger();
 
 
     public GameScreen(DisconnectGame game) {

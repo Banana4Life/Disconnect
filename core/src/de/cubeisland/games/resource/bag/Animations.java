@@ -19,7 +19,7 @@ public class Animations extends ResourceBag<Animation> {
 
     @Override
     protected Animation load(FileHandle basedir, Field field) {
-        TextureRegion[][]keyFrames2D = TextureRegion.split(new Texture(basedir.child(fieldToPath(field) + ".png")), 16, 16);
+        TextureRegion[][] keyFrames2D = TextureRegion.split(new Texture(basedir.child(fieldToPath(field) + ".png")), 16, 16);
 
         int rows = keyFrames2D.length;
         int cols = keyFrames2D[0].length;

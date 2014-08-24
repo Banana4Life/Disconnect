@@ -2,7 +2,7 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.entity.collision.CollisionBox;
@@ -46,13 +46,15 @@ public class Player extends Entity {
     }
 
     @Override
-    public void onCollide(Entity other, Vector2 mtv) {
-        super.onCollide(other, mtv);
-
+    public void onCollide(Entity other, Rectangle collision) {
+        super.onCollide(other, collision);
+        if (other instanceof TileEntity) {
+            return;
+        }
         if (other instanceof GhostPlayer) {
             this.getPos().set(other.getPos());
             other.die();
-            PlayerInput playerInput = ((GameScreen)this.getWorld().getGame().getScreen()).getPlayerInput();
+            PlayerInput playerInput = ((GameScreen) this.getWorld().getGame().getScreen()).getPlayerInput();
             playerInput.setMode(playerInput.getMode());
             playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
             playerInput.getOtherPlayer().getPos().set(this.getPos());

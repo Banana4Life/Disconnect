@@ -15,11 +15,6 @@ public class Camera extends OrthographicCamera {
 
     private CameraType type;
 
-    private enum CameraType
-    {
-        LEFT, RIGHT, GUI;
-    }
-
     private Camera(CameraType type) {
         this.type = type;
         this.zoom = 0.25f;
@@ -29,9 +24,20 @@ public class Camera extends OrthographicCamera {
         shapeRenderer = new ShapeRenderer();
     }
 
+    public static Camera left() {
+        return new Camera(CameraType.LEFT);
+    }
+
+    public static Camera right() {
+        return new Camera(CameraType.RIGHT);
+    }
+
+    public static Camera gui() {
+        return new Camera(CameraType.GUI);
+    }
+
     public void resize(int width, int height) {
-        switch (type)
-        {
+        switch (type) {
             case LEFT:
             case RIGHT:
                 this.setToOrtho(false, width / 2, height);
@@ -42,8 +48,7 @@ public class Camera extends OrthographicCamera {
         }
     }
 
-    public Camera use()
-    {
+    public Camera use() {
         int height = Gdx.graphics.getHeight();
         int width = Gdx.graphics.getWidth();
 
@@ -51,8 +56,7 @@ public class Camera extends OrthographicCamera {
         int y = 0;
         int xSize = width;
         int ySize = height;
-        switch (type)
-        {
+        switch (type) {
             case LEFT:
                 xSize = width / 2 - 2;
                 break;
@@ -94,18 +98,7 @@ public class Camera extends OrthographicCamera {
         return frustum.boundsInFrustum(tlPos.x + hx, tlPos.y + hy, 0, hx, hy, 0);
     }
 
-    public static Camera left()
-    {
-        return new Camera(CameraType.LEFT);
-    }
-
-    public static Camera right()
-    {
-        return new Camera(CameraType.RIGHT);
-    }
-
-    public static Camera gui()
-    {
-        return new Camera(CameraType.GUI);
+    private enum CameraType {
+        LEFT, RIGHT, GUI;
     }
 }

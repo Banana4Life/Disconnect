@@ -1,10 +1,7 @@
 package de.cubeisland.games;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-
-import java.awt.*;
 
 import static com.badlogic.gdx.Input.Keys.*;
 

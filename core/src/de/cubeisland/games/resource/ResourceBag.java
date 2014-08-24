@@ -16,8 +16,8 @@ import java.util.List;
 import static com.badlogic.gdx.Files.FileType;
 
 public abstract class ResourceBag<T> implements Disposable {
-    private final Class<T> type;
     protected final List<T> resources;
+    private final Class<T> type;
     private boolean built = false;
     private FileType fileType = FileType.Internal;
 
@@ -32,6 +32,31 @@ public abstract class ResourceBag<T> implements Disposable {
         }
         this.type = (Class<T>) param;
         this.resources = new ArrayList<>();
+    }
+
+    protected static String fieldToPath(Field field) {
+        return fieldNameToPath(field.getName());
+    }
+
+    protected static String fieldNameToPath(String fieldName) {
+        char[] chars = fieldName.toCharArray();
+        if (chars.length == 0) {
+            throw new IllegalArgumentException("Empty string is not a valid field name!");
+        }
+
+        StringBuilder path = new StringBuilder().append(Character.toLowerCase(chars[0]));
+
+        char c;
+        for (int i = 1; i < chars.length; i++) {
+            c = chars[i];
+            if (Character.isUpperCase(c)) {
+                path.append(File.separatorChar);
+                c = Character.toLowerCase(c);
+            }
+            path.append(c);
+        }
+
+        return path.toString();
     }
 
     public List<T> getResources() {
@@ -73,43 +98,18 @@ public abstract class ResourceBag<T> implements Disposable {
         return basedir.child(path);
     }
 
-    protected static String fieldToPath(Field field) {
-        return fieldNameToPath(field.getName());
-    }
-
-    protected static String fieldNameToPath(String fieldName) {
-        char[] chars = fieldName.toCharArray();
-        if (chars.length == 0) {
-            throw new IllegalArgumentException("Empty string is not a valid field name!");
-        }
-
-        StringBuilder path = new StringBuilder().append(Character.toLowerCase(chars[0]));
-
-        char c;
-        for (int i = 1; i < chars.length; i++) {
-            c = chars[i];
-            if (Character.isUpperCase(c)) {
-                path.append(File.separatorChar);
-                c = Character.toLowerCase(c);
+    @Override
+    public void dispose() {
+        if (Disposable.class.isAssignableFrom(this.type)) {
+            for (T resource : this.resources) {
+                ((Disposable) resource).dispose();
             }
-            path.append(c);
         }
-
-        return path.toString();
     }
 
     public static class MissingResourceException extends RuntimeException {
         public MissingResourceException(String message) {
             super(message);
-        }
-    }
-
-    @Override
-    public void dispose() {
-        if (Disposable.class.isAssignableFrom(this.type)) {
-            for (T resource : this.resources) {
-                ((Disposable)resource).dispose();
-            }
         }
     }
 }

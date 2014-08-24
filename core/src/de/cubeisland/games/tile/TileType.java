@@ -8,8 +8,7 @@ import java.util.Map;
 public enum TileType {
     FLOOR(0xFCFC00FF, false),
     WALL(0xFFFFFFFF, true),
-    SPAWNPOINT(0xDA0205FF, false),
-    ;
+    SPAWNPOINT(0xDA0205FF, false),;
 
     private static final Map<Integer, TileType> BY_COLOR_VALUE;
 
@@ -24,20 +23,19 @@ public enum TileType {
         Color.rgba8888ToColor(this.color, color);
     }
 
-    public Color getColor() {
-        return color.cpy();
-    }
-
     public static TileType getByColor(int colorValue) {
         return BY_COLOR_VALUE.get(colorValue);
     }
-
     static {
         BY_COLOR_VALUE = new HashMap<>();
 
         for (TileType t : values()) {
             BY_COLOR_VALUE.put(t.colorValue, t);
         }
+    }
+
+    public Color getColor() {
+        return color.cpy();
     }
 
     public boolean isBlocking() {

@@ -8,9 +8,9 @@ import de.cubeisland.games.entity.collision.CollisionBox;
 
 public class GhostPlayer extends Entity {
 
+    private final float time;
     TextureRegion keyFrame;
     private float delta;
-    private final float time;
 
     public GhostPlayer(Player player) {
         super();

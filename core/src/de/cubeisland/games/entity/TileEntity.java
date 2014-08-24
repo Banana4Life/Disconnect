@@ -38,14 +38,14 @@ public class TileEntity extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        if (!this.getWorld().getCamera().canBeSeen(this.pos, this.size))
-        {
+        if (!this.getWorld().getCamera().canBeSeen(this.pos, this.size)) {
             return;
         }
 
         if (texture == null) {
-            switch(type) {
-                case FLOOR: this.texture = game.getResourcePack().textures.floor;
+            switch (type) {
+                case FLOOR:
+                    this.texture = game.getResourcePack().textures.floor;
                     break;
                 case WALL:
                     if (getWorld().hasNeighbour(this, TOP)) {
@@ -57,7 +57,7 @@ public class TileEntity extends Entity {
                                 } else {
                                     this.texture = game.getResourcePack().textures.walltopleft;
                                 }
-                            } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR){
+                            } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
                                 this.texture = game.getResourcePack().textures.walltopright;
                             } else {
                                 this.texture = game.getResourcePack().textures.walltop;
@@ -67,7 +67,7 @@ public class TileEntity extends Entity {
                     if (getWorld().hasNeighbour(this, LEFT) && this.texture == null) {
                         TileEntity neighbor = getWorld().getNeighbourOf(this, LEFT);
                         if (neighbor.getType() == FLOOR) {
-                            if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR){
+                            if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
                                 this.texture = game.getResourcePack().textures.wallboth;
                             } else if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
                                 this.texture = game.getResourcePack().textures.wallrightbottom;
@@ -82,18 +82,19 @@ public class TileEntity extends Entity {
                                 this.texture = game.getResourcePack().textures.wallrighttop;
                             }
                         }
-                    } if (getWorld().hasNeighbour(this, RIGHT) && this.texture == null) {
-                    TileEntity neighbor = getWorld().getNeighbourOf(this, RIGHT);
-                    if (neighbor.getType() == FLOOR) {
-                        if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
-                            this.texture = game.getResourcePack().textures.wallleftbottom;
-                        } else {
-                            this.texture = game.getResourcePack().textures.wallleft;
-                        }
-                    } else if (neighbor.getType() == WALL && getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == FLOOR) {
-                        this.texture = game.getResourcePack().textures.walllefttop;
                     }
-                }
+                    if (getWorld().hasNeighbour(this, RIGHT) && this.texture == null) {
+                        TileEntity neighbor = getWorld().getNeighbourOf(this, RIGHT);
+                        if (neighbor.getType() == FLOOR) {
+                            if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
+                                this.texture = game.getResourcePack().textures.wallleftbottom;
+                            } else {
+                                this.texture = game.getResourcePack().textures.wallleft;
+                            }
+                        } else if (neighbor.getType() == WALL && getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == FLOOR) {
+                            this.texture = game.getResourcePack().textures.walllefttop;
+                        }
+                    }
                     if (getWorld().hasNeighbour(this, BOTTOM)) {
                         if (getWorld().getNeighbourOf(this, BOTTOM).getType() == FLOOR) {
                             if (getWorld().hasNeighbour(this, LEFT) && getWorld().getNeighbourOf(this, LEFT).getType() == FLOOR) {
@@ -113,7 +114,8 @@ public class TileEntity extends Entity {
                         this.texture = game.getResourcePack().textures.wall;
                     }
                     break;
-                case SPAWNPOINT: this.texture = game.getResourcePack().textures.floor;
+                case SPAWNPOINT:
+                    this.texture = game.getResourcePack().textures.floor;
                     break;
             }
         }
@@ -127,14 +129,15 @@ public class TileEntity extends Entity {
     }
 
     public void renderOverlay() {
-        if (!this.getWorld().getCamera().canBeSeen(this.pos, this.size) || this.overlay == null)
-        {
+        if (!this.getWorld().getCamera().canBeSeen(this.pos, this.size) || this.overlay == null) {
             return;
         }
+        CollisionBox overlayCollisionBox = new CollisionBox(SIZE, SIZE, overlayOffset.x, overlayOffset.y);
 
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
         batch.begin();
-        if (Collider.intersect(this.getWorld().getPlayer(), pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE - 5) != null) {
+        Player player = this.getWorld().getPlayer();
+        if (Collider.findCollision(player, this, player.getCollisionBox(), overlayCollisionBox) != null) {
             Color c = batch.getColor();
             batch.setColor(c.r, c.g, c.b, 0.7f);
             batch.draw(this.overlay, pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE);

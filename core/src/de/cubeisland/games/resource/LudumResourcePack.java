@@ -1,7 +1,9 @@
 package de.cubeisland.games.resource;
 
 import de.cubeisland.engine.reflect.Reflector;
-import de.cubeisland.games.resource.bag.*;
+import de.cubeisland.games.resource.bag.Animations;
+import de.cubeisland.games.resource.bag.Musics;
+import de.cubeisland.games.resource.bag.Textures;
 
 import static com.badlogic.gdx.Files.FileType;
 
