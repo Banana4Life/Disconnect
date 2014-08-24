@@ -125,7 +125,7 @@ public class TileEntity extends Entity {
         batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
         batch.end();
 
-        super.render(game, delta); // TODO why is this here?
+        super.render(game, delta);
     }
 
     public void renderOverlay() {
