@@ -14,9 +14,25 @@ public class Player extends Entity {
     private TextureRegion currentKeyFrame;
     private TextureRegion idleFrame;
     private Item carriedItem = null;
+    
+    private Animation characterfront;
+    private Animation characterback;
+    private Animation characterleft;
+    private Animation characterright;
 
-    public Player() {
+    public Player(Animation characterfront, Animation characterside, Animation characterback) {
         super();
+
+        this.characterfront = characterfront;
+        TextureRegion[] tmp = new TextureRegion[characterside.getKeyFrames().length];
+        int i = 0;
+        for (TextureRegion keyFrame : characterside.getKeyFrames()) {
+            tmp[i] = new TextureRegion(keyFrame);
+            tmp[i++].flip(true, false);
+        }
+        this.characterleft = new Animation(characterside.getFrameDuration(), tmp);
+        this.characterright = characterside;
+        this.characterback = characterback;
 
         setCollisionBox(new CollisionBox(6, 2, 5, 0));
     }
@@ -28,32 +44,20 @@ public class Player extends Entity {
         this.statetime += delta;
 
         if (velocity.y < 0) {
-            currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
-            idleFrame = game.getResourcePack().animations.characterfront.getKeyFrames()[0];
+            currentKeyFrame = characterfront.getKeyFrame(this.statetime, true);
+            idleFrame = characterfront.getKeyFrames()[0];
         } else if (velocity.y > 0) {
-            currentKeyFrame = game.getResourcePack().animations.characterback.getKeyFrame(this.statetime, true);
-            idleFrame = game.getResourcePack().animations.characterback.getKeyFrames()[0];
+            currentKeyFrame = characterback.getKeyFrame(this.statetime, true);
+            idleFrame = characterback.getKeyFrames()[0];
         } else if (velocity.x < 0) {
-            if (game.getResourcePack().animations.characterleft == null) {
-                TextureRegion[] tmp = new TextureRegion[game.getResourcePack().animations.characterside.getKeyFrames().length];
-                int i = 0;
-                for (TextureRegion keyFrame : game.getResourcePack().animations.characterside.getKeyFrames()) {
-                    tmp[i] = new TextureRegion(keyFrame);
-                    tmp[i++].flip(true, false);
-                }
-                game.getResourcePack().animations.characterleft = new Animation(game.getResourcePack().animations.characterside.getFrameDuration(), tmp);
-            }
-            currentKeyFrame = game.getResourcePack().animations.characterleft.getKeyFrame(this.statetime, true);
-            idleFrame = game.getResourcePack().animations.characterleft.getKeyFrames()[0];
+            currentKeyFrame = characterleft.getKeyFrame(this.statetime, true);
+            idleFrame = characterleft.getKeyFrames()[0];
         } else if (velocity.x > 0) {
-            if (game.getResourcePack().animations.characterright == null) {
-                game.getResourcePack().animations.characterright = new Animation(game.getResourcePack().animations.characterside.getFrameDuration(), game.getResourcePack().animations.characterside.getKeyFrames().clone());
-            }
-            currentKeyFrame = game.getResourcePack().animations.characterright.getKeyFrame(this.statetime, true);
-            idleFrame = game.getResourcePack().animations.characterright.getKeyFrames()[0];
+            currentKeyFrame = characterright.getKeyFrame(this.statetime, true);
+            idleFrame = characterright.getKeyFrames()[0];
         }else if (currentKeyFrame == null) {
-            currentKeyFrame = game.getResourcePack().animations.characterfront.getKeyFrame(this.statetime, true);
-            idleFrame = game.getResourcePack().animations.characterfront.getKeyFrames()[0];
+            currentKeyFrame = characterfront.getKeyFrame(this.statetime, true);
+            idleFrame = characterfront.getKeyFrames()[0];
         } else {
             currentKeyFrame = idleFrame;
         }

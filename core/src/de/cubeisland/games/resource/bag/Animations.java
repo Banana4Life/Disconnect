@@ -10,11 +10,12 @@ import de.cubeisland.games.resource.ResourceBag;
 import java.lang.reflect.Field;
 
 public class Animations extends ResourceBag<Animation> {
-    public Animation characterfront;
-    public Animation characterback;
-    public Animation characterside;
-    public Animation characterleft;
-    public Animation characterright;
+    public Animation characterleftfront;
+    public Animation characterleftback;
+    public Animation characterleftside;
+    public Animation characterrightfront;
+    public Animation characterrightback;
+    public Animation characterrightside;
     public Animation energybar;
     public Animation key;
 
