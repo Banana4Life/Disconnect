@@ -16,6 +16,7 @@ public class Animations extends ResourceBag<Animation> {
     public Animation characterleft;
     public Animation characterright;
     public Animation energybar;
+    public Animation key;
 
     public Animations(Files.FileType fileType) {
         super(fileType);

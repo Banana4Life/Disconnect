@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
-import de.cubeisland.games.entity.Enemy;
-import de.cubeisland.games.entity.Entity;
-import de.cubeisland.games.entity.Player;
-import de.cubeisland.games.entity.TileEntity;
+import de.cubeisland.games.entity.*;
 import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
@@ -84,6 +81,9 @@ public class World implements Disposable {
         Enemy enemy = new Enemy();
         enemy.getPos().set(player.getPos()).add(40, 0);
         spawn(enemy);
+        Key key = new Key();
+        key.getPos().set(player.getPos()).add(10, 10);
+        spawn(key);
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
