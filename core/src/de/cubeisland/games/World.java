@@ -209,6 +209,10 @@ public class World implements Disposable {
         this.camera.dispose();
     }
 
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
     private static final class DepthComparator implements Comparator<Entity> {
         @Override
         public int compare(Entity entity1, Entity entity2) {

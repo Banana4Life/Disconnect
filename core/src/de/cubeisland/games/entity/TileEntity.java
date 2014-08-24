@@ -9,6 +9,8 @@ import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.TileType;
 
+import java.util.List;
+
 import static de.cubeisland.games.tile.Direction.*;
 import static de.cubeisland.games.tile.TileType.FLOOR;
 import static de.cubeisland.games.tile.TileType.WALL;
@@ -135,16 +137,25 @@ public class TileEntity extends Entity {
         CollisionBox overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, -14); // 13 overlay height + 1 to collide sooner
 
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-        batch.begin();
-        Player player = this.getWorld().getPlayer();
-        if (Collider.findCollision(player, this, player.getCollisionBox(), overlayCollisionBox) != null) {
-            Color c = batch.getColor();
-            batch.setColor(c.r, c.g, c.b, 0.7f);
-            batch.draw(this.overlay, pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE);
-            batch.setColor(c.r, c.g, c.b, 1f);
-        } else {
-            batch.draw(this.overlay, pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE);
+
+        List<Entity> entities = this.getWorld().getEntities();
+        for (Entity entity : entities) {
+            if (entity.getCollisionBox() == null) {
+                continue;
+            }
+
+            if (Collider.findCollision(entity, this, entity.getCollisionBox(), overlayCollisionBox) != null) {
+                batch.begin();
+                Color c = batch.getColor();
+                batch.setColor(c.r, c.g, c.b, 0.7f);
+                batch.draw(this.overlay, pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE);
+                batch.setColor(c.r, c.g, c.b, 1f);
+                batch.end();
+                return;
+            }
         }
+        batch.begin();
+        batch.draw(this.overlay, pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE);
         batch.end();
     }
 
