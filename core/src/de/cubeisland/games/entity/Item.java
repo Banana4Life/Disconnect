@@ -24,21 +24,6 @@ public class Item extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-
-        ShapeRenderer r = getWorld().getCamera().getShapeRenderer();
-
-        r.begin(Filled);
-        switch (this.type) {
-            case ENERGY:
-                r.setColor(Color.MAGENTA);
-                break;
-            case UPGRADE:
-                r.setColor(Color.RED);
-                break;
-        }
-        r.rect(pos.x, pos.y, SIZE, SIZE);
-        r.end();
-
         super.render(game, delta);
     }
 

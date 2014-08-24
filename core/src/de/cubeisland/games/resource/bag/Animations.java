@@ -45,6 +45,9 @@ public class Animations extends ResourceBag<Animation> {
             }
         }
 
+        if (field.getName().equals("doorhorizontal")) {
+            return new Animation(0.025f, keyFrames);
+        }
         return new Animation(0.1f, keyFrames);
     }
 }

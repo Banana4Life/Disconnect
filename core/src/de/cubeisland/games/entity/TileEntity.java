@@ -1,7 +1,6 @@
 package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,7 +8,6 @@ import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.resource.bag.Textures;
-import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
 import java.util.List;
@@ -57,14 +55,14 @@ public class TileEntity extends Entity {
                     TileEntity left = getWorld().getNeighbourOf(this, LEFT);
                     TileEntity right = getWorld().getNeighbourOf(this, RIGHT);
                     TileEntity bottom = getWorld().getNeighbourOf(this, BOTTOM);
-                    if (FLOOR.isType(top)) {
-                        if (FLOOR.isType(left)) {
-                            if (FLOOR.isType(right)) {
+                    if (FLOOR.isType(top) || DOOR.isType(top) || DOOR_OPEN.isType(top)) {
+                        if (FLOOR.isType(left) || DOOR.isType(left) || DOOR_OPEN.isType(left)) {
+                            if (FLOOR.isType(right) || DOOR.isType(right) || DOOR_OPEN.isType(right)) {
                                 this.texture = textures.walltopboth;
                             } else {
                                 this.texture = textures.walltopleft;
                             }
-                        } else if (FLOOR.isType(right)) {
+                        } else if (FLOOR.isType(right) || DOOR.isType(right) || DOOR_OPEN.isType(right)) {
                             this.texture = textures.walltopright;
                         } else {
                             this.texture = textures.walltop;
@@ -100,7 +98,7 @@ public class TileEntity extends Entity {
                             this.texture = textures.walllefttop;
                         }
                     }
-                    if (FLOOR.isType(bottom)) {
+                    if (FLOOR.isType(bottom) || DOOR.isType(bottom) || DOOR_OPEN.isType(bottom)) {
                         if (FLOOR.isType(left)) {
                             if (FLOOR.isType(right)) {
                                 this.overlay = textures.wallbottomboth;
@@ -137,7 +135,7 @@ public class TileEntity extends Entity {
         }
 
         CollisionBox overlayCollisionBox;
-        if (this.type == DOOR || this.type == DOOR_OPEN) {
+        if (this.type == DOOR_OPENING || this.type == DOOR_OPEN) {
             overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, 0);
         } else {
             overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, -14); // 13 overlay height + 1 to collide sooner

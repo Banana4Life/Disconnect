@@ -3,11 +3,14 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.resource.bag.Animations;
 import de.cubeisland.games.tile.TileType;
 
 import static de.cubeisland.games.tile.TileType.DOOR_OPEN;
 
 public class Door extends TileEntity {
+    private float statetime = 0f;
+
     public Door(int x, int y, TileType type) {
         super(x, y, type);
     }
@@ -18,8 +21,32 @@ public class Door extends TileEntity {
             return;
         }
 
+        Animations animations = this.getWorld().getGame().getResourcePack().animations;
+
         if (this.texture == null) {
-            this.texture = this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames()[0];
+            if (isHorizontal()) {
+                this.texture = animations.doorhorizontal.getKeyFrames()[0];
+                this.overlayOffset = new Vector2(0, 0);
+            } else {
+                this.texture = this.getWorld().getGame().getResourcePack().textures.floor;
+                this.overlay = animations.doorvertical.getKeyFrames()[0];
+                this.overlayOffset = new Vector2(0, 13);
+            }
+        }
+
+        if (this.type == DOOR_OPENING) {
+            statetime += delta;
+            if (isHorizontal()) {
+                this.overlay = animations.doorhorizontal.getKeyFrame(statetime);
+                if (animations.doorhorizontal.getKeyFrameIndex(statetime) == animations.doorhorizontal.getKeyFrames().length) {
+                    this.type = DOOR_OPEN;
+                }
+            } else {
+                this.overlay = animations.doorvertical.getKeyFrame(statetime);
+                if (animations.doorvertical.getKeyFrameIndex(statetime) == animations.doorvertical.getKeyFrames().length) {
+                    this.type = DOOR_OPEN;
+                }
+            }
         }
 
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
@@ -30,10 +57,15 @@ public class Door extends TileEntity {
 
     public void interact(Item carriedItem) {
         if (carriedItem instanceof Key) {
+            this.type = DOOR_OPENING;
             this.texture = this.getWorld().getGame().getResourcePack().textures.floor;
-            this.overlay = this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames()[this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames().length - 1];
-            this.overlayOffset = new Vector2(0, 0);
-            this.type = DOOR_OPEN;
         }
+    }
+
+    public boolean isHorizontal() {
+        if (getWorld().getNeighbourOf(this, LEFT).getType() == WALL && getWorld().getNeighbourOf(this, RIGHT).getType() == WALL) {
+            return true;
+        }
+        return false;
     }
 }
