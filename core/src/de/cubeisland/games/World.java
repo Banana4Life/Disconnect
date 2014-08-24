@@ -252,6 +252,25 @@ public class World implements Disposable {
         return entities;
     }
 
+    public List<TileEntity> getTilesWithin(float x1, float y1, float x2, float y2) {
+
+        List<TileEntity> tiles = new ArrayList<>();
+        for (int tileX = 0; tileX < this.width; ++tileX) {
+            for (int tileY = 0; tileY < this.height; ++tileY) {
+                if (this.tileEntities[tileX][tileY] != null) {
+                    TileEntity tile = this.tileEntities[tileX][tileY];
+                    float x = tile.getPos().x;
+                    float y = tile.getPos().y;
+                    if (x >= x1 && x < x2 && y >= y2 && y < y1) {
+                        tiles.add(tile);
+                    }
+                }
+            }
+        }
+
+        return tiles;
+    }
+
     private static final class DepthComparator implements Comparator<Entity> {
         @Override
         public int compare(Entity entity1, Entity entity2) {

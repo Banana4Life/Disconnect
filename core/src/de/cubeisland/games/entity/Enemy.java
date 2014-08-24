@@ -2,14 +2,17 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Line;
+import static de.cubeisland.games.entity.collision.Collider.isLineOfSightClear;
 
 public class Enemy extends Entity {
 
@@ -49,21 +52,20 @@ public class Enemy extends Entity {
 
         Player player = getWorld().getPlayer();
         CollisionBox playerCB = player.getCollisionBox();
-        playerDistance.set(player.getPos());
-        playerDistance.add(playerCB.getOffsetX() + playerCB.getWidth() / 2f,
-                playerCB.getOffsetY() + playerCB.getHeight() / 2f).sub(pos);
+        playerDistance
+                .set(player.getPos())
+                .add(playerCB.getOffsetX() + playerCB.getWidth() / 2f, playerCB.getOffsetY() + playerCB.getHeight() / 2f)
+                .sub(pos);
         float viewAngle = velocity.angle();
         float playerAngle = playerDistance.angle();
         float diffAngle = Math.abs(viewAngle - playerAngle);
 
-        if (playerDistance.len2() <= RANGE * RANGE) {
-            if (diffAngle <= (FOV / 2f)) {
-                r.begin(Line);
-                r.setColor(Color.MAGENTA);
-                r.line(pos.cpy().add(SIZE, SIZE), playerDistance.add(pos));
-                r.end();
-                // TODO do something more here
-            }
+        if (playerDistance.len2() <= RANGE * RANGE && diffAngle <= (FOV / 2f) && isLineOfSightClear(getWorld(), pos, pos.cpy().add(playerDistance))) {
+            r.begin(Line);
+            r.setColor(Color.MAGENTA);
+            r.line(pos.cpy().add(SIZE, SIZE), playerDistance.add(pos));
+            r.end();
+            // TODO do something more here
         }
 
 //        r = new ShapeRenderer();
