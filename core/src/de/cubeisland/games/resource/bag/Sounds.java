@@ -15,6 +15,7 @@ public class Sounds extends ResourceBag<SoundPlayer> {
     public SoundPlayer door;
     public SoundPlayer timer;
     public SoundPlayer pickup;
+    public SoundPlayer pressureplate;
 
     public Sounds(Files.FileType fileType) {
         super(fileType);
