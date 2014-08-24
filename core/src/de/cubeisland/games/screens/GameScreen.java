@@ -66,10 +66,11 @@ public class GameScreen extends ScreenAdapter {
             divider = game.getResourcePack().textures.dividerright;
         }
         divider.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 16, divider.getWidth(), Gdx.graphics.getHeight(),
+        batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 0, divider.getWidth(), Gdx.graphics.getHeight(),
                 0, 0, 1, Gdx.graphics.getHeight() / divider.getHeight());
 
-        batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 8, 0, 16, 16);
+        batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 13, 0, 16, 16);
+        batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 3, 0, 16, 16);
 
         if (this.playerInput.getDisconnected()) {
             disconnectTime += delta;
