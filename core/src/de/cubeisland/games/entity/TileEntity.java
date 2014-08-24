@@ -175,6 +175,7 @@ public class TileEntity extends Entity {
     public void interact(Item carriedItem) {
         if (carriedItem != null) {
             this.texture = null;
+            this.overlay = null;
         }
         if (this.type == WALL_DOOR && carriedItem instanceof Key) {
             this.type = FLOOR;
