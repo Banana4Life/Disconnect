@@ -9,10 +9,10 @@ import de.cubeisland.games.tile.TileType;
 
 import static de.cubeisland.games.tile.TileType.*;
 
-public class Autodoor extends TileEntity {
+public class ActivatedDoor extends TileEntity {
     private float statetime = 0f;
 
-    public Autodoor(int x, int y, TileType type) {
+    public ActivatedDoor(int x, int y, TileType type) {
         super(x, y, type);
     }
 

@@ -13,9 +13,9 @@ public enum TileType {
     DOOR_OPENING	 (0x9F9FBFFF, false, Door.class),
     DOOR_OPEN        (0x9F9FAFFF, false, Door.class),
 
-    AUTO_DOOR        (0x555555FF, true, Autodoor.class),
-    AUTO_DOOR_OPENING(0x555555FF, false, Autodoor.class),
-    AUTO_DOOR_OPEN   (0x555555FF, false, Autodoor.class),
+    AUTO_DOOR        (0x555555FF, true, ActivatedDoor.class),
+    AUTO_DOOR_OPENING(0x555555FF, false, ActivatedDoor.class),
+    AUTO_DOOR_OPEN   (0x555555FF, false, ActivatedDoor.class),
 
     FLOOR            (0xFFFFFFFF, false),
     FLOOR_PLAYER     (0xFFF000FF, false, FLOOR),

@@ -23,9 +23,9 @@ public class Activator extends TileEntity {
         this.setCollisionBox(null);
         for (Direction direction : Direction.values()) {
             TileEntity autoDoor = player.getOtherPlayer().getWorld().getNeighbourOf(this, direction);
-            if (autoDoor instanceof Autodoor)
+            if (autoDoor instanceof ActivatedDoor)
             {
-                ((Autodoor)autoDoor).open();
+                ((ActivatedDoor)autoDoor).open();
             }
         }
     }
