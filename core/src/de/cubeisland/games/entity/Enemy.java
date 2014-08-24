@@ -1,17 +1,17 @@
 package de.cubeisland.games.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
-import de.cubeisland.games.entity.collision.Collider;
+import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.tile.Direction;
 
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Line;
 import static de.cubeisland.games.entity.collision.Collider.isLineOfSightClear;
 
 public class Enemy extends Entity {
@@ -61,26 +61,14 @@ public class Enemy extends Entity {
         float playerAngle = playerDistance.angle();
         float diffAngle = Math.abs(viewAngle - playerAngle);
 
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Vector2 center = pos.cpy().add(SIZE, SIZE);
+        r.setColor(0,1,0,0.6f);
         if (playerDistance.len2() <= RANGE * RANGE && diffAngle <= (FOV / 2f) && isLineOfSightClear(getWorld(), pos, pos.cpy().add(playerDistance))) {
-            r.begin(Line);
-            r.setColor(Color.MAGENTA);
-            r.line(pos.cpy().add(SIZE, SIZE), playerDistance.add(pos));
-            r.end();
-            // TODO do something more here
+            r.setColor(1, 0, 0, 0.6f);
         }
-
-//        r = new ShapeRenderer();
-//        r.setProjectionMatrix(getWorld().getCamera().combined);
-//        r.begin(Line);
-//        r.setColor(Color.GREEN);
-//        r.translate(pos.x, pos.y, 0);
-//        r.rotate(velocity.x, velocity.y, 0, -(FOV / 2f));
-//        Vector2 line = pos.cpy().nor().scl(RANGE);
-//        r.line(pos.x, pos.y, line.x, line.y);
-//        r.rotate(velocity.x, velocity.y, 0, FOV);
-//        line = pos.cpy().nor().scl(RANGE);
-//        r.line(pos.x, pos.y, line.x, line.y);
-//        r.arc(pos.x, pos.y, RANGE, 0, -FOV);
-//        r.end();
+        r.begin(ShapeRenderer.ShapeType.Filled);
+        r.arc(center.x, center.y, RANGE, velocity.angle() - FOV / 2f, FOV);
+        r.end();
     }
 }
