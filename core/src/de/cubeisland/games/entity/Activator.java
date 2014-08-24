@@ -2,6 +2,7 @@ package de.cubeisland.games.entity;
 
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
+import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
 public class Activator extends TileEntity {
@@ -19,5 +20,13 @@ public class Activator extends TileEntity {
     @Override
     public void interact(Item carriedItem, Player player) {
         this.texture = this.getWorld().getGame().getResourcePack().textures.activatoron;
+        this.setCollisionBox(null);
+        for (Direction direction : Direction.values()) {
+            TileEntity autoDoor = player.getOtherPlayer().getWorld().getNeighbourOf(this, direction);
+            if (autoDoor instanceof Autodoor)
+            {
+                ((Autodoor)autoDoor).open();
+            }
+        }
     }
 }
