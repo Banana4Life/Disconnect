@@ -58,7 +58,7 @@ public class Enemy extends Entity {
         this.characterRight = animations.securityside;
         this.characterBack = animations.securityback;
 
-        this.step = getWorld().getGame().getResourcePack().sounds.step.start(.05f).pause().looping(true);
+        this.step = getWorld().getGame().getResourcePack().sounds.step.start(.0020f).pause().looping(true);
     }
 
     @Override
@@ -106,8 +106,10 @@ public class Enemy extends Entity {
         }
 
         if (animation != null) {
-            this.step.resume();
             currentKeyFrame = animation.getKeyFrame(this.statetime, true);
+            if (getWorld().getCamera().canBeSeen(pos, new Vector2(currentKeyFrame.getRegionWidth(), currentKeyFrame.getRegionWidth()))) {
+                this.step.resume();
+            }
         } else {
             this.step.pause();
         }
@@ -129,12 +131,17 @@ public class Enemy extends Entity {
             r.setColor(1, 0, 0, 0.6f);
             aggro = true;
             for (Door door : getWorld().findAllDoors()) {
-                // TODO close
+                door.close();
             }
         }
         aggro = false;
         r.begin(ShapeRenderer.ShapeType.Filled);
         r.arc(center.x, center.y, RANGE, velocity.angle() - FOV / 2f, FOV);
         r.end();
+    }
+
+    @Override
+    public void onDeath() {
+        step.stop();
     }
 }

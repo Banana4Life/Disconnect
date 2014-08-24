@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.resource.bag.Animations;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
@@ -30,6 +31,7 @@ public abstract class AbstractDoor extends TileEntity{
         if (state == DoorState.OPENED)
         {
             this.state = DoorState.CLOSING;
+            setCollisionBox(new CollisionBox(SIZE, SIZE));
         }
     }
 
