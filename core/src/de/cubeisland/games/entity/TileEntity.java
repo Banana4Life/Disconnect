@@ -23,6 +23,8 @@ public class TileEntity extends Entity {
     protected TileType type;
     protected TextureRegion texture = null;
 
+    private float statetime = 0f;
+
     protected TextureRegion overlay = null;
     protected Vector2 overlayOffset;
 
@@ -51,6 +53,7 @@ public class TileEntity extends Entity {
                     this.texture = textures.floor;
                     break;
                 case WALL:
+                case TERMINAL:
                     TileEntity top = getWorld().getNeighbourOf(this, TOP);
                     TileEntity left = getWorld().getNeighbourOf(this, LEFT);
                     TileEntity right = getWorld().getNeighbourOf(this, RIGHT);
@@ -121,9 +124,14 @@ public class TileEntity extends Entity {
             }
         }
 
+        statetime += delta;
+
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
         batch.begin();
         batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
+        if (this.type == TERMINAL) {
+            batch.draw(getWorld().getGame().getResourcePack().animations.terminal.getKeyFrame(statetime, true), pos.x, pos.y, SIZE, SIZE);
+        }
         batch.end();
 
         super.render(game, delta);
