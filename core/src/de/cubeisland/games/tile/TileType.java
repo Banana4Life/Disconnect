@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import de.cubeisland.games.entity.Enemy;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Key;
+import de.cubeisland.games.entity.TileEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,5 +76,9 @@ public enum TileType {
 
     public Class<? extends Entity> getEntityClass() {
         return entityClass;
+    }
+
+    public boolean isType(TileEntity tile) {
+        return tile != null && tile.getType() == this;
     }
 }

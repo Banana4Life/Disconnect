@@ -88,6 +88,10 @@ public class World implements Disposable {
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
+        if (tile == null)
+        {
+            return null;
+        }
         int x = tile.getTileX() + dir.getX();
         int y = tile.getTileY() - dir.getY();
 

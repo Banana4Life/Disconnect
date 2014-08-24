@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
+import de.cubeisland.games.resource.bag.Textures;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
@@ -45,80 +46,79 @@ public class TileEntity extends Entity {
         }
 
         if (texture == null) {
+            Textures textures = game.getResourcePack().textures;
             switch (type) {
                 case FLOOR:
-                    this.texture = game.getResourcePack().textures.floor;
+                    this.texture = textures.floor;
                     break;
                 case WALL:
                 case WALL_DOOR:
-                    if (getWorld().hasNeighbour(this, TOP)) {
-                        TileEntity neighbor = getWorld().getNeighbourOf(this, TOP);
-                        if (neighbor.getType() == FLOOR) {
-                            if (getWorld().hasNeighbour(this, LEFT) && getWorld().getNeighbourOf(this, LEFT).getType() == FLOOR) {
-                                if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
-                                    this.texture = game.getResourcePack().textures.walltopboth;
-                                } else {
-                                    this.texture = game.getResourcePack().textures.walltopleft;
-                                }
-                            } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
-                                this.texture = game.getResourcePack().textures.walltopright;
+                    TileEntity top = getWorld().getNeighbourOf(this, TOP);
+                    TileEntity left = getWorld().getNeighbourOf(this, LEFT);
+                    TileEntity right = getWorld().getNeighbourOf(this, RIGHT);
+                    TileEntity bottom = getWorld().getNeighbourOf(this, BOTTOM);
+                    if (FLOOR.isType(top)) {
+                        if (FLOOR.isType(left)) {
+                            if (FLOOR.isType(right)) {
+                                this.texture = textures.walltopboth;
                             } else {
-                                this.texture = game.getResourcePack().textures.walltop;
+                                this.texture = textures.walltopleft;
+                            }
+                        } else if (FLOOR.isType(right)) {
+                            this.texture = textures.walltopright;
+                        } else {
+                            this.texture = textures.walltop;
+                        }
+                    }
+                    TileEntity rightTop = getWorld().getNeighbourOf(right, TOP);
+                    if (left != null && this.texture == null) {
+                        TileEntity leftTop = getWorld().getNeighbourOf(left, TOP);
+                        if (FLOOR.isType(left)) {
+                            if (FLOOR.isType(right)) {
+                                this.texture = textures.wallboth;
+                            } else if (WALL.isType(leftTop)) {
+                                this.texture = textures.wallrightbottom;
+                            } else {
+                                this.texture = textures.wallright;
+                            }
+                        } else if (WALL.isType(left) && FLOOR.isType(leftTop)) {
+                            if (WALL.isType(right) && WALL.isType(left) && FLOOR.isType(rightTop)) {
+                                this.texture = textures.wallbothtop;
+                            } else {
+                                this.texture = textures.wallrighttop;
                             }
                         }
                     }
-                    if (getWorld().hasNeighbour(this, LEFT) && this.texture == null) {
-                        TileEntity neighbor = getWorld().getNeighbourOf(this, LEFT);
-                        if (neighbor.getType() == FLOOR) {
-                            if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
-                                this.texture = game.getResourcePack().textures.wallboth;
-                            } else if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
-                                this.texture = game.getResourcePack().textures.wallrightbottom;
+                    if (right != null && this.texture == null) {
+                        if (FLOOR.isType(right)) {
+                            if (WALL.isType(rightTop)) {
+                                this.texture = textures.wallleftbottom;
                             } else {
-                                this.texture = game.getResourcePack().textures.wallright;
+                                this.texture = textures.wallleft;
                             }
-                        } else if (neighbor.getType() == WALL && getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == FLOOR) {
-                            TileEntity otherNeighbor = getWorld().getNeighbourOf(this, RIGHT);
-                            if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == WALL && otherNeighbor.getType() == WALL && getWorld().hasNeighbour(otherNeighbor, TOP) && getWorld().getNeighbourOf(otherNeighbor, TOP).getType() == FLOOR) {
-                                this.texture = game.getResourcePack().textures.wallbothtop;
-                            } else {
-                                this.texture = game.getResourcePack().textures.wallrighttop;
-                            }
+                        } else if (WALL.isType(right) && FLOOR.isType(rightTop)) {
+                            this.texture = textures.walllefttop;
                         }
                     }
-                    if (getWorld().hasNeighbour(this, RIGHT) && this.texture == null) {
-                        TileEntity neighbor = getWorld().getNeighbourOf(this, RIGHT);
-                        if (neighbor.getType() == FLOOR) {
-                            if (getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == WALL) {
-                                this.texture = game.getResourcePack().textures.wallleftbottom;
+                    if (FLOOR.isType(bottom)) {
+                        if (FLOOR.isType(left)) {
+                            if (FLOOR.isType(right)) {
+                                this.overlay = textures.wallbottomboth;
                             } else {
-                                this.texture = game.getResourcePack().textures.wallleft;
+                                this.overlay = textures.wallbottomleft;
                             }
-                        } else if (neighbor.getType() == WALL && getWorld().hasNeighbour(neighbor, TOP) && getWorld().getNeighbourOf(neighbor, TOP).getType() == FLOOR) {
-                            this.texture = game.getResourcePack().textures.walllefttop;
-                        }
-                    }
-                    if (getWorld().hasNeighbour(this, BOTTOM)) {
-                        if (getWorld().getNeighbourOf(this, BOTTOM).getType() == FLOOR) {
-                            if (getWorld().hasNeighbour(this, LEFT) && getWorld().getNeighbourOf(this, LEFT).getType() == FLOOR) {
-                                if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
-                                    this.overlay = game.getResourcePack().textures.wallbottomboth;
-                                } else {
-                                    this.overlay = game.getResourcePack().textures.wallbottomleft;
-                                }
-                            } else if (getWorld().hasNeighbour(this, RIGHT) && getWorld().getNeighbourOf(this, RIGHT).getType() == FLOOR) {
-                                this.overlay = game.getResourcePack().textures.wallbottomright;
-                            } else {
-                                this.overlay = game.getResourcePack().textures.wallbottom;
-                            }
+                        } else if (FLOOR.isType(right)) {
+                            this.overlay = textures.wallbottomright;
+                        } else {
+                            this.overlay = textures.wallbottom;
                         }
                     }
                     if (this.texture == null) {
-                        this.texture = game.getResourcePack().textures.wall;
+                        this.texture = textures.wall;
                     }
                     break;
                 case FLOOR_PLAYER:
-                    this.texture = game.getResourcePack().textures.floor;
+                    this.texture = textures.floor;
                     break;
             }
         }
@@ -173,8 +173,7 @@ public class TileEntity extends Entity {
     }
 
     public void interact(Item carriedItem) {
-        if (carriedItem != null)
-        {
+        if (carriedItem != null) {
             this.texture = null;
         }
         if (this.type == WALL_DOOR && carriedItem instanceof Key) {
