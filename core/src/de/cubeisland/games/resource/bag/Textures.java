@@ -32,6 +32,8 @@ public class Textures extends ResourceBag<TextureRegion> {
     public TextureRegion iteminhand;
     public TextureRegion logo;
     public TextureRegion exittipp;
+    public TextureRegion activatoron;
+    public TextureRegion activatoroff;
 
     public Textures(Files.FileType fileType) {
         super(fileType);

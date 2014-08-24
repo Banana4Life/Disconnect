@@ -58,6 +58,7 @@ public class Door extends TileEntity {
         batch.end();
     }
 
+    @Override
     public void interact(Item carriedItem) {
         if (carriedItem instanceof Key) {
             this.type = DOOR_OPENING;

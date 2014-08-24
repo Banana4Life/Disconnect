@@ -17,7 +17,7 @@ public enum TileType {
     FLOOR_ENERGY    (0x1200FFFF, false, FLOOR),
     FLOOR_UPGRADE   (0x0066FFFF, false, FLOOR),
     FLOOR_KEY       (0x00AAFFFF, false, FLOOR, Key.class),
-    FLOOR_PLATE     (0xAAAAFFFF, false, Activator.class);
+    FLOOR_ACTIVATOR (0xAAAAFFFF, false, Activator.class);
 
     private static final Map<Integer, TileType> BY_COLOR_VALUE;
 

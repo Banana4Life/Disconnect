@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.PlayerInput;
+import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.screens.GameScreen;
 
@@ -44,7 +45,8 @@ public class Player extends Entity {
     }
 
     @Override
-    public void onSpawn() {
+    public void onSpawn(World world) {
+        super.onSpawn(world);
         this.step = getWorld().getGame().getResourcePack().sounds.step;
         this.soundId = this.step.play(.05f);
         this.step.pause(this.soundId);

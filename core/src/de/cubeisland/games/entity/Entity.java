@@ -39,7 +39,8 @@ public abstract class Entity {
         //*/
     }
 
-    public void onSpawn() {
+    public void onSpawn(World world) {
+        this.world = world;
     }
 
     public void onDeath() {
@@ -172,10 +173,6 @@ public abstract class Entity {
         return world;
     }
 
-    public void setWorld(World world) {
-        this.world = world;
-    }
-
     public Vector2 getPos() {
         return pos;
     }
@@ -206,5 +203,8 @@ public abstract class Entity {
 
     public void setCollisionBox(CollisionBox collisionBox) {
         this.collisionBox = collisionBox;
+    }
+
+    public void interact(Item carriedItem) {
     }
 }

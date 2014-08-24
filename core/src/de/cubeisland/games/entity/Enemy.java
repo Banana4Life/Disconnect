@@ -22,7 +22,8 @@ public class Enemy extends Entity {
     private static final int SIZE = 5;
 
     @Override
-    public void onSpawn() {
+    public void onSpawn(World world) {
+        super.onSpawn(world);
         Direction dir = Direction.random();
         getVelocity().set(SPEED * dir.getX(), SPEED * dir.getY());
         setCollisionBox(new CollisionBox(SIZE * 2f, SIZE * 2f, 0, 0));

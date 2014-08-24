@@ -3,6 +3,7 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
 
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
@@ -18,7 +19,8 @@ public class Item extends Entity {
     }
 
     @Override
-    public void onSpawn() {
+    public void onSpawn(World world) {
+        super.onSpawn(world);
         setCollisionBox(new CollisionBox(SIZE, SIZE));
     }
 

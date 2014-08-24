@@ -2,6 +2,7 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
 
 public class Key extends Item {
@@ -12,8 +13,8 @@ public class Key extends Item {
     }
 
     @Override
-    public void onSpawn() {
-        super.onSpawn();
+    public void onSpawn(World world) {
+        super.onSpawn(world);
         this.setCollisionBox(new CollisionBox(4, 2, 6, 0));
     }
 

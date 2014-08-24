@@ -60,7 +60,7 @@ public class World implements Disposable {
                     System.out.println("MISSING TILE CLASS!");
                     continue;
                 }
-                tile.setWorld(this);
+                tile.onSpawn(this);
                 tileEntities[x][height - y - 1] = tile;
                 if (tileType == FLOOR_PLAYER) {
                     spawnPos = tile.getPos();
@@ -143,9 +143,8 @@ public class World implements Disposable {
         if (e instanceof Player && spawnPos != null) {
             e.getPos().set(spawnPos);
         }
-        e.setWorld(this);
         this.entities.add(e);
-        e.onSpawn();
+        e.onSpawn(this);
         Collections.sort(entities, BY_DEPTH);
         return e;
     }
