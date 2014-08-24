@@ -36,6 +36,8 @@ public class GameScreen extends DisconnectScreen {
         this.worldLeft = new World(game, Camera.left(), new Player(animations.characterleftfront, animations.characterleftside, animations.characterleftback), "LevelL1");
         this.worldRight = new World(game, Camera.right(), new Player(animations.characterrightfront, animations.characterrightside, animations.characterrightback), "LevelR1");
         this.playerInput = new PlayerInput(this.worldLeft.getPlayer(), this.worldRight.getPlayer());
+        this.worldLeft.getPlayer().setOtherPlayer(this.worldRight.getPlayer());
+        this.worldRight.getPlayer().setOtherPlayer(this.worldLeft.getPlayer());
         game.getInputMultiplexer().addProcessor(playerInput);
     }
 

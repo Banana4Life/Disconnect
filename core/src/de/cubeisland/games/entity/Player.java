@@ -23,6 +23,7 @@ public class Player extends Entity {
 
     private Sound step;
     private long soundId;
+    private Player otherPlayer;
 
     public Player(Animation characterFront, Animation characterSide, Animation characterBack) {
         super();
@@ -103,6 +104,7 @@ public class Player extends Entity {
     public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
         super.onTileCollide(tile, collisionBox);
         tile.interact(carriedItem);
+        this.otherPlayer.getPos().set(this.getPos());
     }
 
     @Override
@@ -123,5 +125,9 @@ public class Player extends Entity {
 
     public void spawnGhost() {
         this.getWorld().spawn(new GhostPlayer(this));
+    }
+
+    public void setOtherPlayer(Player otherPlayer) {
+        this.otherPlayer = otherPlayer;
     }
 }
