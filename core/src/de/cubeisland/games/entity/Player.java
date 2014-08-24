@@ -25,18 +25,18 @@ public class Player extends Entity {
     private long soundId;
     private boolean playing = false;
 
-    public Player(Animation characterFront, Animation characterside, Animation characterBack) {
+    public Player(Animation characterFront, Animation characterSide, Animation characterBack) {
         super();
 
         this.characterFront = characterFront;
-        TextureRegion[] tmp = new TextureRegion[characterside.getKeyFrames().length];
+        TextureRegion[] tmp = new TextureRegion[characterSide.getKeyFrames().length];
         int i = 0;
-        for (TextureRegion keyFrame : characterside.getKeyFrames()) {
+        for (TextureRegion keyFrame : characterSide.getKeyFrames()) {
             tmp[i] = new TextureRegion(keyFrame);
             tmp[i++].flip(true, false);
         }
-        this.characterLeft = new Animation(characterside.getFrameDuration(), tmp);
-        this.characterRight = characterside;
+        this.characterLeft = new Animation(characterSide.getFrameDuration(), tmp);
+        this.characterRight = characterSide;
         this.characterBack = characterBack;
 
         setCollisionBox(new CollisionBox(6, 2, 5, 0));
