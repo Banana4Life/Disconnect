@@ -16,6 +16,9 @@ import java.util.*;
 import static de.cubeisland.games.tile.TileType.FLOOR_PLAYER;
 
 public class World implements Disposable {
+
+    private static final Comparator<Entity> BY_DEPTH = new DepthComparator();
+
     private final Player player;
     private final int width;
     private final int height;
@@ -111,7 +114,7 @@ public class World implements Disposable {
         e.setWorld(this);
         this.entities.add(e);
         e.onSpawn();
-        Collections.sort(this.entities, (o1, o2) -> o1.getDepth() - o2.getDepth());
+        Collections.sort(entities, BY_DEPTH);
         return e;
     }
 
@@ -192,5 +195,12 @@ public class World implements Disposable {
     @Override
     public void dispose() {
         this.camera.dispose();
+    }
+
+    private static final class DepthComparator implements Comparator<Entity> {
+        @Override
+        public int compare(Entity entity1, Entity entity2) {
+            return entity1.getDepth() - entity2.getDepth();
+        }
     }
 }

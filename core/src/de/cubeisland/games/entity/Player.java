@@ -85,6 +85,11 @@ public class Player extends Entity {
     }
 
     @Override
+    public void onDeath() {
+        getWorld().getGame().lose();
+    }
+
+    @Override
     public void update(DisconnectGame game, float delta) {
         super.update(game, delta);
 

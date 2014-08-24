@@ -5,9 +5,9 @@ import de.cubeisland.games.DisconnectGame;
 import static com.badlogic.gdx.Input.Keys.ESCAPE;
 import static de.cubeisland.games.screens.UIInput.Handler;
 
-public class CreditsScreen extends UIScreen {
+public class LoseScreen extends UIScreen {
 
-    public CreditsScreen(DisconnectGame game) {
+    public LoseScreen(DisconnectGame game) {
         super(game);
     }
 
@@ -17,7 +17,7 @@ public class CreditsScreen extends UIScreen {
         input.add(ESCAPE, new Handler() {
             @Override
             public boolean handle(DisconnectGame game) {
-                game.setScreen(new TitleScreen(game));
+                game.exit();
                 return true;
             }
         });

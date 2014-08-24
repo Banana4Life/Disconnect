@@ -7,7 +7,12 @@ import static com.badlogic.gdx.Input.Keys.*;
 
 public class GlobalInputProcessor implements InputProcessor {
 
+    private final DisconnectGame game;
     private boolean altDown = false;
+
+    public GlobalInputProcessor(DisconnectGame game) {
+        this.game = game;
+    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -25,7 +30,7 @@ public class GlobalInputProcessor implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case ESCAPE:
-                Gdx.app.exit();
+                game.exit();
                 return true;
             case ENTER:
                 if (altDown) {

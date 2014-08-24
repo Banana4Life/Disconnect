@@ -1,12 +1,11 @@
 package de.cubeisland.games;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.*;
 import de.cubeisland.engine.reflect.Reflector;
 import de.cubeisland.games.resource.LudumResourcePack;
-import de.cubeisland.games.screens.GameScreen;
+import de.cubeisland.games.screens.*;
+
+import java.lang.reflect.Constructor;
 
 public class DisconnectGame extends Game {
 
@@ -19,7 +18,7 @@ public class DisconnectGame extends Game {
     public void create() {
         inputMultiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(inputMultiplexer);
-        inputMultiplexer.addProcessor(new GlobalInputProcessor());
+        inputMultiplexer.addProcessor(new GlobalInputProcessor(this));
 
         this.reflector = new Reflector();
         this.resourcePack = new LudumResourcePack(Files.FileType.Internal, reflector);
@@ -27,7 +26,7 @@ public class DisconnectGame extends Game {
 
         this.guiCamera = Camera.gui();
 
-        setScreen(new GameScreen(this));
+        setScreen(new TitleScreen(this));
     }
 
     @Override
@@ -46,5 +45,30 @@ public class DisconnectGame extends Game {
 
     public LudumResourcePack getResourcePack() {
         return resourcePack;
+    }
+
+    public void win() {
+        transition(WinScreen.class);
+    }
+
+    public void lose() {
+        transition(LoseScreen.class);
+    }
+
+    public void exit() {
+        Gdx.app.exit();
+    }
+
+    public <T extends Screen> T transition(Class<T> screenClass) {
+        try {
+            Constructor<T> ctor = screenClass.getConstructor(this.getClass());
+            T screen = ctor.newInstance(this);
+
+            setScreen(screen);
+
+            return screen;
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to transition to a screen!", e);
+        }
     }
 }
