@@ -109,6 +109,7 @@ public class Player extends Entity {
             this.carriedItem = (Item) other;
             other.setCollisionBox(null);
             this.carriedItem.die();
+            getWorld().getGame().getResourcePack().sounds.pickup.start(.25f);
         } else {
             die();
         }
