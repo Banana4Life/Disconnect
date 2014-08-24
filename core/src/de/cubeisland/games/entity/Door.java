@@ -4,9 +4,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.resource.bag.Animations;
+import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.tile.TileType;
 
 import static de.cubeisland.games.tile.TileType.DOOR_OPEN;
+import static de.cubeisland.games.tile.TileType.DOOR_OPENING;
+import static de.cubeisland.games.tile.TileType.WALL;
 
 public class Door extends TileEntity {
     private float statetime = 0f;
@@ -63,7 +66,7 @@ public class Door extends TileEntity {
     }
 
     public boolean isHorizontal() {
-        if (getWorld().getNeighbourOf(this, LEFT).getType() == WALL && getWorld().getNeighbourOf(this, RIGHT).getType() == WALL) {
+        if (getWorld().getNeighbourOf(this, Direction.LEFT).getType() == WALL && getWorld().getNeighbourOf(this, Direction.RIGHT).getType() == WALL) {
             return true;
         }
         return false;
