@@ -19,8 +19,8 @@ public class Collider {
     }
 
     public static Rectangle findCollision(Entity e1, Entity e2, CollisionBox cB1, CollisionBox cB2) {
-        helper1.set(e1.getPos().x + cB1.getOffsetX(), e1.getPos().y + cB1.getOffsetY(), cB1.getWidth(), cB1.getHeight());
-        helper2.set(e2.getPos().x + cB2.getOffsetX(), e2.getPos().y + cB2.getOffsetY(), cB2.getWidth(), cB2.getHeight());
+        helper1.set(e1.getPos().x + cB1.getOffsetX(), e1.getPos().y - cB1.getOffsetY(), cB1.getWidth(), cB1.getHeight());
+        helper2.set(e2.getPos().x + cB2.getOffsetX(), e2.getPos().y - cB2.getOffsetY(), cB2.getWidth(), cB2.getHeight());
         if (Intersector.intersectRectangles(helper1, helper2, helper3)) {
             return helper3;
         }
