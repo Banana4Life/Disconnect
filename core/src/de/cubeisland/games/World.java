@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
-import de.cubeisland.games.entity.Door;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
@@ -16,7 +15,6 @@ import de.cubeisland.games.tile.TileType;
 
 import java.util.*;
 
-import static de.cubeisland.games.tile.TileType.DOOR;
 import static de.cubeisland.games.tile.TileType.FLOOR_PLAYER;
 
 public class World implements Disposable {
@@ -48,10 +46,19 @@ public class World implements Disposable {
             for (int y = 0; y < height; y++) {
                 TileType tileType = TileType.getByColor(pixmap.getPixel(x, y));
                 TileEntity tile;
-                if (tileType == DOOR) {
-                    tile = new Door(x, height - y - 1);
-                } else {
-                    tile = new TileEntity(x, height - y - 1, tileType);
+                if (tileType.getTileEntityClass() != null)
+                {
+                    try {
+                        tile = tileType.getTileEntityClass().getConstructor(int.class, int.class, TileType.class).newInstance(x, height - y - 1, tileType);
+                    } catch (ReflectiveOperationException e) {
+                        e.printStackTrace();
+                        throw new IllegalArgumentException();
+                    }
+                }
+                else
+                {
+                    System.out.println("MISSING TILE CLASS!");
+                    continue;
                 }
                 tile.setWorld(this);
                 tileEntities[x][height - y - 1] = tile;
