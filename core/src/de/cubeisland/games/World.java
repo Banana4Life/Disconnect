@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import de.cubeisland.games.entity.Door;
 import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
@@ -283,6 +284,20 @@ public class World implements Disposable {
         }
 
         return tiles;
+    }
+
+    public List<Door> findAllDoors() {
+        List<Door> doors = new ArrayList<>();
+
+        for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; ++y) {
+                if (tileEntities[x][y] instanceof Door) {
+                    doors.add((Door) tileEntities[x][y]);
+                }
+            }
+        }
+
+        return doors;
     }
 
     private static final class DepthComparator implements Comparator<Entity> {

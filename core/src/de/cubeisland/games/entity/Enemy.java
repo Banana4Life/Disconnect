@@ -21,6 +21,8 @@ public class Enemy extends Entity {
     public static final float FOV = 50;
     private static final int SIZE = 5;
 
+    private boolean aggro = false;
+
     @Override
     public void onSpawn(World world) {
         super.onSpawn(world);
@@ -40,6 +42,20 @@ public class Enemy extends Entity {
         die();
     }
 
+    @Override
+    public void update(DisconnectGame game, float delta) {
+        Player player = getWorld().getPlayer();
+        CollisionBox playerCB = player.getCollisionBox();
+        playerDistance
+                .set(player.getPos())
+                .add(playerCB.getOffsetX() + playerCB.getWidth() / 2f, playerCB.getOffsetY() + playerCB.getHeight() / 2f)
+                .sub(pos);
+        if (aggro) {
+            velocity.set(playerDistance.cpy().nor().scl(SPEED));
+        }
+        super.update(game, delta);
+    }
+
     private Vector2 playerDistance = new Vector2(0, 0);
 
     @Override
@@ -51,12 +67,6 @@ public class Enemy extends Entity {
         r.circle(pos.x + SIZE, pos.y + SIZE, SIZE);
         r.end();
 
-        Player player = getWorld().getPlayer();
-        CollisionBox playerCB = player.getCollisionBox();
-        playerDistance
-                .set(player.getPos())
-                .add(playerCB.getOffsetX() + playerCB.getWidth() / 2f, playerCB.getOffsetY() + playerCB.getHeight() / 2f)
-                .sub(pos);
         float viewAngle = velocity.angle();
         float playerAngle = playerDistance.angle();
         float diffAngle = Math.abs(viewAngle - playerAngle);
@@ -66,7 +76,12 @@ public class Enemy extends Entity {
         r.setColor(0,1,0,0.6f);
         if (playerDistance.len2() <= RANGE * RANGE && diffAngle <= (FOV / 2f) && isLineOfSightClear(getWorld(), pos, pos.cpy().add(playerDistance))) {
             r.setColor(1, 0, 0, 0.6f);
+            aggro = true;
+            for (Door door : getWorld().findAllDoors()) {
+                // TODO close
+            }
         }
+        aggro = false;
         r.begin(ShapeRenderer.ShapeType.Filled);
         r.arc(center.x, center.y, RANGE, velocity.angle() - FOV / 2f, FOV);
         r.end();
