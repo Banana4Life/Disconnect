@@ -11,6 +11,7 @@ import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.resource.bag.Animations;
 
 import static com.badlogic.gdx.Input.Keys.ENTER;
+import static com.badlogic.gdx.Input.Keys.ESCAPE;
 import static com.badlogic.gdx.Input.Keys.SPACE;
 import static de.cubeisland.games.screens.UIInput.Handler;
 
@@ -35,7 +36,13 @@ public class TitleScreen extends UIScreen {
                 game.transition(GameScreen.class);
                 return true;
             }
-        }, SPACE, ENTER);
+        }, SPACE, ENTER).add(new Handler() {
+            @Override
+            public boolean handle(DisconnectGame game) {
+                game.exit();
+                return true;
+            }
+        }, ESCAPE);
     }
 
     @Override
