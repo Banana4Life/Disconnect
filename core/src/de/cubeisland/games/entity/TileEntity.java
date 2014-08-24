@@ -3,6 +3,7 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.entity.collision.Collider;
@@ -22,9 +23,9 @@ public class TileEntity extends Entity {
     private final int tileX;
     private final int tileY;
     protected TileType type;
-    protected Texture texture = null;
+    protected TextureRegion texture = null;
 
-    protected Texture overlay = null;
+    protected TextureRegion overlay = null;
     protected Vector2 overlayOffset;
 
     public TileEntity(int x, int y, TileType type) {

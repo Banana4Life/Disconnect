@@ -3,6 +3,7 @@ package de.cubeisland.games.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.Camera;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
@@ -40,14 +41,14 @@ public class TitleScreen extends UIScreen {
     @Override
     public void draw(float delta) {
         SpriteBatch batch = game.getGuiCamera().getSpriteBatch();
-        Texture logo = game.getResourcePack().textures.logo;
-        Texture exittipp = game.getResourcePack().textures.exittipp;
+        TextureRegion logo = game.getResourcePack().textures.logo;
+        TextureRegion exittipp = game.getResourcePack().textures.exittipp;
 
         this.titleWorld.render(this.game, delta);
 
         batch.begin();
-        batch.draw(logo, 0, Gdx.graphics.getHeight() / 4 - logo.getHeight(), logo.getWidth(), logo.getHeight());
-        batch.draw(exittipp, 0, 0, exittipp.getWidth(), exittipp.getHeight());
+        batch.draw(logo, 0, Gdx.graphics.getHeight() / 4 - logo.getRegionHeight(), logo.getRegionWidth(), logo.getRegionHeight());
+        batch.draw(exittipp, 0, 0, exittipp.getRegionWidth(), exittipp.getRegionHeight());
         batch.end();
     }
 }

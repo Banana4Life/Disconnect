@@ -18,7 +18,7 @@ public class Door extends TileEntity {
         }
 
         if (this.texture == null) {
-            this.texture = this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames()[0].getTexture();
+            this.texture = this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames()[0];
         }
 
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
@@ -30,7 +30,7 @@ public class Door extends TileEntity {
     public void interact(Item carriedItem) {
         if (carriedItem instanceof Key) {
             this.texture = null;
-            this.overlay = this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames()[this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames().length - 1].getTexture();
+            this.overlay = this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames()[this.getWorld().getGame().getResourcePack().animations.doorhorizontal.getKeyFrames().length - 1];
             this.overlayOffset = new Vector2(0, 0);
             this.type = DOOR_OPEN;
         }

@@ -60,9 +60,9 @@ public class GameScreen extends DisconnectScreen {
         batch.begin();
         Texture divider;
         if (playerInput.getMode() == LEFT) {
-            divider = game.getResourcePack().textures.dividerleft;
+            divider = game.getResourcePack().textures.dividerleft.getTexture();
         } else {
-            divider = game.getResourcePack().textures.dividerright;
+            divider = game.getResourcePack().textures.dividerright.getTexture();
         }
         divider.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 0, divider.getWidth(), Gdx.graphics.getHeight(),
