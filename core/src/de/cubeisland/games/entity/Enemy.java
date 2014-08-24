@@ -31,6 +31,8 @@ public class Enemy extends Entity {
         velocity.scl(-1);
     }
 
+    private Vector2 playerDistance = new Vector2(0, 0);
+
     @Override
     public void render(DisconnectGame game, float delta) {
         ShapeRenderer r = this.getWorld().getCamera().getShapeRenderer();
@@ -40,7 +42,11 @@ public class Enemy extends Entity {
         r.circle(pos.x, pos.y, SIZE);
         r.end();
 
-        Vector2 playerDistance = getWorld().getPlayer().getPos().cpy().sub(pos);
+        Player player = getWorld().getPlayer();
+        CollisionBox playerCB = player.getCollisionBox();
+        playerDistance.set(player.getPos());
+        playerDistance.add(playerCB.getOffsetX() + playerCB.getWidth() / 2f,
+                           playerCB.getOffsetY() + playerCB.getHeight() / 2f).sub(pos);
         float viewAngle = velocity.angle();
         float playerAngle = playerDistance.angle();
         float diffAngle = Math.abs(viewAngle - playerAngle);
