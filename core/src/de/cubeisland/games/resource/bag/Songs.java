@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 
 public class Songs extends ResourceBag<Music> {
     public Music maintheme;
+    public Music intro;
 
     public Songs(Files.FileType fileType) {
         super(fileType);

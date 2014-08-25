@@ -79,7 +79,7 @@ public abstract class AbstractDoor extends TileEntity {
             statetime += delta;
             TextureRegion[] keyFrames = this.animation.getKeyFrames();
             this.overlay = keyFrames[keyFrames.length - this.animation.getKeyFrameIndex(statetime)];
-            if (animation.getKeyFrameIndex(statetime) == animation.getKeyFrames().length - 1) // TODO or 0 ?
+            if (animation.getKeyFrameIndex(statetime) == animation.getKeyFrames().length - 1)
             {
                 this.state = DoorState.CLOSED;
             }

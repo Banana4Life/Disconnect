@@ -16,7 +16,7 @@ public class Exit extends Entity {
     @Override
     public void onSpawn(World world) {
         super.onSpawn(world);
-        this.setCollisionBox(new CollisionBox(16, 16)); // TODO anpassen an textur
+        this.setCollisionBox(new CollisionBox(6, 6, 5, 5)); // TODO anpassen an textur
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Exit extends Entity {
         super.render(game, delta);
         statetime += delta;
         SpriteBatch batch = this.getWorld().beginBatch();
-        batch.draw(game.getResourcePack().animations.exit.getKeyFrame(statetime, true), pos.x, pos.y, 16, 16); // TODO EXIT-TEXTUR
+        batch.draw(game.getResourcePack().animations.exit.getKeyFrame(statetime, true), pos.x, pos.y, 16, 16);
         batch.end();
     }
 

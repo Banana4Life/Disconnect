@@ -2,6 +2,7 @@ package de.cubeisland.games;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import de.cubeisland.games.screens.IntroScreen;
 import de.cubeisland.games.screens.TitleScreen;
 
 import static com.badlogic.gdx.Input.Keys.*;
@@ -31,6 +32,9 @@ public class GlobalInputProcessor implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case ESCAPE:
+                if (game.getScreen() instanceof IntroScreen) {
+                    game.getResourcePack().songs.intro.stop();
+                }
                 game.transition(TitleScreen.class);
                 return true;
             case ENTER:

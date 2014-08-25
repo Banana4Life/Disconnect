@@ -19,9 +19,15 @@ public class IntroScreen extends UIScreen {
     @Override
     public void show() {
         super.show();
+
+        this.game.getResourcePack().songs.intro.setLooping(false);
+        this.game.getResourcePack().songs.intro.setVolume(1f);
+        this.game.getResourcePack().songs.intro.play();
+
         getInput().add(new UIInput.Handler() {
             @Override
             public boolean handle(DisconnectGame game) {
+                game.getResourcePack().songs.intro.stop();
                 game.setScreen(new GameScreen(game));
                 return true;
             }
