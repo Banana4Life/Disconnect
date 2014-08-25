@@ -10,8 +10,6 @@ import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.util.SoundPlayer;
 
 public class Player extends AnimatedEntity {
-    private float statetime = 0f;
-
     private TextureRegion idleFrame;
     private Item carriedItem = null;
     
