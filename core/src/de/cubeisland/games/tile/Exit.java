@@ -11,6 +11,8 @@ import de.cubeisland.games.entity.collision.CollisionBox;
 
 public class Exit extends Entity {
 
+    private float statetime;
+
     @Override
     public void onSpawn(World world) {
         super.onSpawn(world);
@@ -25,8 +27,9 @@ public class Exit extends Entity {
     @Override
     public void render(DisconnectGame game, float delta) {
         super.render(game, delta);
+        statetime += delta;
         SpriteBatch batch = this.getWorld().beginBatch();
-        batch.draw(game.getResourcePack().textures.activatoron, pos.x, pos.y, 16, 16); // TODO EXIT-TEXTUR
+        batch.draw(game.getResourcePack().animations.exit.getKeyFrame(statetime, true), pos.x, pos.y, 16, 16); // TODO EXIT-TEXTUR
         batch.end();
     }
 

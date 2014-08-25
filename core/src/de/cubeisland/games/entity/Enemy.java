@@ -108,7 +108,7 @@ public class Enemy extends AnimatedEntity {
         batch.draw(currentKeyFrame, pos.x, pos.y, 16, 16);
         batch.end();
 
-        float viewAngle = velocity.angle();
+        /*float viewAngle = velocity.angle();
         float playerAngle = playerDistance.angle();
         float diffAngle = Math.abs(viewAngle - playerAngle);
 
@@ -131,7 +131,7 @@ public class Enemy extends AnimatedEntity {
         aggro = false;
         r.begin(ShapeRenderer.ShapeType.Filled);
         r.arc(center.x, center.y, RANGE, velocity.angle() - FOV / 2f, FOV);
-        r.end();
+        r.end();*/
     }
 
     @Override

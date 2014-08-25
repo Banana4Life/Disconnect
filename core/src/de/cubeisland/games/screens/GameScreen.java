@@ -88,7 +88,7 @@ public class GameScreen extends DisconnectScreen {
 
         if (disconnectTime > maxdisconnectTime) {
             disconnectTime = maxdisconnectTime;
-            // this.game.lose();
+            this.game.lose();
         } else if (disconnectTime < 0) {
             disconnectTime = 0;
         }
