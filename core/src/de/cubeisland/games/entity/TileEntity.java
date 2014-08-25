@@ -54,11 +54,13 @@ public class TileEntity extends Entity {
                 case TERMINAL:
                     TileEntity top = getWorld().getNeighbourOf(this, TOP);
                     TileEntity left = getWorld().getNeighbourOf(this, LEFT);
+                    TileEntity leftTop = getWorld().getNeighbourOf(left, TOP);
                     TileEntity right = getWorld().getNeighbourOf(this, RIGHT);
+                    TileEntity rightTop = getWorld().getNeighbourOf(right, TOP);
                     TileEntity bottom = getWorld().getNeighbourOf(this, BOTTOM);
                     if (FLOOR.isType(top) || DOOR.isType(top) || AUTO_DOOR.isType(top)) {
                         if (FLOOR.isType(left) || DOOR.isType(left) || AUTO_DOOR.isType(left)) {
-                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right) || TERMINAL.isType(right)) {
+                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
                                 this.texture = textures.walltopboth;
                             } else {
                                 this.texture = textures.walltopleft;
@@ -69,13 +71,15 @@ public class TileEntity extends Entity {
                             this.texture = textures.walltop;
                         }
                     }
-                    TileEntity rightTop = getWorld().getNeighbourOf(right, TOP);
                     if (left != null && this.texture == null) {
-                        TileEntity leftTop = getWorld().getNeighbourOf(left, TOP);
                         if (FLOOR.isType(left)) {
                             if (FLOOR.isType(right)) {
-                                if (WALL.isType(rightTop) && WALL.isType(leftTop) && TERMINAL.isType(rightTop)) {
+                                if ((WALL.isType(leftTop) || TERMINAL.isType(leftTop)) && (WALL.isType(rightTop) || TERMINAL.isType(rightTop))) {
                                     this.texture = textures.wallbothbottom;
+                                } else if ((WALL.isType(leftTop) || TERMINAL.isType(leftTop))) {
+                                    this.texture = textures.wallleftbottomboth;
+                                } else if ((WALL.isType(rightTop) || TERMINAL.isType(rightTop))) {
+                                    this.texture = textures.wallrightbottomboth;
                                 } else {
                                     this.texture = textures.wallboth;
                                 }
@@ -85,8 +89,10 @@ public class TileEntity extends Entity {
                                 this.texture = textures.wallright;
                             }
                         } else if (WALL.isType(left) && FLOOR.isType(leftTop)) {
-                            if (WALL.isType(right) && WALL.isType(left) && FLOOR.isType(rightTop)) {
+                            if (WALL.isType(right) && FLOOR.isType(rightTop)) {
                                 this.texture = textures.wallbothtop;
+                            } if (FLOOR.isType(right)) {
+                                this.texture = textures.walllefttopboth;
                             } else {
                                 this.texture = textures.wallrighttop;
                             }
@@ -100,17 +106,21 @@ public class TileEntity extends Entity {
                                 this.texture = textures.wallleft;
                             }
                         } else if (WALL.isType(right) && FLOOR.isType(rightTop)) {
-                            this.texture = textures.walllefttop;
+                            if (FLOOR.isType(left)) {
+                                this.texture = textures.wallrighttopboth;
+                            } else {
+                                this.texture = textures.walllefttop;
+                            }
                         }
                     }
                     if (FLOOR.isType(bottom) || DOOR.isType(bottom) || AUTO_DOOR.isType(bottom)) {
-                        if (FLOOR.isType(left)) {
-                            if (FLOOR.isType(right)) {
+                        if (FLOOR.isType(left)  || DOOR.isType(left) || AUTO_DOOR.isType(left)) {
+                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
                                 this.overlay = textures.wallbottomboth;
                             } else {
                                 this.overlay = textures.wallbottomleft;
                             }
-                        } else if (FLOOR.isType(right)) {
+                        } else if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
                             this.overlay = textures.wallbottomright;
                         } else {
                             this.overlay = textures.wallbottom;

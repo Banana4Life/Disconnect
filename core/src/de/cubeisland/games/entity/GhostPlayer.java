@@ -47,12 +47,11 @@ public class GhostPlayer extends Entity {
 
     @Override
     public void interact(Item carriedItem, Player player) {
-        this.getPos().set(this.getPos());
         this.die();
         PlayerInput playerInput = ((GameScreen) this.getWorld().getGame().getScreen()).getPlayerInput();
         playerInput.setMode(playerInput.getMode());
-        playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
-        playerInput.getOtherPlayer().getPos().set(this.getPos());
+        player.getOtherPlayer().getVelocity().set(player.getVelocity());
+        player.getPos().set(player.getOtherPlayer().getPos());
         ((GameScreen) getWorld().getGame().getScreen()).stopTimeSound();
     }
 }
