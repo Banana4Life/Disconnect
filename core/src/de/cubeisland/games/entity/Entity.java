@@ -116,7 +116,7 @@ public abstract class Entity {
     private boolean fixCollision(TileEntity tile, Rectangle collisionBox) {
         for (Direction direction : Direction.values()) {
             TileEntity neighbourOf = this.getWorld().getNeighbourOf(tile, direction);
-            if (!neighbourOf.isBlocking()) {
+            if (neighbourOf != null && !neighbourOf.isBlocking()) {
                 pos.set(neighbourOf.getPos());
                 inWall = false;
                 System.out.println("FIXED COLLISION! " + collisionBox.height + " " + collisionBox.width);
