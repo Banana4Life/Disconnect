@@ -18,11 +18,19 @@ public abstract class Entity {
     private boolean alive = true;
     private CollisionBox collisionBox;
     private boolean inWall = false;
+    private boolean skipMovement = false;
 
     public void update(DisconnectGame game, float delta) {
-        this.lastPos.set(pos);
-        this.pos.add(this.velocity.cpy().scl(delta));
-        this.world.checkCollisions(this);
+        if (skipMovement)
+        {
+            skipMovement = false;
+        }
+        else
+        {
+            this.lastPos.set(pos);
+            this.pos.add(this.velocity.cpy().scl(delta));
+            this.world.checkCollisions(this);
+        }
     }
 
     public void render(DisconnectGame game, float delta) {
@@ -234,5 +242,9 @@ public abstract class Entity {
     }
 
     public void interact(Item carriedItem, Player player) {
+    }
+
+    public void skipMovement() {
+        this.skipMovement = false;
     }
 }

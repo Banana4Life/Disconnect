@@ -9,9 +9,9 @@ import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
 import de.cubeisland.games.util.SoundPlayer;
 
-public class Player extends Entity {
+public class Player extends AnimatedEntity {
     private float statetime = 0f;
-    private TextureRegion currentKeyFrame;
+
     private TextureRegion idleFrame;
     private Item carriedItem = null;
     
@@ -22,7 +22,6 @@ public class Player extends Entity {
 
     private SoundPlayer.SoundInstance step;
     private Player otherPlayer;
-    private boolean skipUpdate = false;
 
     private GhostPlayer ghost = null;
 
@@ -51,10 +50,30 @@ public class Player extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
+        SpriteBatch batch = this.getWorld().beginBatch();
+        batch.draw(currentKeyFrame, pos.x, pos.y, 16, 16);
+        batch.end();
+        super.render(game, delta);
 
-        this.statetime += delta;
+        if (currentKeyFrame == idleFrame)
+        {
+            this.step.pause();
+        }
+        else
+        {
+            this.step.resume();
+        }
+    }
 
+    public TextureRegion getItemInHandTex() {
+        if (carriedItem == null) {
+            return null;
+        }
+        return carriedItem.getTex();
+    }
+
+    @Override
+    public void updateAnimation() {
         Animation animation = null;
         if (currentKeyFrame == null || velocity.y < 0) {
             animation = characterFront;
@@ -67,26 +86,11 @@ public class Player extends Entity {
         }
 
         if (animation != null) {
-            this.step.resume();
             currentKeyFrame = animation.getKeyFrame(this.statetime, true);
             idleFrame = animation.getKeyFrames()[0];
         } else {
-            this.step.pause();
             currentKeyFrame = idleFrame;
         }
-
-        batch.begin();
-        batch.draw(currentKeyFrame, pos.x, pos.y, 16, 16);
-        batch.end();
-
-        super.render(game, delta);
-    }
-
-    public TextureRegion getItemInHandTex() {
-        if (carriedItem == null) {
-            return null;
-        }
-        return carriedItem.getTex();
     }
 
     @Override
@@ -100,12 +104,8 @@ public class Player extends Entity {
         tile.interact(carriedItem, this);
         if (this.ghost == null || !this.ghost.isAlive()) {
             this.otherPlayer.getPos().set(this.getPos());
-            this.otherPlayer.skipUpdate();
+            this.otherPlayer.skipMovement();
         }
-    }
-
-    private void skipUpdate() {
-        this.skipUpdate = true;
     }
 
     @Override
@@ -117,11 +117,6 @@ public class Player extends Entity {
     @Override
     public void update(DisconnectGame game, float delta) {
         this.getWorld().getCamera().position.set(this.pos.x, this.pos.y, 0);
-        if (skipUpdate)
-        {
-            skipUpdate = false;
-            return;
-        }
         super.update(game, delta);
     }
 

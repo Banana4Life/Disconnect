@@ -19,18 +19,17 @@ public class Key extends Item {
     }
 
     @Override
-    public void render(DisconnectGame game, float delta) {
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-
+    public void update(DisconnectGame game, float delta) {
+        super.update(game, delta);
         this.statetime += delta;
         texReg = game.getResourcePack().animations.key.getKeyFrame(this.statetime, true);
+    }
 
-        if (getCollisionBox() != null) {
-            batch.begin();
-            batch.draw(texReg, pos.x, pos.y, 16, 16);
-            batch.end();
-        }
-
+    @Override
+    public void render(DisconnectGame game, float delta) {
+        SpriteBatch batch = this.getWorld().beginBatch();
+        batch.draw(texReg, pos.x, pos.y, 16, 16);
+        batch.end();
         super.render(game, delta);
     }
 }

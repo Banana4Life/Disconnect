@@ -25,7 +25,6 @@ public class TitleScreen extends UIScreen {
 
         Animations animations = game.getResourcePack().animations;
         this.titleWorld = new World(game, game.getGuiCamera(), new Player(animations.characterleftfront, animations.characterleftside, animations.characterleftback), "TitleWorld");
-        this.titleWorld.update(this.game, 0);
 
         getInput().add(new Handler() {
             @Override

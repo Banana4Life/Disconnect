@@ -19,7 +19,7 @@ import de.cubeisland.games.util.SoundPlayer;
 
 import static de.cubeisland.games.entity.collision.Collider.isLineOfSightClear;
 
-public class Enemy extends Entity {
+public class Enemy extends AnimatedEntity {
 
     public static final int SPEED = 20;
     public static final float RANGE = 50;
@@ -32,9 +32,6 @@ public class Enemy extends Entity {
     private Animation characterRight;
 
     private SoundPlayer.SoundInstance step;
-
-    private TextureRegion currentKeyFrame = null;
-    private float statetime = 0f;
 
     private boolean aggro = false;
 
@@ -84,11 +81,7 @@ public class Enemy extends Entity {
     private Vector2 playerDistance = new Vector2(0, 0);
 
     @Override
-    public void render(DisconnectGame game, float delta) {
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-
-        this.statetime += delta;
-
+    public void updateAnimation() {
         Animation animation = null;
         if (currentKeyFrame == null || velocity.y < 0) {
             animation = characterFront;
@@ -108,8 +101,11 @@ public class Enemy extends Entity {
         } else {
             this.step.pause();
         }
+    }
 
-        batch.begin();
+    @Override
+    public void render(DisconnectGame game, float delta) {
+        SpriteBatch batch = this.getWorld().beginBatch();
         batch.draw(currentKeyFrame, pos.x, pos.y, 16, 16);
         batch.end();
 

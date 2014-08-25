@@ -2,6 +2,7 @@ package de.cubeisland.games;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -107,6 +108,7 @@ public class World implements Disposable {
         if (player != null) {
             spawn(player);
         }
+        this.update(game, 0);
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
@@ -157,6 +159,8 @@ public class World implements Disposable {
     }
 
     public void update(DisconnectGame game, float delta) {
+        this.entities.addAll(spawnedEntities);
+        this.spawnedEntities.clear();
         List<Entity> removalQueue = new ArrayList<>();
         for (Entity entity : entities) {
             entity.update(game, delta);
@@ -168,8 +172,6 @@ public class World implements Disposable {
             entity.onDeath();
             this.entities.remove(entity);
         }
-        this.entities.addAll(spawnedEntities);
-        this.spawnedEntities.clear();
     }
 
     public void render(DisconnectGame game, float delta) {
@@ -321,5 +323,12 @@ public class World implements Disposable {
         public int compare(Entity entity1, Entity entity2) {
             return entity1.getDepth() - entity2.getDepth();
         }
+    }
+
+    public SpriteBatch beginBatch()
+    {
+        SpriteBatch batch = this.getCamera().getSpriteBatch();
+        batch.begin();
+        return batch;
     }
 }
