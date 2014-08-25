@@ -6,6 +6,7 @@ import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.Collider;
 import de.cubeisland.games.entity.collision.CollisionBox;
+import de.cubeisland.games.tile.Direction;
 
 public abstract class Entity {
     protected Vector2 pos = Vector2.Zero.cpy();
@@ -16,6 +17,7 @@ public abstract class Entity {
     private int depth = 1;
     private boolean alive = true;
     private CollisionBox collisionBox;
+    private boolean inWall = false;
 
     public void update(DisconnectGame game, float delta) {
         this.lastPos.set(pos);
@@ -72,7 +74,12 @@ public abstract class Entity {
                     collisionBox = Collider.findCollision(this, tile);
                     if (collisionBox != null)
                     {
-                        System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
+                        if (this.inWall)
+                        {
+                            fixCollision(tile, collisionBox);
+                            return;
+                        }
+                        this.inWall = true;
                         pos.x = lastPos.x;
                         pos.y = lastPos.y;
                     }
@@ -101,7 +108,12 @@ public abstract class Entity {
                     collisionBox = Collider.findCollision(this, tile);
                     if (collisionBox != null)
                     {
-                        System.out.println("UNRESOLVED COLLISION! " + collisionBox.height + " " + collisionBox.width);
+                        if (inWall)
+                        {
+                            fixCollision(tile, collisionBox);
+                            return;
+                        }
+                        inWall = true;
                         pos.x = lastPos.x;
                         pos.y = lastPos.y;
                     }
@@ -112,6 +124,21 @@ public abstract class Entity {
                 }
             }
         }
+    }
+
+    private boolean fixCollision(TileEntity tile, Rectangle collisionBox) {
+        for (Direction direction : Direction.values()) {
+            TileEntity neighbourOf = this.getWorld().getNeighbourOf(tile, direction);
+            if (!neighbourOf.isBlocking())
+            {
+                pos.set(neighbourOf.getPos());
+                inWall = false;
+                System.out.println("FIXED COLLISION! " + collisionBox.height + " " + collisionBox.width);
+                return true;
+            }
+        }
+        System.out.println("UNRESOLVABLE COLLISION! " + collisionBox.height + " " + collisionBox.width);
+        return false;
     }
 
     private boolean onTileCollideY(Rectangle collisionBox) {

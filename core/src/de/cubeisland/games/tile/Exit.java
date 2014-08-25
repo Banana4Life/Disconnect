@@ -28,7 +28,7 @@ public class Exit extends Entity {
 
         SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
         batch.begin();
-        // TODO draw exit item batch.draw(texReg, pos.x, pos.y, 16, 16);
+        batch.draw(game.getResourcePack().textures.activatoron, pos.x, pos.y, 16, 16); // TODO EXIT-TEXTUR
         batch.end();
     }
 
