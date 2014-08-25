@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.DisconnectGame;
 
+import static com.badlogic.gdx.Input.Keys.ENTER;
 import static com.badlogic.gdx.Input.Keys.ESCAPE;
+import static com.badlogic.gdx.Input.Keys.SPACE;
 import static de.cubeisland.games.screens.UIInput.Handler;
 
 public class CreditsScreen extends UIScreen {
@@ -17,13 +19,13 @@ public class CreditsScreen extends UIScreen {
     @Override
     public void show() {
         super.show();
-        getInput().add(ESCAPE, new Handler() {
+        getInput().add(new Handler() {
             @Override
             public boolean handle(DisconnectGame game) {
                 game.setScreen(new TitleScreen(game));
                 return true;
             }
-        });
+        }, ESCAPE, ENTER, SPACE);
     }
 
     @Override
