@@ -30,7 +30,7 @@ public class PlayerInput extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Input.Keys.SPACE:
+            case Input.Keys.W:
                 switch (mode) {
                     case LEFT:
                         mode = Mode.LEFT_SINGLE;
@@ -45,14 +45,18 @@ public class PlayerInput extends InputAdapter {
                 }
                 screen.startTimerSound();
                 return true;
-            case Input.Keys.CONTROL_LEFT:
-                switch (mode) {
-                    case LEFT:
-                        mode = Mode.RIGHT;
-                        break;
-                    case RIGHT:
-                        mode = Mode.LEFT;
-                        break;
+            case Input.Keys.A:
+                if (mode == Mode.RIGHT)
+                {
+                    mode = Mode.LEFT;
+                    break;
+                }
+                return true;
+            case Input.Keys.D:
+                if (mode == Mode.LEFT)
+                {
+                    mode = Mode.RIGHT;
+                    break;
                 }
                 return true;
             case Input.Keys.S:
