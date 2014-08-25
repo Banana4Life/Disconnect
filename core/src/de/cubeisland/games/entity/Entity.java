@@ -117,7 +117,7 @@ public abstract class Entity {
         for (Direction direction : Direction.values()) {
             TileEntity neighbourOf = this.getWorld().getNeighbourOf(tile, direction);
             if (neighbourOf != null && !neighbourOf.isBlocking()) {
-                pos.set(neighbourOf.getPos());
+                pos.set(neighbourOf.getPos()).add(8, 8);
                 inWall = false;
                 System.out.println("FIXED COLLISION! " + collisionBox.height + " " + collisionBox.width);
                 return true;
