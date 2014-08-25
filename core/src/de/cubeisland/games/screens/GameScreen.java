@@ -22,7 +22,7 @@ public class GameScreen extends DisconnectScreen {
     private World worldRight;
 
     private float disconnectTime;
-    private float maxdisconnectTime = 5;
+    private float maxdisconnectTime = 7;
     private SoundPlayer timerSound;
     private SoundPlayer.SoundInstance timerSoundInstance;
     private SoundPlayer.SoundInstance alarmSound;

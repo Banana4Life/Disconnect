@@ -31,6 +31,9 @@ public class GhostPlayer extends Entity {
         batch.setColor(c.r, c.g, c.b, 0.7f);
         batch.draw(keyFrame, pos.x, pos.y, 16, 16);
         batch.setColor(c.r, c.g, c.b, 1f);
+        if (getCollisionBox() != null) {
+            batch.draw(game.getResourcePack().textures.wall, pos.x + getCollisionBox().getOffsetX(), pos.y - getCollisionBox().getOffsetY(), getCollisionBox().getWidth(), getCollisionBox().getHeight());
+        }
         batch.end();
         super.render(game, delta);
     }
@@ -41,7 +44,7 @@ public class GhostPlayer extends Entity {
 
         this.delta += delta;
         if (this.getCollisionBox() == null && this.delta > this.time) {
-            this.setCollisionBox(new CollisionBox(2, 3, 7, 0));
+            this.setCollisionBox(new CollisionBox(6, 4, 5, 2));
         }
     }
 

@@ -15,7 +15,7 @@ public class Key extends Item {
     @Override
     public void onSpawn(World world) {
         super.onSpawn(world);
-        this.setCollisionBox(new CollisionBox(6, 6, 5, -6));
+        this.setCollisionBox(new CollisionBox(6, 8, 5, -2));
     }
 
     @Override
