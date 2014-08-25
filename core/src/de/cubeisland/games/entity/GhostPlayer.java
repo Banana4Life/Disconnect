@@ -26,15 +26,12 @@ public class GhostPlayer extends Entity {
 
     @Override
     public void render(DisconnectGame game, float delta) {
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-
-        batch.begin();
+        SpriteBatch batch = this.getWorld().beginBatch();
         Color c = batch.getColor();
         batch.setColor(c.r, c.g, c.b, 0.7f);
         batch.draw(keyFrame, pos.x, pos.y, 16, 16);
         batch.setColor(c.r, c.g, c.b, 1f);
         batch.end();
-
         super.render(game, delta);
     }
 

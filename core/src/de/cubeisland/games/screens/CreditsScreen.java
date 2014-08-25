@@ -32,7 +32,11 @@ public class CreditsScreen extends UIScreen {
         TextureRegion creditsscreen = game.getResourcePack().textures.creditscreen;
 
         batch.begin();
-        batch.draw(creditsscreen, Gdx.graphics.getWidth() / 8 - creditsscreen.getRegionWidth() / 2, Gdx.graphics.getHeight() / 8 - creditsscreen.getRegionHeight() / 2, creditsscreen.getRegionWidth(), creditsscreen.getRegionHeight());
+        batch.draw(creditsscreen,
+                    Gdx.graphics.getWidth() / 8 - creditsscreen.getRegionWidth() / 2,
+                    Gdx.graphics.getHeight() / 8 - creditsscreen.getRegionHeight() / 2,
+                    creditsscreen.getRegionWidth(),
+                    creditsscreen.getRegionHeight());
         batch.end();
     }
 }

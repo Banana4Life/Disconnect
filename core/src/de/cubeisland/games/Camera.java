@@ -18,9 +18,7 @@ public class Camera extends OrthographicCamera implements Disposable {
 
     private Camera(CameraType type) {
         this.type = type;
-        this.zoom = 0.25f;
         this.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
     }
@@ -30,6 +28,8 @@ public class Camera extends OrthographicCamera implements Disposable {
     }
 
     public void resize(int width, int height) {
+        width = width / 4; // Zoom
+        height = height / 4; // Zoom
         switch (type) {
             case LEFT:
             case RIGHT:
@@ -44,7 +44,6 @@ public class Camera extends OrthographicCamera implements Disposable {
     public Camera use() {
         int height = Gdx.graphics.getHeight();
         int width = Gdx.graphics.getWidth();
-
         int x = 0;
         int y = 0;
         int xSize = width;

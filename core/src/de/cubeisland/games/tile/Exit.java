@@ -25,9 +25,7 @@ public class Exit extends Entity {
     @Override
     public void render(DisconnectGame game, float delta) {
         super.render(game, delta);
-
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-        batch.begin();
+        SpriteBatch batch = this.getWorld().beginBatch();
         batch.draw(game.getResourcePack().textures.activatoron, pos.x, pos.y, 16, 16); // TODO EXIT-TEXTUR
         batch.end();
     }

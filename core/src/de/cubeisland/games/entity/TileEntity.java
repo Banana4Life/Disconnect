@@ -116,16 +116,12 @@ public class TileEntity extends Entity {
                         this.texture = textures.wall;
                     }
                     break;
-                case FLOOR_PLAYER:
-                    this.texture = textures.floor;
-                    break;
             }
         }
 
         statetime += delta;
 
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-        batch.begin();
+        SpriteBatch batch = this.getWorld().beginBatch();
         batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
         if (this.type == TERMINAL) {
             batch.draw(getWorld().getGame().getResourcePack().animations.terminal.getKeyFrame(statetime, true), pos.x, pos.y, SIZE, SIZE);
@@ -147,26 +143,19 @@ public class TileEntity extends Entity {
             overlayCollisionBox = new CollisionBox(SIZE, SIZE, 0, -14); // 13 overlay height + 1 to collide sooner
         }
 
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-
+        SpriteBatch batch = this.getWorld().beginBatch();
+        Color c = batch.getColor();
         List<Entity> entities = this.getWorld().getEntities();
         for (Entity entity : entities) {
             if (entity.getCollisionBox() == null || entity instanceof Item) {
                 continue;
             }
-
             if (Collider.findCollision(entity, this, entity.getCollisionBox(), overlayCollisionBox) != null) {
-                batch.begin();
-                Color c = batch.getColor();
                 batch.setColor(c.r, c.g, c.b, 0.7f);
-                batch.draw(this.overlay, pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE);
-                batch.setColor(c.r, c.g, c.b, 1f);
-                batch.end();
-                return;
             }
         }
-        batch.begin();
         batch.draw(this.overlay, pos.x + overlayOffset.x, pos.y + overlayOffset.y, SIZE, SIZE);
+        batch.setColor(c.r, c.g, c.b, 1f);
         batch.end();
     }
 

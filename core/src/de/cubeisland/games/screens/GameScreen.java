@@ -65,17 +65,19 @@ public class GameScreen extends DisconnectScreen {
         } else {
             divider = game.getResourcePack().textures.dividerright.getTexture();
         }
+        int width = Gdx.graphics.getWidth();
+        int mid = width / 8;
         divider.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        batch.draw(divider, Gdx.graphics.getWidth() / 8 - 4, 0, divider.getWidth(), Gdx.graphics.getHeight(),
+        batch.draw(divider, mid - 4, 0, divider.getWidth(), Gdx.graphics.getHeight(),
                 0, 0, 1, Gdx.graphics.getHeight() / divider.getHeight());
 
-        batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 13, 0, 16, 16);
+        batch.draw(game.getResourcePack().textures.iteminhand, mid - 13, 0, 16, 16);
         if (worldLeft.getPlayer().getItemInHandTex() != null) {
-            batch.draw(worldLeft.getPlayer().getItemInHandTex(), Gdx.graphics.getWidth() / 8 - 13, 0, 16, 16);
+            batch.draw(worldLeft.getPlayer().getItemInHandTex(), mid - 13, 0, 16, 16);
         }
-        batch.draw(game.getResourcePack().textures.iteminhand, Gdx.graphics.getWidth() / 8 - 3, 0, 16, 16);
+        batch.draw(game.getResourcePack().textures.iteminhand, mid - 3, 0, 16, 16);
         if (worldRight.getPlayer().getItemInHandTex() != null) {
-            batch.draw(worldRight.getPlayer().getItemInHandTex(), Gdx.graphics.getWidth() / 8 - 3, 0, 16, 16);
+            batch.draw(worldRight.getPlayer().getItemInHandTex(), mid - 3, 0, 16, 16);
         }
 
         if (this.playerInput.getDisconnected()) {
@@ -86,12 +88,13 @@ public class GameScreen extends DisconnectScreen {
 
         if (disconnectTime > maxdisconnectTime) {
             disconnectTime = maxdisconnectTime;
+            this.game.lose();
         } else if (disconnectTime < 0) {
             disconnectTime = 0;
         }
 
         TextureRegion energybar = game.getResourcePack().animations.energybar.getKeyFrames()[(int) ((game.getResourcePack().animations.energybar.getKeyFrames().length - 1) * disconnectTime / maxdisconnectTime)];
-        batch.draw(energybar, Gdx.graphics.getWidth() / 8 - 16, 0, 32, 16);
+        batch.draw(energybar, mid - 16, 0, 32, 16);
         batch.end();
     }
 

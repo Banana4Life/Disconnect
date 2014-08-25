@@ -85,8 +85,7 @@ public abstract class AbstractDoor extends TileEntity {
             }
         }
 
-        SpriteBatch batch = this.getWorld().getCamera().getSpriteBatch();
-        batch.begin();
+        SpriteBatch batch = this.getWorld().beginBatch();
         batch.draw(this.texture, pos.x, pos.y, SIZE, SIZE);
         batch.end();
     }
