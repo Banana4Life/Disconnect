@@ -1,16 +1,12 @@
 package de.cubeisland.games.entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import de.cubeisland.games.DisconnectGame;
-import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
-import de.cubeisland.games.screens.GameScreen;
 import de.cubeisland.games.util.SoundPlayer;
 
 public class Player extends Entity {
@@ -95,33 +91,7 @@ public class Player extends Entity {
 
     @Override
     public void onCollide(Entity other, Rectangle collision) {
-        if (other instanceof GhostPlayer) {
-            this.getPos().set(other.getPos());
-            other.die();
-            PlayerInput playerInput = ((GameScreen) this.getWorld().getGame().getScreen()).getPlayerInput();
-            playerInput.setMode(playerInput.getMode());
-            playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
-            playerInput.getOtherPlayer().getPos().set(this.getPos());
-            ((GameScreen)getWorld().getGame().getScreen()).stopTimeSound();
-        } else if (other instanceof Item) {
-            if (this.carriedItem != null)
-            {
-                if (Gdx.input.isKeyJustPressed(Input.Keys.S))
-                {
-                    this.getWorld().spawn(carriedItem.getClass(), this.getPos());
-                }
-                else
-                {
-                    return;
-                }
-            }
-            this.carriedItem = (Item) other;
-            other.setCollisionBox(null);
-            this.carriedItem.die();
-            getWorld().getGame().getResourcePack().sounds.pickup.start(.25f);
-        } else {
-            die();
-        }
+        other.interact(carriedItem, this);
     }
 
     @Override
@@ -183,5 +153,9 @@ public class Player extends Entity {
         }
         this.otherPlayer.getWorld().spawn(this.carriedItem.getClass(), this.getPos());
         this.carriedItem = null;
+    }
+
+    public void setItem(Item item) {
+        this.carriedItem = item;
     }
 }

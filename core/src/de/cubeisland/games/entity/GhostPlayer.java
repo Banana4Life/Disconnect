@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.DisconnectGame;
+import de.cubeisland.games.PlayerInput;
 import de.cubeisland.games.entity.collision.CollisionBox;
+import de.cubeisland.games.screens.GameScreen;
 
 public class GhostPlayer extends Entity {
 
@@ -44,5 +46,16 @@ public class GhostPlayer extends Entity {
         if (this.getCollisionBox() == null && this.delta > this.time) {
             this.setCollisionBox(new CollisionBox(2, 3, 7, 0));
         }
+    }
+
+    @Override
+    public void interact(Item carriedItem, Player player) {
+        this.getPos().set(this.getPos());
+        this.die();
+        PlayerInput playerInput = ((GameScreen) this.getWorld().getGame().getScreen()).getPlayerInput();
+        playerInput.setMode(playerInput.getMode());
+        playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
+        playerInput.getOtherPlayer().getPos().set(this.getPos());
+        ((GameScreen)getWorld().getGame().getScreen()).stopTimeSound();
     }
 }

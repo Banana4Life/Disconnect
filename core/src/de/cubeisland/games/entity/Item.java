@@ -1,13 +1,11 @@
 package de.cubeisland.games.entity;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.cubeisland.games.DisconnectGame;
 import de.cubeisland.games.World;
 import de.cubeisland.games.entity.collision.CollisionBox;
-
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 
 public class Item extends Entity {
 
@@ -50,5 +48,25 @@ public class Item extends Entity {
 
     public TextureRegion getTex() {
         return texReg;
+    }
+
+    @Override
+    public void interact(Item carriedItem, Player player) {
+
+        if (carriedItem != null)
+        {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.S))
+            {
+                this.getWorld().spawn(carriedItem.getClass(), this.getPos());
+            }
+            else
+            {
+                return;
+            }
+        }
+        player.setItem(this);
+        this.setCollisionBox(null);
+        this.die();
+        getWorld().getGame().getResourcePack().sounds.pickup.start(.25f);
     }
 }

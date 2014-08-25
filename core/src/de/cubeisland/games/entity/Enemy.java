@@ -68,11 +68,6 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void onCollide(Entity other, Rectangle collisionBox) {
-        die();
-    }
-
-    @Override
     public void update(DisconnectGame game, float delta) {
         Player player = getWorld().getPlayer();
         CollisionBox playerCB = player.getCollisionBox();
@@ -147,5 +142,10 @@ public class Enemy extends Entity {
     @Override
     public void onDeath() {
         step.stop();
+    }
+
+    @Override
+    public void interact(Item carriedItem, Player player) {
+        player.die();
     }
 }
