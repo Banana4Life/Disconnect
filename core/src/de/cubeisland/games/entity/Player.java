@@ -1,5 +1,7 @@
 package de.cubeisland.games.entity;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -104,7 +106,14 @@ public class Player extends Entity {
         } else if (other instanceof Item) {
             if (this.carriedItem != null)
             {
-                this.getWorld().spawn(carriedItem.getClass(), carriedItem.getPos());
+                if (Gdx.input.isKeyJustPressed(Input.Keys.S))
+                {
+                    this.getWorld().spawn(carriedItem.getClass(), this.getPos());
+                }
+                else
+                {
+                    return;
+                }
             }
             this.carriedItem = (Item) other;
             other.setCollisionBox(null);
@@ -168,8 +177,11 @@ public class Player extends Entity {
     }
 
     public void switchItems() {
-        Item tmp = this.carriedItem;
-        this.carriedItem = this.otherPlayer.carriedItem;
-        this.otherPlayer.carriedItem = tmp;
+        if (this.carriedItem == null)
+        {
+            return;
+        }
+        this.otherPlayer.getWorld().spawn(this.carriedItem.getClass(), this.getPos());
+        this.carriedItem = null;
     }
 }
