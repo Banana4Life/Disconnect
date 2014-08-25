@@ -2,7 +2,6 @@ package de.cubeisland.games.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +17,6 @@ import de.cubeisland.games.screens.GameScreen;
 import de.cubeisland.games.tile.Direction;
 import de.cubeisland.games.util.SoundPlayer;
 
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 import static de.cubeisland.games.entity.collision.Collider.isLineOfSightClear;
 
 public class Enemy extends Entity {
@@ -45,7 +43,7 @@ public class Enemy extends Entity {
         super.onSpawn(world);
         Direction dir = Direction.random();
         getVelocity().set(SPEED * dir.getX(), SPEED * dir.getY());
-        setCollisionBox(new CollisionBox(SIZE * 2f, SIZE * 2f, 0, 0));
+        setCollisionBox(new CollisionBox(6, 4, 5, 0));
 
         Animations animations =  getWorld().getGame().getResourcePack().animations;
 
