@@ -12,7 +12,7 @@ public class SoundPlayer {
         this.sound = sound;
     }
 
-    public SoundInstance start () {
+    public SoundInstance start() {
         return new SoundInstance(this.sound.play());
     }
 

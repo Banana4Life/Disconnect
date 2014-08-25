@@ -3,7 +3,6 @@ package de.cubeisland.games;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
-import de.cubeisland.games.entity.Entity;
 import de.cubeisland.games.entity.Player;
 import de.cubeisland.games.entity.TileEntity;
 import de.cubeisland.games.entity.UserInteractableTile;
@@ -59,11 +58,11 @@ public class PlayerInput extends InputAdapter {
             case Input.Keys.S:
                 TileEntity leftNeighbor = left.getWorld().getNeighbourOf(left.getWorld().getTileAtPos(left.getPos().x + 8, left.getPos().y), Direction.BOTTOM);
                 if (leftNeighbor.getType() == TileType.TERMINAL) {
-                    ((UserInteractableTile)leftNeighbor).userInteract(left);
+                    ((UserInteractableTile) leftNeighbor).userInteract(left);
                 }
                 TileEntity rightNeighbor = right.getWorld().getNeighbourOf(right.getWorld().getTileAtPos(right.getPos().x + 8, right.getPos().y), Direction.BOTTOM);
                 if (rightNeighbor.getType() == TileType.TERMINAL) {
-                    ((UserInteractableTile)rightNeighbor).userInteract(right);
+                    ((UserInteractableTile) rightNeighbor).userInteract(right);
                 }
                 return true;
         }
@@ -145,6 +144,13 @@ public class PlayerInput extends InputAdapter {
         }
     }
 
+    public boolean getDisconnected() {
+        if (this.mode == Mode.LEFT_SINGLE || this.mode == Mode.RIGHT_SINGLE) {
+            return true;
+        }
+        return false;
+    }
+
     public enum Mode {
         LEFT, RIGHT, LEFT_SINGLE(true, false), RIGHT_SINGLE(false, true);
         public final boolean right;
@@ -158,12 +164,5 @@ public class PlayerInput extends InputAdapter {
         Mode() {
             this(true, true);
         }
-    }
-
-    public boolean getDisconnected() {
-        if (this.mode == Mode.LEFT_SINGLE || this.mode == Mode.RIGHT_SINGLE) {
-            return true;
-        }
-        return false;
     }
 }

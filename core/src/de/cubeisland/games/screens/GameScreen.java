@@ -1,7 +1,6 @@
 package de.cubeisland.games.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -91,7 +90,7 @@ public class GameScreen extends DisconnectScreen {
             disconnectTime = 0;
         }
 
-        TextureRegion energybar = game.getResourcePack().animations.energybar.getKeyFrames()[(int)((game.getResourcePack().animations.energybar.getKeyFrames().length - 1) * disconnectTime / maxdisconnectTime)];
+        TextureRegion energybar = game.getResourcePack().animations.energybar.getKeyFrames()[(int) ((game.getResourcePack().animations.energybar.getKeyFrames().length - 1) * disconnectTime / maxdisconnectTime)];
         batch.draw(energybar, Gdx.graphics.getWidth() / 8 - 16, 0, 32, 16);
         batch.end();
     }

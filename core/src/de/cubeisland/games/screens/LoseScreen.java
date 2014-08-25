@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.DisconnectGame;
-import de.cubeisland.games.World;
-import de.cubeisland.games.entity.Player;
-import de.cubeisland.games.resource.bag.Animations;
 
 import static com.badlogic.gdx.Input.Keys.*;
 import static de.cubeisland.games.screens.UIInput.Handler;

@@ -56,6 +56,6 @@ public class GhostPlayer extends Entity {
         playerInput.setMode(playerInput.getMode());
         playerInput.getOtherPlayer().getVelocity().set(this.getVelocity());
         playerInput.getOtherPlayer().getPos().set(this.getPos());
-        ((GameScreen)getWorld().getGame().getScreen()).stopTimeSound();
+        ((GameScreen) getWorld().getGame().getScreen()).stopTimeSound();
     }
 }

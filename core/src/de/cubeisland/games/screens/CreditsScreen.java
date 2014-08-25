@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.DisconnectGame;
 
-import static com.badlogic.gdx.Input.Keys.ENTER;
-import static com.badlogic.gdx.Input.Keys.ESCAPE;
-import static com.badlogic.gdx.Input.Keys.SPACE;
+import static com.badlogic.gdx.Input.Keys.*;
 import static de.cubeisland.games.screens.UIInput.Handler;
 
 public class CreditsScreen extends UIScreen {

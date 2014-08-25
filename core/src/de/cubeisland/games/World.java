@@ -49,17 +49,14 @@ public class World implements Disposable {
             for (int y = 0; y < height; y++) {
                 TileType tileType = TileType.getByColor(pixmap.getPixel(x, y));
                 TileEntity tile;
-                if (tileType.getTileEntityClass() != null)
-                {
+                if (tileType.getTileEntityClass() != null) {
                     try {
                         tile = tileType.getTileEntityClass().getConstructor(int.class, int.class, TileType.class).newInstance(x, height - y - 1, tileType);
                     } catch (ReflectiveOperationException e) {
                         e.printStackTrace();
                         throw new IllegalArgumentException();
                     }
-                }
-                else
-                {
+                } else {
                     System.out.println("MISSING TILE CLASS!");
                     continue;
                 }
@@ -68,8 +65,7 @@ public class World implements Disposable {
                 if (tileType == FLOOR_PLAYER) {
                     spawnPos = tile.getPos();
                 }
-                if (!tile.getType().isBlocking() && tile.getCollisionBox() != null)
-                {
+                if (!tile.getType().isBlocking() && tile.getCollisionBox() != null) {
                     this.entities.add(tile);
                 }
                 this.spawn(tileType.getEntityClass(), tile.getPos());
@@ -112,8 +108,7 @@ public class World implements Disposable {
     }
 
     public TileEntity getNeighbourOf(TileEntity tile, Direction dir) {
-        if (tile == null)
-        {
+        if (tile == null) {
             return null;
         }
         int x = tile.getTileX() + dir.getX();
@@ -134,8 +129,7 @@ public class World implements Disposable {
 
     public <E extends Entity> E spawn(Class<E> clazz, Vector2 pos) {
         try {
-            if (clazz !=null)
-            {
+            if (clazz != null) {
                 E e = clazz.newInstance();
                 this.spawn(e);
                 e.getPos().set(pos);
@@ -220,12 +214,9 @@ public class World implements Disposable {
             }
             Rectangle collision = Collider.findCollision(e1, e2);
             if (collision != null) {
-                if (e2 instanceof TileEntity)
-                {
+                if (e2 instanceof TileEntity) {
                     e1.onTileCollide((TileEntity) e2, collision);
-                }
-                else
-                {
+                } else {
                     e1.onCollide(e2, collision);
                 }
                 count++;
@@ -233,8 +224,7 @@ public class World implements Disposable {
         }
         for (Iterator<TileEntity> iterator = blockingTiles.iterator(); iterator.hasNext(); ) {
             TileEntity e2 = iterator.next();
-            if (!e2.getType().isBlocking())
-            {
+            if (!e2.getType().isBlocking()) {
                 iterator.remove();
             }
             Rectangle collision = Collider.findCollision(e1, e2);
@@ -318,17 +308,16 @@ public class World implements Disposable {
         return doors;
     }
 
+    public SpriteBatch beginBatch() {
+        SpriteBatch batch = this.getCamera().getSpriteBatch();
+        batch.begin();
+        return batch;
+    }
+
     private static final class DepthComparator implements Comparator<Entity> {
         @Override
         public int compare(Entity entity1, Entity entity2) {
             return entity1.getDepth() - entity2.getDepth();
         }
-    }
-
-    public SpriteBatch beginBatch()
-    {
-        SpriteBatch batch = this.getCamera().getSpriteBatch();
-        batch.begin();
-        return batch;
     }
 }

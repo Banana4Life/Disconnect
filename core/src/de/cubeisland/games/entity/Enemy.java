@@ -34,6 +34,7 @@ public class Enemy extends AnimatedEntity {
     private SoundPlayer.SoundInstance step;
 
     private boolean aggro = false;
+    private Vector2 playerDistance = new Vector2(0, 0);
 
     @Override
     public void onSpawn(World world) {
@@ -42,7 +43,7 @@ public class Enemy extends AnimatedEntity {
         getVelocity().set(SPEED * dir.getX(), SPEED * dir.getY());
         setCollisionBox(new CollisionBox(6, 4, 5, 0));
 
-        Animations animations =  getWorld().getGame().getResourcePack().animations;
+        Animations animations = getWorld().getGame().getResourcePack().animations;
 
         this.characterFront = animations.securityfront;
         TextureRegion[] tmp = new TextureRegion[animations.securityside.getKeyFrames().length];
@@ -77,8 +78,6 @@ public class Enemy extends AnimatedEntity {
         }
         super.update(game, delta);
     }
-
-    private Vector2 playerDistance = new Vector2(0, 0);
 
     @Override
     public void updateAnimation() {
@@ -117,7 +116,7 @@ public class Enemy extends AnimatedEntity {
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Vector2 center = pos.cpy().add(SIZE, SIZE);
-        r.setColor(0,1,0,0.6f);
+        r.setColor(0, 1, 0, 0.6f);
         if (playerDistance.len2() <= RANGE * RANGE && diffAngle <= (FOV / 2f) && isLineOfSightClear(getWorld(), pos, pos.cpy().add(playerDistance))) {
             r.setColor(1, 0, 0, 0.6f);
             aggro = true;

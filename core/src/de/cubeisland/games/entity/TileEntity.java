@@ -22,11 +22,9 @@ public class TileEntity extends Entity {
     private final int tileY;
     protected TileType type;
     protected TextureRegion texture = null;
-
-    private float statetime = 0f;
-
     protected TextureRegion overlay = null;
     protected Vector2 overlayOffset;
+    private float statetime = 0f;
 
     public TileEntity(int x, int y, TileType type) {
         this.tileX = x;

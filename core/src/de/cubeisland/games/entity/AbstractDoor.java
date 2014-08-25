@@ -12,43 +12,33 @@ import de.cubeisland.games.tile.TileType;
 
 import static de.cubeisland.games.tile.TileType.*;
 
-public abstract class AbstractDoor extends TileEntity{
+public abstract class AbstractDoor extends TileEntity {
     protected float statetime = 0f;
     protected Animation animation;
-
-    protected enum DoorState {
-        OPENED, OPENING, CLOSING, CLOSED
-    }
-
     protected DoorState state = DoorState.CLOSED;
 
     protected AbstractDoor(int x, int y, TileType type) {
         super(x, y, type);
     }
 
-    public void close()
-    {
-        if (state == DoorState.OPENED)
-        {
+    public void close() {
+        if (state == DoorState.OPENED) {
             this.state = DoorState.CLOSING;
             setCollisionBox(new CollisionBox(SIZE, SIZE));
         }
     }
 
-    public void open()
-    {
-        if (state == DoorState.CLOSED)
-        {
+    public void open() {
+        if (state == DoorState.CLOSED) {
             this.state = DoorState.OPENING;
             this.texture = this.getWorld().getGame().getResourcePack().textures.floor;
             getWorld().getGame().getResourcePack().sounds.door.start(0.20f);
         }
     }
 
-
     public boolean isHorizontal() {
         return WALL.isType(getWorld().getNeighbourOf(this, Direction.LEFT))
-            && WALL.isType(getWorld().getNeighbourOf(this, Direction.RIGHT));
+                && WALL.isType(getWorld().getNeighbourOf(this, Direction.RIGHT));
     }
 
     @Override
@@ -74,22 +64,18 @@ public abstract class AbstractDoor extends TileEntity{
         if (this.state == DoorState.OPENING) {
             statetime += delta;
             this.overlay = this.animation.getKeyFrame(statetime);
-            if (animation.getKeyFrameIndex(statetime) == animation.getKeyFrames().length - 1)
-            {
+            if (animation.getKeyFrameIndex(statetime) == animation.getKeyFrames().length - 1) {
                 this.state = DoorState.OPENED;
                 if (this.type == AUTO_DOOR) {
                     this.type = AUTO_DOOR_OPEN;
-                }
-                else if (this.type == DOOR)
-                {
+                } else if (this.type == DOOR) {
                     this.type = DOOR_OPEN;
                 }
                 this.setCollisionBox(null);
             }
         }
 
-        if (this.state == DoorState.CLOSING)
-        {
+        if (this.state == DoorState.CLOSING) {
             statetime += delta;
             TextureRegion[] keyFrames = this.animation.getKeyFrames();
             this.overlay = keyFrames[keyFrames.length - this.animation.getKeyFrameIndex(statetime)];
@@ -107,8 +93,7 @@ public abstract class AbstractDoor extends TileEntity{
 
     @Override
     public boolean isBlocking() {
-        switch (state)
-        {
+        switch (state) {
             case OPENED:
                 return false;
             case OPENING:
@@ -117,5 +102,9 @@ public abstract class AbstractDoor extends TileEntity{
                 return true;
         }
         return true;
+    }
+
+    protected enum DoorState {
+        OPENED, OPENING, CLOSING, CLOSED
     }
 }

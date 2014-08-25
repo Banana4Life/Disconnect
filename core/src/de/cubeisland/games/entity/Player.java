@@ -12,7 +12,7 @@ import de.cubeisland.games.util.SoundPlayer;
 public class Player extends AnimatedEntity {
     private TextureRegion idleFrame;
     private Item carriedItem = null;
-    
+
     private Animation characterFront;
     private Animation characterBack;
     private Animation characterLeft;
@@ -53,12 +53,9 @@ public class Player extends AnimatedEntity {
         batch.end();
         super.render(game, delta);
 
-        if (currentKeyFrame == idleFrame)
-        {
+        if (currentKeyFrame == idleFrame) {
             this.step.pause();
-        }
-        else
-        {
+        } else {
             this.step.resume();
         }
     }
@@ -127,12 +124,12 @@ public class Player extends AnimatedEntity {
         this.getWorld().spawn(ghost);
     }
 
-    public void setOtherPlayer(Player otherPlayer) {
-        this.otherPlayer = otherPlayer;
-    }
-
     public Player getOtherPlayer() {
         return otherPlayer;
+    }
+
+    public void setOtherPlayer(Player otherPlayer) {
+        this.otherPlayer = otherPlayer;
     }
 
     public void useItem() {
@@ -140,8 +137,7 @@ public class Player extends AnimatedEntity {
     }
 
     public void switchItems() {
-        if (this.carriedItem == null)
-        {
+        if (this.carriedItem == null) {
             return;
         }
         this.otherPlayer.getWorld().spawn(this.carriedItem.getClass(), this.getPos());

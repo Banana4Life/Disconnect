@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import de.cubeisland.engine.reflect.Reflector;
 import de.cubeisland.games.resource.LudumResourcePack;
-import de.cubeisland.games.screens.*;
+import de.cubeisland.games.screens.LoseScreen;
+import de.cubeisland.games.screens.TitleScreen;
+import de.cubeisland.games.screens.WinScreen;
 
 import java.lang.reflect.Constructor;
 

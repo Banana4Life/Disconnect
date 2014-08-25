@@ -10,10 +10,9 @@ import de.cubeisland.games.entity.collision.CollisionBox;
 public class Item extends Entity {
 
     private static final float SIZE = 3;
-
-    private Type type = Type.DEFAULT;
     protected TextureRegion texReg = null;
-    
+    private Type type = Type.DEFAULT;
+
     public Item(Type type) {
         this.type = type;
     }
@@ -37,15 +36,6 @@ public class Item extends Entity {
         this.type = type;
     }
 
-    public static enum Type {
-        KEY,
-        ENERGY,
-        UPGRADE,
-        ;
-
-        public static final Type DEFAULT = KEY;
-    }
-
     public TextureRegion getTex() {
         return texReg;
     }
@@ -53,14 +43,10 @@ public class Item extends Entity {
     @Override
     public void interact(Item carriedItem, Player player) {
 
-        if (carriedItem != null)
-        {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.S))
-            {
+        if (carriedItem != null) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
                 this.getWorld().spawn(carriedItem.getClass(), this.getPos());
-            }
-            else
-            {
+            } else {
                 return;
             }
         }
@@ -68,5 +54,13 @@ public class Item extends Entity {
         this.setCollisionBox(null);
         this.die();
         getWorld().getGame().getResourcePack().sounds.pickup.start(.25f);
+    }
+
+    public static enum Type {
+        KEY,
+        ENERGY,
+        UPGRADE,;
+
+        public static final Type DEFAULT = KEY;
     }
 }

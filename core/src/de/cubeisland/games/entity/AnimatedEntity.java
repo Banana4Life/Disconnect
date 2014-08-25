@@ -3,7 +3,7 @@ package de.cubeisland.games.entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.DisconnectGame;
 
-public abstract class AnimatedEntity extends Entity{
+public abstract class AnimatedEntity extends Entity {
     protected float statetime = 0f;
     protected TextureRegion currentKeyFrame;
 

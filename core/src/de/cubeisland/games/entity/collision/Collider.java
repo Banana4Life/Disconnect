@@ -14,6 +14,8 @@ public class Collider {
     private static final Rectangle helper1 = new Rectangle(0, 0, 0, 0);
     private static final Rectangle helper2 = new Rectangle(0, 0, 0, 0);
     private static final Rectangle helper3 = new Rectangle(0, 0, 0, 0);
+    private static final Polygon polyHelper = new Polygon();
+    private static final float[] vertexHelper = new float[8];
 
     public static Rectangle findCollision(Entity e1, Entity e2) {
         CollisionBox cB1 = e1.getCollisionBox();
@@ -32,9 +34,6 @@ public class Collider {
         }
         return null;
     }
-
-    private static final Polygon polyHelper = new Polygon();
-    private static final float[] vertexHelper = new float[8];
 
     public static boolean isLineOfSightClear(World world, Vector2 begin, Vector2 end) {
         float x1;

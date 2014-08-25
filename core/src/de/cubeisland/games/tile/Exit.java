@@ -14,7 +14,7 @@ public class Exit extends Entity {
     @Override
     public void onSpawn(World world) {
         super.onSpawn(world);
-        this.setCollisionBox(new CollisionBox(16,16)); // TODO anpassen an textur
+        this.setCollisionBox(new CollisionBox(16, 16)); // TODO anpassen an textur
     }
 
     @Override

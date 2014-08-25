@@ -12,8 +12,8 @@ public abstract class Entity {
     protected Vector2 pos = Vector2.Zero.cpy();
     protected Vector2 velocity = Vector2.Zero.cpy();
     protected Vector2 size = Vector2.Zero.cpy();
-    private World world;
     protected Vector2 lastPos = Vector2.Zero.cpy();
+    private World world;
     private int depth = 1;
     private boolean alive = true;
     private CollisionBox collisionBox;
@@ -21,12 +21,9 @@ public abstract class Entity {
     private boolean skipMovement = false;
 
     public void update(DisconnectGame game, float delta) {
-        if (skipMovement)
-        {
+        if (skipMovement) {
             skipMovement = false;
-        }
-        else
-        {
+        } else {
             this.lastPos.set(pos);
             this.pos.add(this.velocity.cpy().scl(delta));
             this.world.checkCollisions(this);
@@ -60,30 +57,23 @@ public abstract class Entity {
     }
 
     public void onTileCollide(TileEntity tile, Rectangle collisionBox) {
-        if (!tile.getType().isBlocking())
-        {
+        if (!tile.getType().isBlocking()) {
             return;
         }
-        if (Math.abs(lastPos.y - pos.y) > Math.abs((lastPos.x - pos.x)))
-        {
-            if (onTileCollideY(collisionBox))
-            {
+        if (Math.abs(lastPos.y - pos.y) > Math.abs((lastPos.x - pos.x))) {
+            if (onTileCollideY(collisionBox)) {
                 collisionBox = Collider.findCollision(this, tile);
             }
-            if (collisionBox != null)
-            {
+            if (collisionBox != null) {
                 float posy = pos.y;
                 pos.y = lastPos.y;
                 onTileColideX(collisionBox);
                 collisionBox = Collider.findCollision(this, tile);
-                if (collisionBox != null)
-                {
+                if (collisionBox != null) {
                     pos.y = posy;
                     collisionBox = Collider.findCollision(this, tile);
-                    if (collisionBox != null)
-                    {
-                        if (this.inWall)
-                        {
+                    if (collisionBox != null) {
+                        if (this.inWall) {
                             fixCollision(tile, collisionBox);
                             return;
                         }
@@ -91,33 +81,24 @@ public abstract class Entity {
                         pos.x = lastPos.x;
                         pos.y = lastPos.y;
                     }
-                }
-                else
-                {
+                } else {
                     pos.y = posy;
                 }
             }
-        }
-        else
-        {
-            if (onTileColideX(collisionBox))
-            {
+        } else {
+            if (onTileColideX(collisionBox)) {
                 collisionBox = Collider.findCollision(this, tile);
             }
-            if (collisionBox != null)
-            {
+            if (collisionBox != null) {
                 float posx = pos.x;
                 pos.x = lastPos.x;
                 onTileCollideY(collisionBox);
                 collisionBox = Collider.findCollision(this, tile);
-                if (collisionBox != null)
-                {
+                if (collisionBox != null) {
                     pos.x = posx;
                     collisionBox = Collider.findCollision(this, tile);
-                    if (collisionBox != null)
-                    {
-                        if (inWall)
-                        {
+                    if (collisionBox != null) {
+                        if (inWall) {
                             fixCollision(tile, collisionBox);
                             return;
                         }
@@ -125,9 +106,7 @@ public abstract class Entity {
                         pos.x = lastPos.x;
                         pos.y = lastPos.y;
                     }
-                }
-                else
-                {
+                } else {
                     pos.x = posx;
                 }
             }
@@ -137,8 +116,7 @@ public abstract class Entity {
     private boolean fixCollision(TileEntity tile, Rectangle collisionBox) {
         for (Direction direction : Direction.values()) {
             TileEntity neighbourOf = this.getWorld().getNeighbourOf(tile, direction);
-            if (!neighbourOf.isBlocking())
-            {
+            if (!neighbourOf.isBlocking()) {
                 pos.set(neighbourOf.getPos());
                 inWall = false;
                 System.out.println("FIXED COLLISION! " + collisionBox.height + " " + collisionBox.width);
@@ -156,9 +134,7 @@ public abstract class Entity {
             if (newVal >= lastPos.y && newVal < pos.y) {
                 pos.y = newVal;
                 return true;
-            }
-            else
-            {
+            } else {
                 pos.y = lastPos.y;
                 return true;
             }
@@ -167,9 +143,7 @@ public abstract class Entity {
             if (newVal <= lastPos.y && newVal > pos.y) {
                 pos.y = newVal;
                 return true;
-            }
-            else
-            {
+            } else {
                 pos.y = lastPos.y;
                 return true;
             }
@@ -184,9 +158,7 @@ public abstract class Entity {
             if (newVal >= lastPos.x && newVal < pos.x) {
                 pos.x = newVal;
                 return true;
-            }
-            else
-            {
+            } else {
                 pos.x = lastPos.x;
                 return true;
             }
@@ -195,9 +167,7 @@ public abstract class Entity {
             if (newVal <= lastPos.x && newVal > pos.x) {
                 pos.x = newVal;
                 return true;
-            }
-            else
-            {
+            } else {
                 pos.x = lastPos.x;
                 return true;
             }
