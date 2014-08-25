@@ -35,7 +35,7 @@ public class IntroScreen extends UIScreen {
         TextureRegion pressenter = game.getResourcePack().textures.pressenter;
         TextureRegion overlay = game.getResourcePack().textures.wallbottom;
 
-        time += delta * 10;
+        time += delta * 7;
 
         if (time > introscreen.getRegionHeight() - Gdx.graphics.getHeight() / 4 + pressenter.getRegionHeight()) {
             time = introscreen.getRegionHeight() - Gdx.graphics.getHeight() / 4 + pressenter.getRegionHeight();
