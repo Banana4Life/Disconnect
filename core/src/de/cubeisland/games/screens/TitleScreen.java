@@ -39,7 +39,13 @@ public class TitleScreen extends UIScreen {
                 game.exit();
                 return true;
             }
-        }, ESCAPE);
+        }, ESCAPE).add(new Handler() {
+            @Override
+            public boolean handle(DisconnectGame game) {
+                game.transition(CreditsScreen.class);
+                return true;
+            }
+        }, C);
     }
 
     @Override

@@ -1,5 +1,8 @@
 package de.cubeisland.games.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.DisconnectGame;
 
 import static com.badlogic.gdx.Input.Keys.ESCAPE;
@@ -25,6 +28,11 @@ public class CreditsScreen extends UIScreen {
 
     @Override
     public void draw(float delta) {
+        SpriteBatch batch = game.getGuiCamera().getSpriteBatch();
+        TextureRegion creditsscreen = game.getResourcePack().textures.creditscreen;
 
+        batch.begin();
+        batch.draw(creditsscreen, Gdx.graphics.getWidth() / 8 - creditsscreen.getRegionWidth() / 2, Gdx.graphics.getHeight() / 8 - creditsscreen.getRegionHeight() / 2, creditsscreen.getRegionWidth(), creditsscreen.getRegionHeight());
+        batch.end();
     }
 }

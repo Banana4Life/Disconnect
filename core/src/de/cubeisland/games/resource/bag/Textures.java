@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.cubeisland.games.resource.ResourceBag;
 
+import javax.xml.soap.Text;
 import java.lang.reflect.Field;
 
 public class Textures extends ResourceBag<TextureRegion> {
@@ -34,6 +35,9 @@ public class Textures extends ResourceBag<TextureRegion> {
     public TextureRegion exittipp;
     public TextureRegion activatoron;
     public TextureRegion activatoroff;
+    public TextureRegion lostscreen;
+    public TextureRegion wonscreen;
+    public TextureRegion creditscreen;
 
     public Textures(Files.FileType fileType) {
         super(fileType);
