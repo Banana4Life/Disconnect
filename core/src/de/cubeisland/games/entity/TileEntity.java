@@ -58,7 +58,7 @@ public class TileEntity extends Entity {
                     TileEntity bottom = getWorld().getNeighbourOf(this, BOTTOM);
                     if (FLOOR.isType(top) || DOOR.isType(top) || AUTO_DOOR.isType(top)) {
                         if (FLOOR.isType(left) || DOOR.isType(left) || AUTO_DOOR.isType(left)) {
-                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
+                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right) || TERMINAL.isType(right)) {
                                 this.texture = textures.walltopboth;
                             } else {
                                 this.texture = textures.walltopleft;
@@ -74,7 +74,11 @@ public class TileEntity extends Entity {
                         TileEntity leftTop = getWorld().getNeighbourOf(left, TOP);
                         if (FLOOR.isType(left)) {
                             if (FLOOR.isType(right)) {
-                                this.texture = textures.wallboth;
+                                if (WALL.isType(rightTop) && WALL.isType(leftTop) && TERMINAL.isType(rightTop)) {
+                                    this.texture = textures.wallbothbottom;
+                                } else {
+                                    this.texture = textures.wallboth;
+                                }
                             } else if (WALL.isType(leftTop)) {
                                 this.texture = textures.wallrightbottom;
                             } else {
