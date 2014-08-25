@@ -38,6 +38,8 @@ public class Textures extends ResourceBag<TextureRegion> {
     public TextureRegion lostscreen;
     public TextureRegion wonscreen;
     public TextureRegion creditscreen;
+    public TextureRegion introscreen;
+    public TextureRegion pressenter;
 
     public Textures(Files.FileType fileType) {
         super(fileType);

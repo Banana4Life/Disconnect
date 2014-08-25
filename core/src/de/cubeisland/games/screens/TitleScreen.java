@@ -30,7 +30,7 @@ public class TitleScreen extends UIScreen {
         getInput().add(new Handler() {
             @Override
             public boolean handle(DisconnectGame game) {
-                game.transition(GameScreen.class);
+                game.transition(IntroScreen.class);
                 return true;
             }
         }, SPACE, ENTER).add(new Handler() {
