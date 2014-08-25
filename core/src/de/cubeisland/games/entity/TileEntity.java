@@ -58,14 +58,14 @@ public class TileEntity extends Entity {
                     TileEntity right = getWorld().getNeighbourOf(this, RIGHT);
                     TileEntity rightTop = getWorld().getNeighbourOf(right, TOP);
                     TileEntity bottom = getWorld().getNeighbourOf(this, BOTTOM);
-                    if (FLOOR.isType(top) || DOOR.isType(top) || AUTO_DOOR.isType(top)) {
-                        if (FLOOR.isType(left) || DOOR.isType(left) || AUTO_DOOR.isType(left)) {
-                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
+                    if (FLOOR.isType(top) || DOOR.isType(top) || AUTO_DOOR.isType(top) || FLOOR_ACTIVATOR.isType(top)) {
+                        if (FLOOR.isType(left) || DOOR.isType(left) || AUTO_DOOR.isType(left) || FLOOR_ACTIVATOR.isType(left)) {
+                            if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right) || FLOOR_ACTIVATOR.isType(right)) {
                                 this.texture = textures.walltopboth;
                             } else {
                                 this.texture = textures.walltopleft;
                             }
-                        } else if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right)) {
+                        } else if (FLOOR.isType(right) || DOOR.isType(right) || AUTO_DOOR.isType(right) || FLOOR_ACTIVATOR.isType(right)) {
                             this.texture = textures.walltopright;
                         } else {
                             this.texture = textures.walltop;
@@ -85,13 +85,15 @@ public class TileEntity extends Entity {
                                 }
                             } else if (WALL.isType(leftTop)) {
                                 this.texture = textures.wallrightbottom;
+                            } else if (WALL.isType(right) && FLOOR.isType(rightTop)) {
+                                this.texture = textures.wallbothtopright;
                             } else {
                                 this.texture = textures.wallright;
                             }
-                        } else if (WALL.isType(left) && FLOOR.isType(leftTop)) {
-                            if (WALL.isType(right) && FLOOR.isType(rightTop)) {
+                        } else if ((WALL.isType(left) || TERMINAL.isType(left)) && (FLOOR.isType(leftTop) || FLOOR_ACTIVATOR.isType(leftTop))) {
+                            if ((WALL.isType(right) || TERMINAL.isType(right)) && FLOOR.isType(rightTop)) {
                                 this.texture = textures.wallbothtop;
-                            } if (FLOOR.isType(right)) {
+                            } else if (FLOOR.isType(right)) {
                                 this.texture = textures.walllefttopboth;
                             } else {
                                 this.texture = textures.wallrighttop;
@@ -105,7 +107,7 @@ public class TileEntity extends Entity {
                             } else {
                                 this.texture = textures.wallleft;
                             }
-                        } else if (WALL.isType(right) && FLOOR.isType(rightTop)) {
+                        } else if (WALL.isType(right) && (FLOOR.isType(rightTop) || FLOOR_ACTIVATOR.isType(rightTop))) {
                             if (FLOOR.isType(left)) {
                                 this.texture = textures.wallrighttopboth;
                             } else {
