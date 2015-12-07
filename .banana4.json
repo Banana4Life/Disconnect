@@ -1,0 +1,9 @@
+{
+  "description": "Find the endless energy by navigating through the worlds, but be aware: the worlds look alike, but can be quite different!",
+  "ludumdare": {
+    "number": 30,
+    "theme": "Connected Worlds"
+  },
+  "authors": ["Jonas Dann", "Phillip Schichtel", "Anselm Brehme", "Katharina Spinner"],
+  "comments": []
+}
