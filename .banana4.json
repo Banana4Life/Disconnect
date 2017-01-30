@@ -1,12 +1,14 @@
 {
   "name": "Disconnect",
   "description": "Find the endless energy by navigating through the worlds, but be aware: the worlds look alike, but can be quite different!",
-  "ludumdare": {
+  "jam": {
+    "name": "Ludum Dare",
     "number": 30,
     "theme": "Connected Worlds",
     "site": "http://ludumdare.com/compo/ludum-dare-30/?action=preview&uid=41477",
     "comments": []
   },
   "authors": ["Jonas Dann", "Phillip Schichtel", "Anselm Brehme", "Katharina Spinner"],
-  "soundtrack": "https://soundcloud.com/rahtainka/disconnect"
+  "soundtrack": "https://soundcloud.com/rahtainka/disconnect",
+  "date": "2014-08-22",
 }
